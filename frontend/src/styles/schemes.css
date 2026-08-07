@@ -1,0 +1,40 @@
+.schemes-container { padding: 20px; max-width: 1100px; margin: 18px auto; }
+
+.search-row { display:flex; gap:12px; align-items:center; margin-bottom:16px; }
+.search-row .search-input { flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface); }
+.search-row .search-button { padding:10px 14px; border-radius:8px; }
+
+.filters { display:flex; gap:8px; margin-bottom:12px; align-items:center }
+.filters select { padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--surface) }
+.filters .btn-ghost { padding:8px 10px }
+
+/* Responsive grid: 3 columns desktop, 2 tablet, 1 mobile */
+.schemes-list { display:grid; gap:16px; grid-template-columns: repeat(1, 1fr); }
+@media (min-width: 600px) {
+  .schemes-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 992px) {
+  .schemes-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.scheme-card { padding:12px; }
+.scheme-card .card { padding:12px; }
+.scheme-card-body { display:flex; flex-direction:column; gap:8px; }
+.scheme-title-row { display:flex; align-items:center; justify-content:space-between; gap:8px }
+.scheme-title { margin:0; font-size:18px }
+.scheme-meta { color:var(--text-muted); font-size:13px }
+.scheme-categories { display:flex; gap:6px; flex-wrap:wrap }
+.scheme-desc { color:var(--text-secondary); margin:0 }
+.scheme-actions { margin-top:8px }
+.badge { padding:4px 8px; border-radius:999px; font-size:12px; background:var(--accent-bg); border:1px solid var(--accent-border); color:var(--accent); }
+.badge.published { background:var(--primary-light); color:var(--primary-dark) }
+.badge.draft { background:#fff3cd; color:var(--warning) }
+
+.loading { padding:24px; text-align:center; color:var(--text-muted) }
+.empty { padding:24px; text-align:center; color:var(--text-muted) }
+
+/* Card visuals */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* Action button spacing */
+.scheme-actions .btn-primary { padding:8px 12px; text-decoration:none; display:inline-block }

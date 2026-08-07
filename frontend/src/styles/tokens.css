@@ -1,0 +1,84 @@
+:root {
+  /* Colors */
+  --primary: #005A9C;
+  --primary-dark: #003F6B;
+  --primary-light: #EAF3F9;
+  --accent: #F5A623;
+
+  --page-bg: #F5F6F7;
+  --surface: #FFFFFF;
+  --text: #222222;
+  --text-secondary: #555555;
+  --text-muted: #6C757D;
+  --border: #D9D9D9;
+
+  --success: #198754;
+  --warning: #F0AD4E;
+  --danger: #DC3545;
+  --info: #0D6EFD;
+
+  /* Utility derived colors */
+  --accent-bg: rgba(245,166,35,0.08);
+  --accent-border: rgba(245,166,35,0.2);
+  --social-bg: rgba(0,0,0,0.03);
+
+  /* Shadows and radii */
+  --shadow: 0 6px 18px rgba(0,0,0,0.06);
+  --radius: 8px;
+
+  /* Typography */
+  --font-sans: 'Inter', 'Segoe UI', Arial, sans-serif;
+  --base-size: 16px;
+  --line-height-body: 1.5;
+  --line-height-heading: 1.25;
+
+  /* Spacing */
+  --gap-sm: 8px;
+  --gap-md: 16px;
+  --gap-lg: 24px;
+}
+
+/* Global element defaults */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--base-size);
+  line-height: var(--line-height-body);
+  color: var(--text);
+  background: var(--page-bg);
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5 {
+  line-height: var(--line-height-heading);
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+}
+
+/* Buttons */
+.btn-primary {
+  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  border-radius: var(--radius);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+}
