@@ -1,0 +1,184 @@
+[
+  {
+    "schemeName": "Old Age Pension Scheme",
+    "rules": {
+      "all": [
+        {
+          "field": "age",
+          "operator": ">=",
+          "value": 60,
+          "reason": "Applicant must be 60 years or older."
+        },
+        {
+          "field": "income",
+          "operator": "<",
+          "value": 100000,
+          "reason": "Annual family income must be below ₹1,00,000."
+        },
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must be a resident of Delhi."
+        },
+        {
+          "field": "residenceYears",
+          "operator": ">=",
+          "value": 5,
+          "reason": "Applicant must have been a Delhi resident for at least 5 years."
+        },
+        {
+          "field": "aadhaar",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must have an Aadhaar number or qualifying enrolment."
+        },
+        {
+          "field": "receivesOtherPension",
+          "operator": "==",
+          "value": false,
+          "reason": "Applicant must not already receive another pension/financial assistance for the same purpose."
+        }
+      ]
+    },
+    "sourceNote": "Starter rules. Verify current official criteria before production use."
+  },
+  {
+    "schemeName": "Financial Assistance to Persons with Special Needs",
+    "rules": {
+      "all": [
+        {
+          "field": "age",
+          "operator": "<",
+          "value": 60,
+          "reason": "Applicant must be below 60 under the published disability-assistance criteria."
+        },
+        {
+          "field": "income",
+          "operator": "<=",
+          "value": 100000,
+          "reason": "Published criteria specify an annual family-income ceiling of ₹1,00,000."
+        },
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must be a Delhi resident."
+        },
+        {
+          "field": "residenceYears",
+          "operator": ">=",
+          "value": 5,
+          "reason": "Applicant must have been a Delhi resident for at least 5 years."
+        },
+        {
+          "field": "disability",
+          "operator": "==",
+          "value": "yes",
+          "reason": "Applicant must have a qualifying disability."
+        },
+        {
+          "field": "disabilityPercentage",
+          "operator": ">=",
+          "value": 40,
+          "reason": "Published criteria require disability of at least 40%."
+        }
+      ]
+    },
+    "sourceNote": "Starter rules. Verify the currently applicable official threshold before production use."
+  },
+  {
+    "schemeName": "Issuance of Income and Assets Certificate for Economically Weaker Section(EWS)",
+    "rules": {
+      "all": [
+        {
+          "field": "category",
+          "operator": "==",
+          "value": "general",
+          "reason": "EWS applies to applicants outside the SC/ST/OBC reservation categories."
+        },
+        {
+          "field": "income",
+          "operator": "<",
+          "value": 800000,
+          "reason": "Applicable EWS rules use an annual family-income ceiling of ₹8 lakh."
+        }
+      ]
+    },
+    "sourceNote": "Income alone is not sufficient: EWS also has family/property/asset exclusion conditions."
+  },
+  {
+    "schemeName": "Non-Creamy Layer Certificate (NCL) for OBC",
+    "rules": {
+      "all": [
+        {
+          "field": "category",
+          "operator": "==",
+          "value": "obc",
+          "reason": "Applicant must belong to the applicable OBC category."
+        },
+        {
+          "field": "income",
+          "operator": "<",
+          "value": 800000,
+          "reason": "NCL assessment uses applicable creamy-layer criteria."
+        },
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must satisfy applicable Delhi conditions."
+        }
+      ]
+    },
+    "sourceNote": "Starter rule only. NCL determination is more detailed than income alone."
+  },
+  {
+    "schemeName": "Issuance of Caste (OBC) Certificate",
+    "rules": {
+      "all": [
+        {
+          "field": "category",
+          "operator": "==",
+          "value": "obc",
+          "reason": "Applicant must belong to the applicable OBC category."
+        },
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must satisfy Delhi-specific eligibility conditions."
+        }
+      ]
+    },
+    "sourceNote": "Additional conditions such as notified caste and qualifying paternal blood-relative/residency requirements must be modelled later."
+  },
+  {
+    "schemeName": "Issuance of Surviving Member Certificate",
+    "rules": {
+      "all": [
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must satisfy applicable Delhi service requirements."
+        }
+      ]
+    },
+    "sourceNote": "Minimal starter rule. Relationship/deceased-member information is required for a real eligibility decision."
+  },
+  {
+    "schemeName": "Issuance of Lal Dora Certificate",
+    "rules": {
+      "all": [
+        {
+          "field": "delhiResident",
+          "operator": "==",
+          "value": true,
+          "reason": "Applicant must satisfy applicable Delhi property/residency requirements."
+        }
+      ]
+    },
+    "sourceNote": "Property/land conditions are not captured by the current questionnaire."
+  }
+]

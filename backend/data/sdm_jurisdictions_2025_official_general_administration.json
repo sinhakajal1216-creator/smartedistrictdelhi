@@ -1,0 +1,718 @@
+[
+  {
+    "subDivisionCode": "SOUTH-EAST-JANGPURA",
+    "area": "South East",
+    "subDivision": "Jangpura",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Daryaganj",
+      "Sidhartha Nagar",
+      "Lajpat Nagar",
+      "Andrews Ganj",
+      "Amar Colony",
+      "Kotla Mubarakpur"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-EAST-KALKAJI",
+    "area": "South East",
+    "subDivision": "Kalkaji",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Kalkaji",
+      "Govind Puri",
+      "Sri Niwas Puri",
+      "Madanpur Khadar East",
+      "Madanpur Khadar West",
+      "Sarita Vihar",
+      "Abul Fazal Enclave",
+      "Zakir Nagar",
+      "Tughlakabad Extension",
+      "Sangam Vihar-B",
+      "Sangam Vihar-C",
+      "Harkesh Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-EAST-BADARPUR",
+    "area": "South East",
+    "subDivision": "Badarpur",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Pul Pehladpur",
+      "Tughlakabad",
+      "Jaitpur",
+      "Meethapur",
+      "Molarband",
+      "Badarpur",
+      "Hari Nagar Extension"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "OLD-DELHI-SADAR-BAZAR",
+    "area": "Old Delhi",
+    "subDivision": "Sadar Bazar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Shastri Nagar",
+      "Kishan Ganj",
+      "Sadar Bazar",
+      "Ballimaran",
+      "Ram Nagar",
+      "Quraish Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "OLD-DELHI-CHANDNI-CHOWK",
+    "area": "Old Delhi",
+    "subDivision": "Chandni Chowk",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Civil Lines",
+      "Jama Masjid",
+      "Chandni Chowk",
+      "Chandani Mahal",
+      "Delhi Gate",
+      "Bazar Sita Ram"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-BURARI",
+    "area": "North",
+    "subDivision": "Burari",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Burari",
+      "Kadipur",
+      "Mukundpur",
+      "Jharoda",
+      "Sant Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-ADARSH-NAGAR",
+    "area": "North",
+    "subDivision": "Adarsh Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Malka Ganj",
+      "Mukherjee Nagar",
+      "Timarpur",
+      "Dhirpur",
+      "Adarsh Nagar",
+      "Azadpur",
+      "Bhalswa",
+      "Jahangir Puri",
+      "Sarup Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-BADLI",
+    "area": "North",
+    "subDivision": "Badli",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Badli"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NEW-DELHI-DELHI-CANTT",
+    "area": "New Delhi",
+    "subDivision": "Delhi Cantt",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "NDMC & Delhi Cantonment"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NEW-DELHI-NEW-DELHI",
+    "area": "New Delhi",
+    "subDivision": "New Delhi",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "NDMC & Delhi Cantonment"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "CENTRAL-PATEL-NAGAR",
+    "area": "Central",
+    "subDivision": "Patel Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "West Patel Nagar",
+      "East Patel Nagar",
+      "Ranjeet Nagar",
+      "Baljeet Nagar",
+      "Karam Pura",
+      "Moti Nagar",
+      "Ramesh Nagar",
+      "Pahar Ganj"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "CENTRAL-KAROL-BAGH",
+    "area": "Central",
+    "subDivision": "Karol Bagh",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Karol Bagh",
+      "Dev Nagar",
+      "Naraina",
+      "Inder Puri",
+      "Rajinder Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "CENTRAL-NORTH-SHAKUR-BASTI",
+    "area": "Central North",
+    "subDivision": "Shakur Basti",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Saraswati Vihar",
+      "Paschim Vihar",
+      "Rani Bagh",
+      "Shalimar Bagh-A"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "CENTRAL-NORTH-SHALIMAR-BAGH",
+    "area": "Central North",
+    "subDivision": "Shalimar Bagh",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Shalimar Bagh-B",
+      "Pitam Pura",
+      "Kohat Enclave",
+      "Shakur Pur",
+      "Tri Nagar",
+      "Keshav Puram"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "CENTRAL-NORTH-MODEL-TOWN",
+    "area": "Central North",
+    "subDivision": "Model Town",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Ashok Vihar",
+      "Wazir Pur",
+      "Sangam Park",
+      "Model Town",
+      "Kamla Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-WEST-NAJAFGARH",
+    "area": "South West",
+    "subDivision": "Najafgarh",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Isapur",
+      "Najafgarh",
+      "Roshan Pura",
+      "Dichaon Kalan"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-WEST-MATIALA",
+    "area": "South West",
+    "subDivision": "Matiala",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Dwarka-B",
+      "Matiala",
+      "Kakrola",
+      "Dwarka-A",
+      "Chhawala",
+      "Nangli Sakrawati",
+      "Dabri"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-WEST-DWARKA",
+    "area": "South West",
+    "subDivision": "Dwarka",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Sagarpur",
+      "Manglapuri",
+      "Palam",
+      "Madhu Vihar",
+      "Sadh Nagar",
+      "Mahavir Enclave",
+      "Dwarka-C"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-WEST-BIJWASAN",
+    "area": "South West",
+    "subDivision": "Bijwasan",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Kapashera",
+      "Raj Nagar",
+      "Bijwasan",
+      "Mahipalpur"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "OUTER-NORTH-MUNDKA",
+    "area": "Outer North",
+    "subDivision": "Mundka",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Kanjhawala",
+      "Nangloi",
+      "Mundka",
+      "Rani Khera",
+      "Nilothi"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "OUTER-NORTH-NARELA",
+    "area": "Outer North",
+    "subDivision": "Narela",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Narela",
+      "Bankner",
+      "Holambi Kalan",
+      "Alipur",
+      "Bakhtawarpur",
+      "Pooth Kalan",
+      "Shahbaad Dairy"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "OUTER-NORTH-BAWANA",
+    "area": "Outer North",
+    "subDivision": "Bawana",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Pooth Khurd",
+      "Bawana",
+      "Nangal Thakran",
+      "Begumpur"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-WEST-KIRARI",
+    "area": "North West",
+    "subDivision": "Kirari",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Kirari",
+      "Prem Nagar",
+      "Mubarikpur",
+      "Aman Vihar",
+      "Nithari",
+      "Mangol Puri",
+      "Sultanpuri-A",
+      "Sultanpuri-B"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-WEST-NANGLOI-JAT",
+    "area": "North West",
+    "subDivision": "Nangloi Jat",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Jawalapuri",
+      "Nangloi Jat",
+      "Nihal Vihar",
+      "Guru Harkishan Nagar",
+      "Mangolpuri-A",
+      "Mangolpuri-B"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-WEST-ROHINI",
+    "area": "North West",
+    "subDivision": "Rohini",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Rohini-C",
+      "Rohini-A",
+      "Vijay Vihar",
+      "Budh Vihar",
+      "Rithala"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-EAST-KARAWAL-NAGAR",
+    "area": "North East",
+    "subDivision": "Karawal Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Rohini-B",
+      "Rohini-F",
+      "Rohini-E",
+      "Rohini-D",
+      "Karawal Nagar-East",
+      "Dayalpur",
+      "Mustafabad",
+      "Brij Puri",
+      "Nehru Vihar",
+      "Karawal Nagar-West",
+      "Sadatpur",
+      "Sri Ram Colony",
+      "Sonia Vihar",
+      "Sabapur",
+      "Pur Shahdara",
+      "Harsh Vihar",
+      "Saboli"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-EAST-GOKALPUR",
+    "area": "North East",
+    "subDivision": "Gokalpur",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Gokal Puri",
+      "Joharipur",
+      "Nand Nagri",
+      "Sundar Nagri"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-EAST-YAMUNA-VIHAR",
+    "area": "North East",
+    "subDivision": "Yamuna Vihar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Dilshad Garden",
+      "Chauhan Banger",
+      "Seelampur",
+      "Gautam Puri",
+      "Maujpur",
+      "Bhajanpura",
+      "Yamuna Vihar",
+      "Ghonda",
+      "Braham Puri"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "NORTH-EAST-SHAHDARA",
+    "area": "North East",
+    "subDivision": "Shahdara",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Dilshad Colony",
+      "Jhilmil",
+      "Subhash Mohalla",
+      "Kabir Nagar",
+      "Kardam Puri",
+      "Gorakh Park",
+      "Ashok Nagar",
+      "Rohtash Nagar",
+      "Welcome Colony",
+      "Ram Nagar East"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "EAST-GANDHI-NAGAR",
+    "area": "East",
+    "subDivision": "Gandhi Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Pandav Nagar",
+      "Lalita Park",
+      "Shakarpur",
+      "Laxmi Nagar",
+      "Anarkali",
+      "Jagat Puri",
+      "Geeta Colony",
+      "Krishna Nagar",
+      "Shastri Park",
+      "Gandhi Nagar",
+      "Azad Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "EAST-VISHWAS-NAGAR",
+    "area": "East",
+    "subDivision": "Vishwas Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Preet Vihar",
+      "I.P. Extension",
+      "Anand Vihar",
+      "Vishwas Nagar",
+      "Shahdara"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "EAST-PATPARGANJ",
+    "area": "East",
+    "subDivision": "Patparganj",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Trilokpuri",
+      "New Ashok Nagar",
+      "Mayur Vihar Phase-I",
+      "Kalyanpuri",
+      "Gharoli",
+      "Kondli",
+      "Patpar Ganj",
+      "Mayur Vihar Phase-II",
+      "Vinod Nagar",
+      "Mandawali"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-CHHATARPUR",
+    "area": "South",
+    "subDivision": "Chhatarpur",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Bhati",
+      "Said-Ul-Ajaib",
+      "Aya Nagar",
+      "Chhatarpur",
+      "Green Park",
+      "Hauz Khas"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-MALVIYA-NAGAR",
+    "area": "South",
+    "subDivision": "Malviya Nagar",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Malviya Nagar",
+      "Greater Kailash",
+      "Chitaranjan Park",
+      "Chirag Delhi",
+      "Dakshin Puri",
+      "Tigri"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-DEOLI",
+    "area": "South",
+    "subDivision": "Deoli",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Sangam Vihar-A",
+      "Deoli",
+      "Khanpur",
+      "Madangir",
+      "Pushp Vihar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "SOUTH-MEHRAULI",
+    "area": "South",
+    "subDivision": "Mehrauli",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "R.K. Puram",
+      "Munirka",
+      "Vasant Vihar",
+      "Mehrauli",
+      "Vasant Kunj",
+      "Lado Sarai",
+      "Kunwar Singh Nagar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "WEST-VIKASPURI",
+    "area": "West",
+    "subDivision": "Vikaspuri",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Bakkarwala",
+      "Budhela",
+      "Hastsal",
+      "Shafipur Ranhola",
+      "Tilangpur Kotla",
+      "Baprola",
+      "Rajapur Khurd",
+      "Asalatpur Khadar",
+      "Kesopur",
+      "Nawada Mazara Hastal"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "WEST-JANAKPURI",
+    "area": "West",
+    "subDivision": "Janakpuri",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Bindapur",
+      "Dabri",
+      "Nangli Jalib",
+      "Posangipur"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  },
+  {
+    "subDivisionCode": "WEST-RAJOURI-GARDEN",
+    "area": "West",
+    "subDivision": "Rajouri Garden",
+    "administrationType": "general_administration",
+    "mcdWards": [
+      "Chokhandi",
+      "Titarpur",
+      "Khiyala",
+      "Madipur",
+      "Tihar"
+    ],
+    "source": "Delhi Revenue Department, Gazette Notification F. 223/SDM-II(HQ)/Land/2025/285 dated 25-12-2025",
+    "sourceUrl": "https://revenue.delhi.gov.in/sites/default/files/revenue/generic_multiple_files/268793_list.pdf",
+    "sourceDate": "2025-12-25",
+    "notes": "Table III: MCD Wards are the basic unit of general administration. Revenue-village jurisdiction is governed separately by Table II for revenue administration."
+  }
+]
