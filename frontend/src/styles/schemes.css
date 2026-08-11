@@ -1,0 +1,82 @@
+.schemes-container { padding: 20px; max-width: 1100px; margin: 18px auto; }
+
+.search-row { display:flex; gap:12px; align-items:center; margin-bottom:16px; }
+.search-row .search-input { flex:1; padding:10px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface); }
+.search-row .search-button { padding:10px 14px; border-radius:8px; }
+
+.filters { display:flex; gap:8px; margin-bottom:12px; align-items:center }
+.filters select { padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--surface) }
+.filters .btn-ghost { padding:8px 10px }
+
+/* Responsive grid: 3 columns desktop, 2 tablet, 1 mobile */
+.schemes-list { display:grid; gap:16px; grid-template-columns: repeat(1, 1fr); }
+@media (min-width: 600px) {
+  .schemes-list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 992px) {
+  .schemes-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+.scheme-card { padding:12px; }
+.scheme-card .card { padding:12px; }
+.scheme-card-body { display:flex; flex-direction:column; gap:8px; }
+.scheme-title-row { display:flex; align-items:center; justify-content:space-between; gap:8px }
+.scheme-title { margin:0; font-size:18px }
+.scheme-meta { color:var(--text-muted); font-size:13px }
+.scheme-categories { display:flex; gap:6px; flex-wrap:wrap }
+.scheme-desc { color:var(--text-secondary); margin:0 }
+.scheme-actions { margin-top:8px }
+.badge { padding:4px 8px; border-radius:999px; font-size:12px; background:var(--accent-bg); border:1px solid var(--accent-border); color:var(--accent); }
+.badge.published { background:var(--primary-light); color:var(--primary-dark) }
+.badge.draft { background:#fff3cd; color:var(--warning) }
+
+.loading { padding:24px; text-align:center; color:var(--text-muted) }
+.empty { padding:24px; text-align:center; color:var(--text-muted) }
+
+/* Eligibility form styles */
+.eligibility-panel { max-width: 1000px; margin: 0 auto; padding: 12px; }
+.eligibility-form { max-width: 100%; }
+.eligibility-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+@media (min-width: 700px) {
+  .eligibility-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1100px) {
+  .eligibility-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.eligibility-grid label { display: block; }
+.field-label { font-weight: 600; margin-bottom: 6px; color: var(--text-muted); font-size: 13px }
+.eligibility-grid input[type="text"], .eligibility-grid input[type="number"], .eligibility-grid select { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); box-sizing: border-box }
+.checkbox-row { display:flex; gap:16px; align-items:center; flex-wrap:wrap }
+.form-actions { display:flex; gap:12px; margin-top:16px }
+.form-actions .btn-primary { background: #0057A6; color: #fff; border: none; padding: 10px 16px; border-radius: 8px }
+.form-actions .btn-ghost { background: transparent; border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px }
+
+/* Cards for groups */
+.card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.04) }
+.card legend { font-weight:700; padding:0 8px }
+
+.result-summary { display:flex; gap:16px; margin-top:20px; flex-wrap:wrap }
+.summary-item { background: #f3f7fb; padding:8px 12px; border-radius:8px; font-weight:600 }
+
+.results-grid { display:grid; grid-template-columns: 1fr; gap:18px; margin-top:12px }
+@media (min-width: 1000px) {
+  .results-grid { grid-template-columns: 1fr 1fr }
+}
+.results-column { display:flex; flex-direction:column; gap:12px }
+.result-card { padding: 12px }
+.result-card-body { display:flex; flex-direction:column; gap:8px }
+.reason-box { margin-top:8px; padding:10px; border-radius:8px; font-size:13px }
+.reason-box.success { background: #eaf7ef; border:1px solid #cdebd1; color: #145a2e }
+.reason-box.warning { background: #fff4e6; border:1px solid #ffd9a8; color: #7a4f00 }
+.reason-box.muted { background: #f4f6f8; border:1px solid #e3e6ea; color: #4b5563 }
+
+.eligibility-results .schemes-list { margin-top: 6px }
+
+/* Ensure scheme card fits */
+.scheme-card { width: 100% }
+
+/* Card visuals */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* Action button spacing */
+.scheme-actions .btn-primary { padding:8px 12px; text-decoration:none; display:inline-block }
