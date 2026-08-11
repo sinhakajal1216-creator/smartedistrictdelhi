@@ -13,7 +13,7 @@ exports.search = (req, res) => {
       });
     }
     
-    const result = sdmLocatorService.searchLocality(q);
+    const result = sdmLocatorService.locateSdmOffice(q);
     
     if (!result) {
       return res.status(404).json({
@@ -23,12 +23,7 @@ exports.search = (req, res) => {
       });
     }
     
-    return res.status(200).json({
-      locality: result.locality,
-      ward: result.wardName,
-      wardNumber: result.wardNumber,
-      acName: result.acName
-    });
+    return res.status(200).json(result);
   } catch (error) {
     console.error('SDM Locator error:', error);
     return res.status(500).json({
