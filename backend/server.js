@@ -4,11 +4,16 @@ require("dotenv").config();
 
 const app = express();
 
+
+
+
 app.use(cors());
 app.use(express.json());
 
 const sdmLocatorRoutes = require('./routes/sdmLocator');
 const eligibilityRoutes = require('./routes/eligibility');
+const schemeRoutes = require('./routes/schemes');
+const authRoutes = require('./routes/auth');
 
 app.get("/", (req, res) => {
     res.json({
@@ -23,9 +28,11 @@ app.get("/health", (req, res) => {
     });
 });
 
+app.use('/api/auth', authRoutes);
 app.use('/api/sdm', sdmLocatorRoutes);
 
 app.use('/api/eligibility', eligibilityRoutes);
+app.use('/api/schemes', schemeRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {

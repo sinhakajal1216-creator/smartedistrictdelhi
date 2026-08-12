@@ -1,0 +1,90 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-08-12",
+  "services": [
+    {
+      "serviceCode": "old-age-pension-scheme",
+      "serviceTitle": "Old Age Pension Scheme",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "financial-assistance-to-persons-with-special-needs",
+      "serviceTitle": "Financial Assistance to Persons with Special Needs",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "issuance-of-income-and-assets-certificate-for-economically-weaker-section-ews",
+      "serviceTitle": "Issuance of Income and Assets Certificate for Economically Weaker Section(EWS)",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "non-creamy-layer-certificate-ncl-for-obc",
+      "serviceTitle": "Non-Creamy Layer Certificate (NCL) for OBC",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "issuance-of-caste-obc-certificate",
+      "serviceTitle": "Issuance of Caste (OBC) Certificate",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "issuance-of-surviving-member-certificate",
+      "serviceTitle": "Issuance of Surviving Member Certificate",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    },
+    {
+      "serviceCode": "issuance-of-lal-dora-certificate",
+      "serviceTitle": "Issuance of Lal Dora Certificate",
+      "onlineSubmissionDocuments": [],
+      "officeVerificationDocuments": [],
+      "additionalDocuments": [],
+      "documentAlternatives": [],
+      "verificationNotes": [],
+      "sources": [],
+      "verificationStatus": "unverified",
+      "lastVerified": null
+    }
+  ]
+}

@@ -123,6 +123,18 @@
   padding: 20px;
 }
 
+.office-primary { padding-bottom: 16px; border-bottom: 1px solid rgba(102, 126, 234, 0.2); }
+.office-name { margin-top: 4px; color: #333; font-size: 22px; font-weight: 700; }
+.result-row-stacked { align-items: flex-start; }
+.result-row-stacked .result-value { max-width: 62%; line-height: 1.45; }
+.map-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 4px; }
+.map-actions a { color: #fff; background: #667eea; border-radius: 5px; font-size: 13px; font-weight: 600; padding: 8px 12px; text-decoration: none; }
+.mapping-details { margin-top: 20px; padding-top: 4px; }
+.mapping-details h3 { color: #555; font-size: 14px; margin: 0 0 6px; }
+.sdm-unavailable-message { border-left: 4px solid #d98b2b; border-radius: 8px; background: #fff7e8; color: #5e471f; padding: 20px; }
+.sdm-unavailable-message h2 { font-size: 17px; margin: 0 0 8px; }
+.sdm-unavailable-message p { font-size: 14px; line-height: 1.5; margin: 0; }
+
 .result-row {
   display: flex;
   justify-content: space-between;
@@ -181,4 +193,6 @@
   .result-value {
     text-align: left;
   }
+
+  .result-row-stacked .result-value { max-width: none; }
 }

@@ -7,7 +7,7 @@ export default function ProtectedRoute({ children }) {
   const [authed, setAuthed] = useState(false)
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     (async () => {
       try {
         await auth.me()

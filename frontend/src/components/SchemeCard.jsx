@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 
 export default function SchemeCard({ scheme }) {
   if (!scheme) return null
-  const { _id, title, description, department, categories } = scheme
+  const { _id, id, code, title, description, department, categories } = scheme
+  const schemeId = id || code || _id
 
   const hasDepartment = department && String(department).trim().length > 0
   const hasCategories = Array.isArray(categories) && categories.filter(Boolean).length > 0
@@ -28,7 +29,7 @@ export default function SchemeCard({ scheme }) {
         {hasDescription && <p className="scheme-desc">{description}</p>}
 
         <div className="scheme-actions">
-          <Link to={`/schemes/${_id}`} className="btn-primary">View Details</Link>
+          <Link to={`/schemes/${schemeId}`} className="btn-primary">View Details</Link>
         </div>
       </div>
     </article>

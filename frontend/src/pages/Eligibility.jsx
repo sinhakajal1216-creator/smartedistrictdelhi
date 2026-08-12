@@ -179,6 +179,9 @@ export default function Eligibility() {
       <div className="eligibility-panel">
         <h2>Eligibility Questionnaire</h2>
         <p className="muted">Provide basic details to find schemes you may be eligible for. If logged in, your saved profile will pre-fill the form.</p>
+        <div className="reason-box muted" role="note" style={{ marginBottom: 16 }}>
+          <strong>Important:</strong> Results are based on the currently available starter rules and data in this platform. They are guidance only and are <strong>not</strong> an official government eligibility decision. Verify current criteria on the relevant official portal before applying.
+        </div>
 
         {form.loadingProfile ? (
           <div className="loading">Loading profile…</div>

@@ -5,7 +5,7 @@
 // - Returns array: [{ schemeId, code, title, eligible: true|false|null, reasons: [string] }]
 
 function isNumeric(v) {
-  return typeof v === 'number' || (!Number.isNaN(Number(v)) && String(v).trim() !== '');
+  return typeof v === 'number' || (typeof v !== 'boolean' && !Number.isNaN(Number(v)) && String(v).trim() !== '');
 }
 
 function escapeRegex(s) {

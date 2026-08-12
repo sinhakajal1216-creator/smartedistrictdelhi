@@ -1,6 +1,8 @@
 ﻿import axios from 'axios';
 
-const baseURL = import.meta.env.VITE_API_BASE || 'http://localhost:4000/api';
+// In development, Vite proxies this relative path to the Express server.
+// Deployments can override it with VITE_API_BASE.
+const baseURL = import.meta.env.VITE_API_BASE || '/api';
 
 const api = axios.create({
   baseURL,

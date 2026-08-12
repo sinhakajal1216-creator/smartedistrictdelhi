@@ -39,7 +39,8 @@ function App() {
           setUser(res.user)
         }
       } catch (e) {
-        // ignore - user not logged in or token invalid
+        // Clear invalid token from localStorage
+        localStorage.removeItem('sd_token')
       }
     })()
 

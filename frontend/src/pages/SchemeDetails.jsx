@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import api from '../services/api'
-import SchemeCard from '../components/SchemeCard'
 import '../styles/schemes.css'
 
 export default function SchemeDetails() {
@@ -21,7 +20,7 @@ export default function SchemeDetails() {
       })
       .catch(err => {
         if (!mounted) return
-        setError(err?.response?.data?.error || err.message || 'Failed to load')
+        setError(err?.response?.data?.error || err.message || 'Failed to load scheme')
       })
       .finally(() => { if (mounted) setLoading(false) })
 
@@ -32,7 +31,6 @@ export default function SchemeDetails() {
   if (error) return <div className="schemes-container"><div className="empty">{String(error)}</div></div>
   if (!scheme) return <div className="schemes-container"><div className="empty">Scheme not found</div></div>
 
-  // render rule predicate to human text
   const fieldLabel = (f) => {
     const map = {
       age: 'Age',
@@ -52,32 +50,29 @@ export default function SchemeDetails() {
   }
 
   const opText = (op, value) => {
-    if (op === '>=' ) return `at least ${value}`
-    if (op === '<=' ) return `at most ${value}`
-    if (op === '>' ) return `greater than ${value}`
-    if (op === '<' ) return `less than ${value}`
-    if (op === '==' ) return `is ${value}`
-    if (op === '!=' ) return `is not ${value}`
-    if (op === 'in' ) return `one of (${Array.isArray(value)? value.join(', '): value})`
-    if (op === 'not_in' ) return `not one of (${Array.isArray(value)? value.join(', '): value})`
+    if (op === '>=') return `at least ${value}`
+    if (op === '<=') return `at most ${value}`
+    if (op === '>') return `greater than ${value}`
+    if (op === '<') return `less than ${value}`
+    if (op === '==') return `is ${value}`
+    if (op === '!=') return `is not ${value}`
+    if (op === 'in') return `one of (${Array.isArray(value) ? value.join(', ') : value})`
+    if (op === 'not_in') return `not one of (${Array.isArray(value) ? value.join(', ') : value})`
     return `${op} ${value}`
   }
 
   const renderNode = (node) => {
     if (!node) return []
     if (node.all && Array.isArray(node.all)) {
-      // AND list
       return node.all.flatMap(child => renderNode(child))
     }
     if (node.any && Array.isArray(node.any)) {
-      // OR list, prefix each child
       return node.any.flatMap(child => {
         return renderNode(child).map(t => `(Any) ${t}`)
       })
     }
-    // predicate expected: { field, operator, value, reason }
     const field = node.field || node.f || ''
-    const op = node.operator || node.op || node?.op || ''
+    const op = node.operator || node.op || ''
     const value = node.value
     const reason = node.reason || ''
     const label = fieldLabel(field)
@@ -87,60 +82,101 @@ export default function SchemeDetails() {
 
   const renderEligibility = (rules) => {
     const items = renderNode(rules)
-    if (!items || items.length === 0) return <div className="empty">No eligibility rules available for this scheme.</div>
+    if (!items || items.length === 0) {
+      return <div className="unavailable-box">Eligibility Criteria: Information not available in repository records.</div>
+    }
     return (
-      <ul>
+      <ul style={{ paddingLeft: '1.2rem', marginTop: '0.5rem' }}>
         {items.map((t, i) => <li key={i} style={{ marginBottom: 6 }}>{t}</li>)}
       </ul>
     )
   }
 
+  const hasDocuments = Array.isArray(scheme.requiredDocuments) && scheme.requiredDocuments.length > 0
+  const hasSteps = Array.isArray(scheme.steps) && scheme.steps.length > 0
+  const hasOfficialLink = Boolean(scheme.officialLink)
+
   return (
     <div className="schemes-container">
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
         <h1 style={{ marginTop: 0 }}>{scheme.title}</h1>
-        {scheme.department && <div className="scheme-meta">{scheme.department}</div>}
-        {scheme.description && <p className="scheme-desc">{scheme.description}</p>}
 
-        <section style={{ marginTop: 16 }}>
-          <h3>Eligibility</h3>
+        {scheme.department ? (
+          <div className="scheme-meta">{scheme.department}</div>
+        ) : (
+          <div className="scheme-meta unavailable">Department: Information not available</div>
+        )}
+
+        {scheme.description && (
+          <p className="scheme-desc" style={{ marginTop: '0.75rem', fontSize: '1rem', lineHeight: '1.5' }}>
+            {scheme.description}
+          </p>
+        )}
+
+        {/* Guidance Callout linking to existing /eligibility tool */}
+        <div className="guidance-box">
+          <div>
+            <h4>Check Your Eligibility</h4>
+            <p>Evaluate your profile against all Delhi welfare rules using our citizen eligibility tool.</p>
+          </div>
+          <Link to="/eligibility" className="btn-primary" style={{ textDecoration: 'none', whiteSpace: 'nowrap' }}>
+            Evaluate Eligibility
+          </Link>
+        </div>
+
+        {/* Eligibility Rules */}
+        <section style={{ marginTop: 24 }}>
+          <h3>Eligibility Rules</h3>
           {scheme.eligibilityRules ? (
             renderEligibility(scheme.eligibilityRules)
           ) : (
-            <div className="empty">No eligibility rules available for this scheme.</div>
+            <div className="unavailable-box">Eligibility Criteria: Information not available in repository records.</div>
           )}
         </section>
 
-        {scheme.requiredDocuments && scheme.requiredDocuments.length > 0 && (
-          <section style={{ marginTop: 16 }}>
-            <h3>Required documents</h3>
+        {/* Required Documents */}
+        <section style={{ marginTop: 24 }}>
+          <h3>Required Documents</h3>
+          {hasDocuments ? (
             <ul>
               {scheme.requiredDocuments.map((d, i) => <li key={i}>{d}</li>)}
             </ul>
-          </section>
-        )}
+          ) : (
+            <div className="unavailable-box">Required Documents: Information not available in repository records.</div>
+          )}
+        </section>
 
-        {scheme.steps && scheme.steps.length > 0 && (
-          <section style={{ marginTop: 16 }}>
-            <h3>Application steps</h3>
+        {/* Application Steps */}
+        <section style={{ marginTop: 24 }}>
+          <h3>Application Steps</h3>
+          {hasSteps ? (
             <ol>
               {scheme.steps.map((s, i) => (
-                <li key={i}>
+                <li key={i} style={{ marginBottom: 8 }}>
                   <strong>{s.title}</strong>
                   {s.description && <div style={{ color: 'var(--text-muted)' }}>{s.description}</div>}
                   {s.link && <div><a href={s.link} target="_blank" rel="noreferrer">{s.link}</a></div>}
                 </li>
               ))}
             </ol>
-          </section>
-        )}
+          ) : (
+            <div className="unavailable-box">Application Steps: Information not available in repository records.</div>
+          )}
+        </section>
 
-        {scheme.officialLink && (
-          <section style={{ marginTop: 16 }}>
-            <h3>Official link</h3>
-            <a href={scheme.officialLink} target="_blank" rel="noreferrer">Open official page</a>
-          </section>
-        )}
+        {/* Official Link & Additional Guidance */}
+        <section style={{ marginTop: 24, marginBottom: 32 }}>
+          <h3>Official Portals & Contacts</h3>
+          {hasOfficialLink ? (
+            <div>
+              <a href={scheme.officialLink} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none' }}>
+                Open Official Portal
+              </a>
+            </div>
+          ) : (
+            <div className="unavailable-box">Official Link & Support Contact: Information not available in repository records.</div>
+          )}
+        </section>
       </div>
     </div>
   )
