@@ -3,7 +3,7 @@ import { useState } from 'react'
 import AuthWidget from './AuthWidget'
 import "../styles/navbar.css";
 
-export default function Navbar({ serverStatus, serverError, user, onLogout, onAuthSuccess }) {
+export default function Navbar({ serverStatus, serverError, user, onLogout, onAuthSuccess, onOpenAssistant }) {
   const [q, setQ] = useState('')
   const navigate = useNavigate()
 
@@ -39,6 +39,23 @@ export default function Navbar({ serverStatus, serverError, user, onLogout, onAu
       </div>
 
       <div className="nav-right">
+        <button
+          className="btn-ghost"
+          onClick={onOpenAssistant}
+          style={{
+            color: '#1e3a8a',
+            fontWeight: 700,
+            cursor: 'pointer',
+            padding: '0.4rem 0.75rem',
+            border: '1px solid #bfdbfe',
+            borderRadius: '6px',
+            backgroundColor: '#eff6ff',
+            fontSize: '0.85rem'
+          }}
+        >
+          💬 Ask Assistant
+        </button>
+
         <div className="status-pill" aria-live="polite">
           {serverStatus ? (
             <span className={`status ${serverStatus.status === 'ok' ? 'ok' : 'warn'}`}>Backend: {serverStatus.status}</span>
@@ -47,11 +64,6 @@ export default function Navbar({ serverStatus, serverError, user, onLogout, onAu
           ) : (
             <span className="status loading">Checking backend...</span>
           )}
-        </div>
-
-        <div className="lang-toggle" role="group" aria-label="Language">
-          <button className="lang">EN</button>
-          <button className="lang">HI</button>
         </div>
 
         <div className="auth-area">

@@ -1,0 +1,249 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2026-08-14",
+  "description": "Verified service guidance for chatbot responses. Processing times are prescribed timelines published by Delhi e-District and may vary when additional verification is required.",
+  "services": [
+    {
+      "serviceCode": "old-age-pension-scheme",
+      "serviceTitle": "Old Age Pension Scheme",
+      "department": "Department of Social Welfare",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 45,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 45 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check whether you meet the eligibility conditions.",
+        "Keep the required documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the required documents and submit the application.",
+        "The concerned department will check your application.",
+        "If additional verification is required, you may be contacted by the concerned office.",
+        "Keep your application or reference number safely for future status checking."
+      ],
+      "citizenFAQs": {
+        "howToApply": "You can apply online through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 45 days.",
+        "whereToApply": "Apply through the Delhi e-District portal.",
+        "afterApplying": "Keep your application or reference number so you can track the application later."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Department of Social Welfare service listing",
+        "verificationStatus": "verified"
+      }
+    },
+
+    {
+      "serviceCode": "financial-assistance-to-persons-with-special-needs",
+      "serviceTitle": "Financial Assistance to Persons with Special Needs",
+      "department": "Department of Social Welfare",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 45,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 45 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check whether you meet the eligibility conditions.",
+        "Keep your disability certificate and other required documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the required documents.",
+        "Submit the application.",
+        "The concerned department will scrutinize the application.",
+        "If additional verification is required, follow the instructions given by the concerned office.",
+        "Keep your application or reference number safely."
+      ],
+      "citizenFAQs": {
+        "howToApply": "You can apply online through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 45 days.",
+        "whereToApply": "Apply through the Delhi e-District portal.",
+        "afterApplying": "Keep your application or reference number for future status checking."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Department of Social Welfare service listing",
+        "verificationStatus": "verified"
+      }
+    },
+
+    {
+      "serviceCode": "issuance-of-income-and-assets-certificate-for-economically-weaker-section-ews",
+      "serviceTitle": "Issuance of Income and Assets Certificate for Economically Weaker Section (EWS)",
+      "department": "Department of Revenue",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 15,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 15 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check that you meet the EWS eligibility requirements.",
+        "Keep the required income, asset, identity and residence information ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the documents requested by the service.",
+        "Submit the application.",
+        "The concerned Revenue Department authority will examine the application.",
+        "If additional verification is required, provide the requested information or documents.",
+        "Keep your application or reference number safely."
+      ],
+      "citizenFAQs": {
+        "howToApply": "Apply through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 15 days.",
+        "whereToApply": "The service is available through Delhi e-District.",
+        "afterApplying": "Keep your application or reference number for future status checking."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Revenue Department service listing",
+        "verificationStatus": "verified_for_service_and_timeline"
+      },
+      "notes": [
+        "The service and prescribed timeline are verified from the official e-District service listing.",
+        "Do not use this file as the source for the detailed EWS document checklist unless the document checklist has been separately verified."
+      ]
+    },
+
+    {
+      "serviceCode": "non-creamy-layer-certificate-ncl-for-obc",
+      "serviceTitle": "Non-Creamy Layer Certificate (NCL) for OBC",
+      "department": "Department of Revenue",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 14,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 14 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check that you satisfy the applicable OBC and Non-Creamy Layer conditions.",
+        "Identify which OBC/NCL document case applies to you.",
+        "Keep the required supporting documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the required documents and submit the application.",
+        "The concerned Revenue Department authority will examine the application.",
+        "If additional verification is required, provide the requested information.",
+        "Keep your application or reference number safely."
+      ],
+      "citizenFAQs": {
+        "howToApply": "Apply online through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 14 days.",
+        "whereToApply": "Apply through Delhi e-District.",
+        "important": "The documents required can depend on your particular OBC/NCL case."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Department of Revenue service listing and OBC/NCL guidance",
+        "verificationStatus": "verified"
+      },
+      "notes": [
+        "Do not tell every applicant that the same document set applies to all OBC/NCL cases.",
+        "The chatbot should ask for relevant case information before giving case-specific document guidance."
+      ]
+    },
+
+    {
+      "serviceCode": "issuance-of-caste-obc-certificate",
+      "serviceTitle": "Issuance of Caste (OBC) Certificate",
+      "department": "Department of Revenue",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 14,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 14 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check whether you satisfy the applicable OBC certificate conditions.",
+        "Keep your identity, residence and caste-related supporting documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the required documents.",
+        "Submit the application.",
+        "The concerned Revenue Department authority will verify the application.",
+        "Provide additional information or documents if requested.",
+        "Keep your application or reference number safely."
+      ],
+      "citizenFAQs": {
+        "howToApply": "Apply through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 14 days.",
+        "whereToApply": "Apply through Delhi e-District.",
+        "important": "The required documents can depend on your family and residence circumstances."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Department of Revenue service listing and OBC certificate guidance",
+        "verificationStatus": "verified"
+      }
+    },
+
+    {
+      "serviceCode": "issuance-of-surviving-member-certificate",
+      "serviceTitle": "Issuance of Surviving Member Certificate",
+      "department": "Department of Revenue",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 14,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 14 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Prepare the details of the deceased person and the surviving family members.",
+        "Keep the required supporting documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the requested documents.",
+        "Submit the application.",
+        "The concerned Revenue Department authority will examine the application.",
+        "Provide additional information or documents if requested.",
+        "Keep your application or reference number safely."
+      ],
+      "citizenFAQs": {
+        "howToApply": "Apply through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 14 days.",
+        "whereToApply": "Apply through Delhi e-District.",
+        "afterApplying": "Keep your application or reference number for future status checking."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Department of Revenue service listing",
+        "verificationStatus": "verified_for_service_and_timeline"
+      },
+      "notes": [
+        "The official service listing confirms a 14-day prescribed timeline.",
+        "Do not use this record as the source for a detailed document checklist until the complete official checklist is verified."
+      ]
+    },
+
+    {
+      "serviceCode": "issuance-of-lal-dora-certificate",
+      "serviceTitle": "Issuance of Lal Dora Certificate",
+      "department": "Department of Revenue",
+      "applicationMode": "online",
+      "whereToApply": "Delhi e-District portal",
+      "processingTime": {
+        "value": 14,
+        "unit": "days",
+        "citizenMessage": "The prescribed processing time is 14 days. The actual time may vary if additional verification is required."
+      },
+      "procedure": [
+        "Check that the property or land falls within a Lal Dora area under the territorial jurisdiction of Delhi.",
+        "Keep your identity, address and property-related documents ready.",
+        "Apply through the Delhi e-District portal.",
+        "Upload the required documents.",
+        "Submit the application.",
+        "The concerned Revenue Department authority will examine the application.",
+        "If property or document verification is required, provide the requested information.",
+        "After approval, the certificate can be issued digitally.",
+        "Keep the certificate and application/reference number safely."
+      ],
+      "citizenFAQs": {
+        "whatIsIt": "A Lal Dora Certificate establishes that a person has land or a house in a Lal Dora area of a village.",
+        "howToApply": "Apply through the Delhi e-District portal.",
+        "howLong": "The prescribed processing time is 14 days.",
+        "whereToApply": "Apply through Delhi e-District."
+      },
+      "officialSource": {
+        "sourceName": "Delhi e-District — Revenue Department Lal Dora guidance and service listing",
+        "verificationStatus": "verified"
+      }
+    }
+  ]
+}

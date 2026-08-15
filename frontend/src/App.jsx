@@ -3,6 +3,7 @@ import './App.css'
 import api from './services/api'
 import * as auth from './services/auth'
 import Navbar from './components/Navbar'
+import ChatbotWidget from './components/ChatbotWidget'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
@@ -15,6 +16,7 @@ function App() {
   const [serverStatus, setServerStatus] = useState(null)
   const [serverError, setServerError] = useState(null)
   const [user, setUser] = useState(null)
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false)
 
   useEffect(() => {
     let mounted = true
@@ -58,7 +60,14 @@ function App() {
 
   return (
     <>
-      <Navbar serverStatus={serverStatus} serverError={serverError} user={user} onLogout={logout} onAuthSuccess={handleAuthSuccess} />
+      <Navbar
+        serverStatus={serverStatus}
+        serverError={serverError}
+        user={user}
+        onLogout={logout}
+        onAuthSuccess={handleAuthSuccess}
+        onOpenAssistant={() => setIsChatbotOpen(true)}
+      />
 
       <main>
         <Routes>
@@ -70,6 +79,41 @@ function App() {
           <Route path="/sdm-locator" element={<SDMLocator />} />
         </Routes>
       </main>
+
+      {/* Floating Assistant Trigger Launcher */}
+      {!isChatbotOpen && (
+        <button
+          onClick={() => setIsChatbotOpen(true)}
+          style={{
+            position: 'fixed',
+            bottom: '1.5rem',
+            right: '1.5rem',
+            padding: '0.875rem 1.25rem',
+            backgroundColor: '#1e3a8a',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '9999px',
+            boxShadow: '0 10px 15px -3px rgba(15, 23, 42, 0.3), 0 4px 6px -2px rgba(15, 23, 42, 0.05)',
+            fontWeight: 700,
+            fontSize: '0.9rem',
+            cursor: 'pointer',
+            zIndex: 9980,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}
+        >
+          <span style={{ fontSize: '1.2rem' }}>💬</span>
+          <span>e-District Assistant</span>
+        </button>
+      )}
+
+      {/* Embedded Chatbot Drawer Widget */}
+      <ChatbotWidget
+        isOpen={isChatbotOpen}
+        onClose={() => setIsChatbotOpen(false)}
+        citizenProfile={user?.citizenProfile}
+      />
     </>
   )
 }

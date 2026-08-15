@@ -166,6 +166,11 @@ export default function Eligibility() {
       const profile = buildProfile(form)
       const res = await api.post('/eligibility/evaluate', profile)
       const data = res.data || {}
+      try {
+        sessionStorage.setItem('sd_eligibility_profile', JSON.stringify(profile))
+      } catch {
+        // ignore storage errors
+      }
       setForm(prev => ({ ...prev, results: data, evalLoading: false }))
     } catch (err) {
       setForm(prev => ({ ...prev, error: err?.response?.data?.error || err.message || 'Failed to evaluate', evalLoading: false }))

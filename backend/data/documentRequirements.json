@@ -1,31 +1,114 @@
 {
-  "version": "1.0",
-  "lastUpdated": "2026-08-12",
+  "version": "1.1",
+  "lastUpdated": "2026-08-14",
   "services": [
     {
       "serviceCode": "old-age-pension-scheme",
       "serviceTitle": "Old Age Pension Scheme",
-      "onlineSubmissionDocuments": [],
-      "officeVerificationDocuments": [],
-      "additionalDocuments": [],
-      "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "onlineSubmissionDocuments": [
+        "Age proof",
+        "Residence proof showing at least 5 years of residence in Delhi",
+        "Bank account details for a singly-operated bank account in Delhi",
+        "Passport-size photograph",
+        "Income self-declaration in the prescribed format"
+      ],
+      "officeVerificationDocuments": [
+        "Original/supporting documents may be required by the District Social Welfare Office during scrutiny or verification"
+      ],
+      "additionalDocuments": [
+        "SC/ST applicants aged 60-69: caste certificate issued by the competent authority",
+        "Minority applicants aged 60-69: self-declaration of religion duly verified from the religious institution"
+      ],
+      "documentAlternatives": {
+        "ageProof": [
+          "Birth certificate issued by MCD/Registrar of Births and Deaths",
+          "School leaving certificate",
+          "Matriculation/10th certificate",
+          "Hospital discharge slip at birth",
+          "Driving licence",
+          "Passport",
+          "PAN card",
+          "Ration card",
+          "Voter card",
+          "Immunization card",
+          "Age-assessment medical certificate",
+          "Other government/government-recognized document stating date and place of birth"
+        ],
+        "residenceProof": [
+          "Ration card",
+          "Voter ID card",
+          "Passport",
+          "Driving licence",
+          "Birth certificate",
+          "Death certificate",
+          "Insurance policy document",
+          "Family member's immunization card",
+          "Medical records of treatment in Delhi",
+          "Electricity bill",
+          "Water bill",
+          "Telephone bill",
+          "Gas connection receipt",
+          "Bank passbook",
+          "Delhi caste certificate",
+          "Student identity card",
+          "Service identity card",
+          "Property document"
+        ]
+      },
+      "verificationNotes": [
+        "Aadhaar number is mandatory for applying.",
+        "Documents are to be scanned and uploaded with the application.",
+        "The District Social Welfare Office may call the applicant for verification."
+      ],
+      "sources": [
+        {
+          "title": "Financial Assistance for Senior Citizen / Old Age Pension",
+          "url": "https://edistrict.delhi.gov.in/Public/ViewUploadScanDocumentTemplate?q=6DMr0k3GU8wRF4s64MWnbkyMfPXWeAPjVsrdkbZAIEA%3D"
+        }
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "financial-assistance-to-persons-with-special-needs",
       "serviceTitle": "Financial Assistance to Persons with Special Needs",
-      "onlineSubmissionDocuments": [],
-      "officeVerificationDocuments": [],
+      "onlineSubmissionDocuments": [
+        "Age proof",
+        "Residence proof",
+        "Bank account details for a single bank account",
+        "Government-issued disability certificate",
+        "Passport-size photograph",
+        "Income self-declaration"
+      ],
+      "officeVerificationDocuments": [
+        "Original/supporting documents may be required during verification"
+      ],
       "additionalDocuments": [],
-      "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "documentAlternatives": {
+        "ageProof": [
+          "Use an age-proof document accepted for the Old Age Pension scheme"
+        ],
+        "residenceProof": [
+          "Document proving residence in Delhi"
+        ]
+      },
+      "verificationNotes": [
+        "Aadhaar number is mandatory.",
+        "The disability certificate must be issued by a Government Hospital as per applicable norms.",
+        "The applicant must have a Delhi bank account for receiving assistance.",
+        "The application is submitted online through the e-District portal."
+      ],
+      "sources": [
+        {
+          "title": "Financial Assistance for Persons with Special Needs",
+          "url": "https://edistrict.delhi.gov.in/Public/ViewUploadScanDocumentTemplate?q=7aoyF9OA1bfmRq%2FCCpDHkWz580SlQc8OLJmbDj8dTSc%3D"
+        }
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "issuance-of-income-and-assets-certificate-for-economically-weaker-section-ews",
       "serviceTitle": "Issuance of Income and Assets Certificate for Economically Weaker Section(EWS)",
@@ -33,35 +116,135 @@
       "officeVerificationDocuments": [],
       "additionalDocuments": [],
       "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "verificationNotes": [
+        "The service is officially listed by Delhi e-District with a prescribed timeline of 15 days.",
+        "The complete service-specific document checklist could not be reliably extracted from the current official searchable source.",
+        "Do not provide a document checklist to citizens until the official checklist is verified."
+      ],
+      "sources": [
+        {
+          "title": "e-District Delhi Services",
+          "url": "https://edistrict.delhi.gov.in/Public/Services?q=CQ7k3iQWAiwgKSSFQfWzpg%3D%3D"
+        }
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "non-creamy-layer-certificate-ncl-for-obc",
       "serviceTitle": "Non-Creamy Layer Certificate (NCL) for OBC",
-      "onlineSubmissionDocuments": [],
-      "officeVerificationDocuments": [],
-      "additionalDocuments": [],
-      "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "onlineSubmissionDocuments": [
+        "Completed application form",
+        "Self-declaration of Non-Creamy Layer claim in the prescribed format",
+        "Documents applicable to the applicant's OBC certificate case"
+      ],
+      "officeVerificationDocuments": [
+        "Original/supporting documents may be required during verification"
+      ],
+      "additionalDocuments": [
+        "Case-specific supporting documents depending on whether the applicant's family has been residing in Delhi since before 1993 and whether an OBC certificate exists for a paternal relative"
+      ],
+      "documentAlternatives": {
+        "identityProof": [
+          "Aadhaar Card",
+          "Voter ID",
+          "Driving Licence",
+          "Passport",
+          "Ration Card",
+          "Other accepted government identity document"
+        ],
+        "residenceProof": [
+          "Aadhaar Card",
+          "Voter ID",
+          "Driving Licence",
+          "Passport",
+          "Ration Card",
+          "Registered Rent Agreement",
+          "Bank Passbook",
+          "Electricity Bill",
+          "Water Bill",
+          "Telephone Bill",
+          "Gas Bill",
+          "Other government-issued address document"
+        ]
+      },
+      "verificationNotes": [
+        "The exact supporting documents depend on the applicant's case.",
+        "Delhi e-District guidance describes multiple cases for OBC/NCL certificates.",
+        "A signed Non-Creamy Layer self-declaration is required."
+      ],
+      "sources": [
+        {
+          "title": "Guideline for OBC Certificate",
+          "url": "https://edistrict.delhi.gov.in/Public/ViewUploadScanDocumentTemplate?q=JB43Aj%2Fg9K8d1RKt88lGvwuLNCKqIbcj5IEnYbOVu3E%3D"
+        }
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "issuance-of-caste-obc-certificate",
       "serviceTitle": "Issuance of Caste (OBC) Certificate",
-      "onlineSubmissionDocuments": [],
-      "officeVerificationDocuments": [],
-      "additionalDocuments": [],
-      "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "onlineSubmissionDocuments": [
+        "Completed application form",
+        "Self-declaration where applicable",
+        "Identity proof",
+        "Present address proof",
+        "Permanent address proof"
+      ],
+      "officeVerificationDocuments": [
+        "Original/supporting documents may be required for verification"
+      ],
+      "additionalDocuments": [
+        "Case-specific proof relating to the applicant's paternal OBC certificate where applicable",
+        "Proof of relationship with paternal relative whose OBC certificate is being relied upon where applicable",
+        "Proof of residence in Delhi before 8 September 1993 where applicable",
+        "OBC certificate of the applicant or paternal relative where applicable"
+      ],
+      "documentAlternatives": {
+        "identityProof": [
+          "Aadhaar Card",
+          "Voter ID",
+          "Driving Licence",
+          "Passport",
+          "Ration Card",
+          "Other accepted government identity document"
+        ],
+        "addressProof": [
+          "Aadhaar Card",
+          "Voter ID",
+          "Driving Licence",
+          "Passport",
+          "Ration Card",
+          "Registered Rent Agreement",
+          "Bank Passbook",
+          "Electricity Bill",
+          "Water Bill",
+          "Telephone Bill",
+          "Gas Bill",
+          "Other government-issued document"
+        ]
+      },
+      "verificationNotes": [
+        "The exact document set depends on the applicant's case.",
+        "Delhi OBC certificate eligibility includes specific residence and paternal-family conditions."
+      ],
+      "sources": [
+        {
+          "title": "Guidelines for Issuance of OBC Certificate",
+          "url": "https://edistrict.delhi.gov.in/Public/ViewUploadScanDocumentTemplate?q=JB43Aj%2Fg9K8d1RKt88lGvwuLNCKqIbcj5IEnYbOVu3E%3D"
+        },
+        {
+          "title": "District Delhi Caste Certificate Service",
+          "url": "https://dmnewdelhi.delhi.gov.in/service/caste-certificate/"
+        }
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "issuance-of-surviving-member-certificate",
       "serviceTitle": "Issuance of Surviving Member Certificate",
@@ -69,22 +252,73 @@
       "officeVerificationDocuments": [],
       "additionalDocuments": [],
       "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "verificationNotes": [
+        "The service and official guideline are available on Delhi government/e-District sources.",
+        "The complete official document checklist was not reliably extractable from the available official source.",
+        "Do not present a guessed document list to citizens."
+      ],
+      "sources": [
+        {
+          "title": "Surviving Member Certificate — District South West Delhi",
+          "url": "https://dmsouthwest.delhi.gov.in/service/surviving-member-certificate/"
+        },
+        {
+          "title": "e-District Delhi Service List",
+          "url": "https://edistrict.delhi.gov.in/Public/Services?q=ewccYDDRyTQ1GqdljziLXQ%3D%3D"
+        }
+      ],
+      "verificationStatus": "partially_verified",
+      "lastVerified": "2026-08-14"
     },
+
     {
       "serviceCode": "issuance-of-lal-dora-certificate",
       "serviceTitle": "Issuance of Lal Dora Certificate",
-      "onlineSubmissionDocuments": [],
-      "officeVerificationDocuments": [],
+      "onlineSubmissionDocuments": [
+        "Identity proof of applicant",
+        "Present address proof of applicant",
+        "Document proving ownership/possession of the land or house in the Lal Dora area"
+      ],
+      "officeVerificationDocuments": [
+        "Original/supporting property and identity documents may be required for verification"
+      ],
       "additionalDocuments": [],
-      "documentAlternatives": [],
-      "verificationNotes": [],
-      "sources": [],
-      "verificationStatus": "unverified",
-      "lastVerified": null
+      "documentAlternatives": {
+        "identityProof": [
+          "Aadhaar Card",
+          "PAN Card",
+          "Ration Card with photograph",
+          "Voter ID Card",
+          "Passport",
+          "Driving Licence",
+          "Any government-recognized identity document"
+        ],
+        "addressProof": [
+          "Aadhaar Card",
+          "Voter ID Card",
+          "Driving Licence",
+          "Passport",
+          "Ration Card",
+          "Registered Rent Agreement",
+          "Bank Passbook",
+          "Electricity Bill",
+          "Water Bill",
+          "Telephone Bill",
+          "Gas Bill",
+          "Any government-recognized address document"
+        ]
+      },
+      "verificationNotes": [
+        "The applicant must have land/house within a Lal Dora area under the territorial jurisdiction of NCT of Delhi."
+      ],
+      "sources": [
+        {
+          "title": "Guidelines for Issuance of Lal Dora Certificate",
+          "url": "https://edistrict.delhi.gov.in/Public/ViewUploadScanDocumentTemplate?q=XOxylLBoD4sewChY%2B0GlTCPuG2p%2BVdGCmclg%2FTT9t4E%3D"
+        }
+      ],
+      "verificationStatus": "verified",
+      "lastVerified": "2026-08-14"
     }
   ]
 }
