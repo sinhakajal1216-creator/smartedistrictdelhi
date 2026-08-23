@@ -9,6 +9,7 @@
       "department": "Department of Social Welfare",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 45,
         "unit": "days",
@@ -26,7 +27,8 @@
       "citizenFAQs": {
         "howToApply": "You can apply online through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 45 days.",
-        "whereToApply": "Apply through the Delhi e-District portal.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "afterApplying": "Keep your application or reference number so you can track the application later."
       },
       "officialSource": {
@@ -41,6 +43,7 @@
       "department": "Department of Social Welfare",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 45,
         "unit": "days",
@@ -59,7 +62,8 @@
       "citizenFAQs": {
         "howToApply": "You can apply online through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 45 days.",
-        "whereToApply": "Apply through the Delhi e-District portal.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "afterApplying": "Keep your application or reference number for future status checking."
       },
       "officialSource": {
@@ -74,6 +78,7 @@
       "department": "Department of Revenue",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 15,
         "unit": "days",
@@ -92,7 +97,8 @@
       "citizenFAQs": {
         "howToApply": "Apply through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 15 days.",
-        "whereToApply": "The service is available through Delhi e-District.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "afterApplying": "Keep your application or reference number for future status checking."
       },
       "officialSource": {
@@ -111,6 +117,7 @@
       "department": "Department of Revenue",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 14,
         "unit": "days",
@@ -129,7 +136,8 @@
       "citizenFAQs": {
         "howToApply": "Apply online through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 14 days.",
-        "whereToApply": "Apply through Delhi e-District.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "important": "The documents required can depend on your particular OBC/NCL case."
       },
       "officialSource": {
@@ -148,6 +156,7 @@
       "department": "Department of Revenue",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 14,
         "unit": "days",
@@ -166,7 +175,8 @@
       "citizenFAQs": {
         "howToApply": "Apply through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 14 days.",
-        "whereToApply": "Apply through Delhi e-District.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "important": "The required documents can depend on your family and residence circumstances."
       },
       "officialSource": {
@@ -181,6 +191,7 @@
       "department": "Department of Revenue",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 14,
         "unit": "days",
@@ -199,7 +210,8 @@
       "citizenFAQs": {
         "howToApply": "Apply through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 14 days.",
-        "whereToApply": "Apply through Delhi e-District.",
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/",
         "afterApplying": "Keep your application or reference number for future status checking."
       },
       "officialSource": {
@@ -218,6 +230,7 @@
       "department": "Department of Revenue",
       "applicationMode": "online",
       "whereToApply": "Delhi e-District portal",
+      "officialUrl": "https://edistrict.delhigovt.nic.in/",
       "processingTime": {
         "value": 14,
         "unit": "days",
@@ -238,7 +251,8 @@
         "whatIsIt": "A Lal Dora Certificate establishes that a person has land or a house in a Lal Dora area of a village.",
         "howToApply": "Apply through the Delhi e-District portal.",
         "howLong": "The prescribed processing time is 14 days.",
-        "whereToApply": "Apply through Delhi e-District."
+        "whereToApply": "Delhi e-District portal",
+        "officialUrl": "https://edistrict.delhigovt.nic.in/"
       },
       "officialSource": {
         "sourceName": "Delhi e-District — Revenue Department Lal Dora guidance and service listing",

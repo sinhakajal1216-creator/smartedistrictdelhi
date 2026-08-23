@@ -95,11 +95,12 @@ export default function SchemeDetails() {
   const hasDocuments = Array.isArray(scheme.requiredDocuments) && scheme.requiredDocuments.length > 0
   const hasSteps = Array.isArray(scheme.steps) && scheme.steps.length > 0
   const hasOfficialLink = Boolean(scheme.officialLink)
+  const openAssistant = () => window.dispatchEvent(new Event('open-assistant'))
 
   return (
     <div className="schemes-container">
       <div style={{ maxWidth: 900, margin: '0 auto' }}>
-        <h1 style={{ marginTop: 0 }}>{scheme.title}</h1>
+        <h1 style={{ marginTop: 0, marginBottom: 8 }}>{scheme.title}</h1>
 
         {scheme.department ? (
           <div className="scheme-meta">{scheme.department}</div>
@@ -113,19 +114,26 @@ export default function SchemeDetails() {
           </p>
         )}
 
-        {/* Guidance Callout linking to existing /eligibility tool */}
         <div className="guidance-box">
           <div>
             <h4>Check Your Eligibility</h4>
             <p>Evaluate your profile against all Delhi welfare rules using our citizen eligibility tool.</p>
           </div>
-          <Link to="/eligibility" className="btn-primary" style={{ textDecoration: 'none', whiteSpace: 'nowrap' }}>
-            Evaluate Eligibility
-          </Link>
+          <div className="scheme-actions">
+            <Link to="/eligibility" className="btn-primary" style={{ textDecoration: 'none', whiteSpace: 'nowrap' }}>
+              Evaluate Eligibility
+            </Link>
+            <button type="button" className="btn-ghost" onClick={openAssistant}>e-District Assistant</button>
+            {hasOfficialLink && (
+              <a href={scheme.officialLink} target="_blank" rel="noreferrer" className="btn-ghost">
+                Apply Online
+              </a>
+            )}
+          </div>
         </div>
 
-        {/* Eligibility Rules */}
-        <section style={{ marginTop: 24 }}>
+        <div className="details-grid">
+        <section className="details-section">
           <h3>Eligibility Rules</h3>
           {scheme.eligibilityRules ? (
             renderEligibility(scheme.eligibilityRules)
@@ -134,8 +142,7 @@ export default function SchemeDetails() {
           )}
         </section>
 
-        {/* Required Documents */}
-        <section style={{ marginTop: 24 }}>
+        <section className="details-section">
           <h3>Required Documents</h3>
           {hasDocuments ? (
             <ul>
@@ -146,8 +153,7 @@ export default function SchemeDetails() {
           )}
         </section>
 
-        {/* Application Steps */}
-        <section style={{ marginTop: 24 }}>
+        <section className="details-section">
           <h3>Application Steps</h3>
           {hasSteps ? (
             <ol>
@@ -164,8 +170,7 @@ export default function SchemeDetails() {
           )}
         </section>
 
-        {/* Official Link & Additional Guidance */}
-        <section style={{ marginTop: 24, marginBottom: 32 }}>
+        <section className="details-section" style={{ marginBottom: 24 }}>
           <h3>Official Portals & Contacts</h3>
           {hasOfficialLink ? (
             <div>
@@ -177,6 +182,7 @@ export default function SchemeDetails() {
             <div className="unavailable-box">Official Link & Support Contact: Information not available in repository records.</div>
           )}
         </section>
+        </div>
       </div>
     </div>
   )

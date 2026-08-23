@@ -9,3 +9,11 @@ export const sendChatMessage = async (message, profile = {}, lang = 'en', contex
   });
   return response.data;
 };
+
+export const transcribeSpeech = async (audioBase64, lang = 'hi') => {
+  const response = await api.post('/chatbot/speech-to-text', {
+    audioBase64,
+    lang
+  });
+  return response.data;
+};

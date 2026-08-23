@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom'
 
 export default function SchemeCard({ scheme }) {
   if (!scheme) return null
-  const { _id, id, code, title, description, department, categories } = scheme
+  const { _id, id, code, title, description, department, categories, officialLink } = scheme
   const schemeId = id || code || _id
+
+  const openAssistant = () => {
+    window.dispatchEvent(new Event('open-assistant'))
+  }
 
   const hasDepartment = department && String(department).trim().length > 0
   const hasCategories = Array.isArray(categories) && categories.filter(Boolean).length > 0
@@ -30,6 +34,10 @@ export default function SchemeCard({ scheme }) {
 
         <div className="scheme-actions">
           <Link to={`/schemes/${schemeId}`} className="btn-primary">View Details</Link>
+          {officialLink ? (
+            <a href={officialLink} target="_blank" rel="noreferrer" className="btn-ghost">Apply Online</a>
+          ) : null}
+          <button type="button" className="btn-ghost" onClick={openAssistant}>e-District Assistant</button>
         </div>
       </div>
     </article>

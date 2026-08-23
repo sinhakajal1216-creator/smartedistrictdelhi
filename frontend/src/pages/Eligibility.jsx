@@ -177,7 +177,24 @@ export default function Eligibility() {
     }
   }
 
-  const clear = () => setForm({ age: '', residency: false, income: '', gender: '', category: '', occupation: '', disability: false, maritalStatus: '', loadingProfile: false, error: null, evalLoading: false, results: null })
+  const clear = () => setForm({
+    age: '',
+    residency: false,
+    residenceYears: '',
+    income: '',
+    gender: '',
+    category: '',
+    occupation: '',
+    disability: false,
+    disabilityPercentage: '',
+    aadhaar: false,
+    receivesOtherPension: false,
+    maritalStatus: '',
+    loadingProfile: false,
+    error: null,
+    evalLoading: false,
+    results: null
+  })
 
   return (
     <div className="schemes-container">
@@ -236,12 +253,12 @@ export default function Eligibility() {
 
                 <label>
                   <div className="field-label">Residency</div>
-                  <div><input type="checkbox" checked={form.residency} onChange={e => handleChange('residency', e.target.checked)} /> Residency in Delhi</div>
+                  <div className="checkbox-control"><input type="checkbox" checked={form.residency} onChange={e => handleChange('residency', e.target.checked)} /> Residency in Delhi</div>
                 </label>
 
                 <label>
                   <div className="field-label">Aadhaar available</div>
-                  <div><input type="checkbox" checked={form.aadhaar} onChange={e => handleChange('aadhaar', e.target.checked)} /> I have Aadhaar</div>
+                  <div className="checkbox-control"><input type="checkbox" checked={form.aadhaar} onChange={e => handleChange('aadhaar', e.target.checked)} /> I have Aadhaar</div>
                 </label>
               </fieldset>
 
@@ -249,7 +266,7 @@ export default function Eligibility() {
                 <legend>Identification & benefits</legend>
                 <label>
                   <div className="field-label">Disability</div>
-                  <div><input type="checkbox" checked={form.disability} onChange={e => handleChange('disability', e.target.checked)} /> Disability</div>
+                  <div className="checkbox-control"><input type="checkbox" checked={form.disability} onChange={e => handleChange('disability', e.target.checked)} /> Disability</div>
                 </label>
 
                 {form.disability && (
@@ -261,7 +278,7 @@ export default function Eligibility() {
 
                 <label>
                   <div className="field-label">Receives other pension</div>
-                  <div><input type="checkbox" checked={form.receivesOtherPension} onChange={e => handleChange('receivesOtherPension', e.target.checked)} /> I receive other pension</div>
+                  <div className="checkbox-control"><input type="checkbox" checked={form.receivesOtherPension} onChange={e => handleChange('receivesOtherPension', e.target.checked)} /> I receive other pension</div>
                 </label>
               </fieldset>
 

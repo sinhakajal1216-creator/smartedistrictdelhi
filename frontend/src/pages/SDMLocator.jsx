@@ -5,10 +5,12 @@ import '../styles/sdmLocator.css';
 function MappingDetails({ result }) {
   return (
     <div className="mapping-details">
-      <h3>Mapping Details</h3>
+      <h3>Jurisdiction chain</h3>
       <div className="result-row"><span className="result-label">Locality:</span><span className="result-value">{result.locality}</span></div>
       <div className="result-row"><span className="result-label">MCD Ward:</span><span className="result-value">{result.ward}</span></div>
       <div className="result-row"><span className="result-label">Ward Number:</span><span className="result-value">#{result.wardNumber}</span></div>
+      {result.sdmJurisdiction?.subDivision && <div className="result-row"><span className="result-label">Sub-Division:</span><span className="result-value">{result.sdmJurisdiction.subDivision}</span></div>}
+      {result.sdmJurisdiction?.area && <div className="result-row"><span className="result-label">SDM District Area:</span><span className="result-value">{result.sdmJurisdiction.area}</span></div>}
       {result.acName && <div className="result-row"><span className="result-label">Assembly:</span><span className="result-value">{result.acName}</span></div>}
     </div>
   );
@@ -51,8 +53,12 @@ export default function SDMLocator() {
           <div className="result-row"><span className="result-label">Jurisdiction:</span><span className="result-value">{result.sdmJurisdiction.subDivision} ({result.sdmJurisdiction.area})</span></div>
           {office.address && <div className="result-row result-row-stacked"><span className="result-label">Office address:</span><span className="result-value">{office.address}</span></div>}
           {(office.contact.phone || office.contact.email) && <div className="result-row result-row-stacked"><span className="result-label">Contact information:</span><span className="result-value">{office.contact.phone}{office.contact.phone && office.contact.email && <br />}{office.contact.email && <a href={`mailto:${office.contact.email}`}>{office.contact.email}</a>}</span></div>}
-          {mapTarget && <div className="map-actions"><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapTarget)}`} target="_blank" rel="noreferrer">View on Map</a><a href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapTarget)}`} target="_blank" rel="noreferrer">Get Directions</a></div>}
+          {mapTarget && <div className="map-actions"><a href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapTarget)}`} target="_blank" rel="noreferrer">View on Map</a></div>}
           <MappingDetails result={result} />
+          <div className="official-note">
+            <strong>How was this determined?</strong> This mapping follows project records that link Locality → MCD Ward
+            → SDM Sub-Division → SDM Office using official Delhi ward delimitation and SDM jurisdiction datasets.
+          </div>
         </div>
       </div>}
       {result?.mappingStatus === 'unavailable' && <div className="sdm-unavailable-message"><h2>SDM office mapping unavailable</h2><p>{result.mappingUnavailableReason}</p><MappingDetails result={result} /></div>}

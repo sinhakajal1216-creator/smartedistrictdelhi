@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+﻿import { useEffect, useState, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import api from '../services/api'
 import SchemeCard from '../components/SchemeCard'
@@ -8,28 +8,26 @@ export default function Home() {
   const location = useLocation()
   const navigate = useNavigate()
   const params = new URLSearchParams(location.search)
+  const isHomeView = location.pathname === '/'
 
   const [q, setQ] = useState(params.get('q') || '')
   const [schemes, setSchemes] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
   const [department, setDepartment] = useState(params.get('department') || '')
   const [category, setCategory] = useState(params.get('category') || '')
   const [serverDepartments, setServerDepartments] = useState([])
   const [serverCategories, setServerCategories] = useState([])
 
-  // fetch schemes with optional params
   const fetchSchemes = async (opts = {}) => {
     setLoading(true)
     setError(null)
     try {
-      const params = { q: opts.q ?? q }
-      if (opts.department !== undefined) params.department = opts.department
-      if (opts.category !== undefined) params.category = opts.category
-      // request a larger page to populate filters if needed
-      params.limit = opts.limit ?? 200
-      const res = await api.get('/schemes', { params })
+      const searchParams = { q: opts.q ?? q }
+      if (opts.department !== undefined) searchParams.department = opts.department
+      if (opts.category !== undefined) searchParams.category = opts.category
+      searchParams.limit = opts.limit ?? 200
+      const res = await api.get('/schemes', { params: searchParams })
       const result = res.data?.schemes || res.schemes || []
       setSchemes(result)
     } catch (err) {
@@ -39,7 +37,6 @@ export default function Home() {
     }
   }
 
-  // initial load and whenever query params change
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search)
     const qParam = searchParams.get('q') || ''
@@ -52,7 +49,6 @@ export default function Home() {
 
     fetchSchemes({ q: qParam, department: deptParam || undefined, category: catParam || undefined, limit: 200 })
 
-    // also attempt to load authoritative lists from server
     let mounted = true
     ;(async () => {
       try {
@@ -64,7 +60,7 @@ export default function Home() {
         setServerDepartments(dRes.data?.departments || dRes.departments || [])
         setServerCategories(cRes.data?.categories || cRes.categories || [])
       } catch (e) {
-        // ignore - fall back to derived lists
+        // ignore server list failures
       }
     })()
 
@@ -72,24 +68,22 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.search])
 
-  // derive filter options from loaded schemes, prefer server lists when available
   const departments = useMemo(() => {
     if (serverDepartments && serverDepartments.length > 0) return serverDepartments
     const set = new Set()
-    schemes.forEach(s => s.department && set.add(s.department))
+    schemes.forEach((s) => s.department && set.add(s.department))
     return Array.from(set).sort()
   }, [schemes, serverDepartments])
 
   const categories = useMemo(() => {
     if (serverCategories && serverCategories.length > 0) return serverCategories
     const set = new Set()
-    schemes.forEach(s => Array.isArray(s.categories) && s.categories.forEach(c => c && set.add(c)))
+    schemes.forEach((s) => Array.isArray(s.categories) && s.categories.forEach((c) => c && set.add(c)))
     return Array.from(set).sort()
   }, [schemes, serverCategories])
 
-  // apply filters when changed
   useEffect(() => {
-    // when drop-downs change, update URL and fetch
+    if (isHomeView) return
     const search = new URLSearchParams()
     if (q) search.set('q', q)
     if (department) search.set('department', department)
@@ -97,11 +91,10 @@ export default function Home() {
     navigate({ pathname: '/schemes', search: search.toString() }, { replace: true })
     fetchSchemes({ q, department: department || undefined, category: category || undefined })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [department, category])
+  }, [department, category, isHomeView])
 
-  const onSearch = (e) => {
-    e.preventDefault()
-    // navigate to /schemes?q=...
+  const onSearch = (event) => {
+    event.preventDefault()
     const search = new URLSearchParams()
     if (q) search.set('q', q)
     if (department) search.set('department', department)
@@ -117,38 +110,49 @@ export default function Home() {
     fetchSchemes({ q: '', department: undefined, category: undefined })
   }
 
+  if (isHomeView) {
+    return (
+      <div className="identity-page">
+        <section className="identity-hero" aria-label="SmartEDistrict Delhi home hero">
+          <div className="identity-hero-inner">
+            <span className="eyebrow">Delhi e-District</span>
+            <h1>SmartEDistrict Delhi</h1>
+            <p>One Platform. Every Citizen Service.</p>
+          </div>
+        </section>
+      </div>
+    )
+  }
+
   return (
     <div className="schemes-container">
-      <h2 style={{ marginBottom: 12 }}>Government Services & Schemes</h2>
+      <section className="search-panel card">
+        <form className="search-row" onSubmit={onSearch}>
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search services, certificates or keywords" />
+          <button className="btn-primary" type="submit">Search</button>
+          <button type="button" className="btn-ghost" onClick={clearFilters}>Clear</button>
+        </form>
 
-      <form className="search-row" onSubmit={onSearch}>
-        <input className="search-input" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search schemes or services" />
-        <button className="btn-primary search-button" type="submit">Search</button>
-      </form>
+        <div className="filter-row">
+          <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+            <option value="">All departments</option>
+            {departments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
+          </select>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">All categories</option>
+            {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+        </div>
+      </section>
 
-      <div className="filters">
-        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-          <option value="">All Departments</option>
-          {departments.map(d => <option key={d} value={d}>{d}</option>)}
-        </select>
+      {loading && <div className="loading">Loading services…</div>}
+      {error && <div className="empty">{String(error?.error || error?.message || 'Failed to load services')}</div>}
 
-        <select value={category} onChange={(e) => setCategory(e.target.value)}>
-          <option value="">All Categories</option>
-          {categories.map(c => <option key={c} value={c}>{c}</option>)}
-        </select>
-
-        <button type="button" className="btn-ghost" onClick={clearFilters}>Clear</button>
-      </div>
-
-      {loading ? (
-        <div className="loading">Loading schemes…</div>
-      ) : error ? (
-        <div className="empty">Error loading schemes</div>
-      ) : schemes.length === 0 ? (
-        <div className="empty">No schemes found</div>
-      ) : (
-        <div className="schemes-list">
-          {schemes.map(s => <SchemeCard key={s._id || s.id} scheme={s} />)}
+      {!loading && !error && (
+        <div className="schemes-grid">
+          {schemes.length ? schemes.map((scheme) => (
+            <SchemeCard key={scheme.id || scheme._id || scheme.title} scheme={scheme} />
+          )) : <div className="empty">No services found for the selected filters.</div>}
         </div>
       )}
     </div>

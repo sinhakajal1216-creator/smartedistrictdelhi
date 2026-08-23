@@ -1,55 +1,74 @@
 :root {
-  /* Colors */
-  --primary: #005A9C;
-  --primary-dark: #003F6B;
-  --primary-light: #EAF3F9;
-  --accent: #F5A623;
+  --primary: #0057A6;
+  --primary-dark: #003f7a;
+  --primary-light: #eaf3ff;
+  --accent: #FFB400;
+  --accent-dark: #d99500;
 
-  --page-bg: #F5F6F7;
+  --page-bg: #f4f7fb;
   --surface: #FFFFFF;
-  --text: #222222;
-  --text-secondary: #555555;
-  --text-muted: #6C757D;
-  --border: #D9D9D9;
+  --text: #12273f;
+  --text-secondary: #335170;
+  --text-muted: #667a8f;
+  --border: #d5e0ee;
 
   --success: #198754;
-  --warning: #F0AD4E;
+  --warning: #b7791f;
   --danger: #DC3545;
   --info: #0D6EFD;
 
-  /* Utility derived colors */
-  --accent-bg: rgba(245,166,35,0.08);
-  --accent-border: rgba(245,166,35,0.2);
-  --social-bg: rgba(0,0,0,0.03);
+  --accent-bg: rgba(255, 180, 0, 0.12);
+  --accent-border: rgba(255, 180, 0, 0.42);
+  --shadow: 0 12px 28px rgba(10, 31, 77, 0.08);
+  --shadow-soft: 0 2px 8px rgba(10, 31, 77, 0.08);
+  --radius: 10px;
 
-  /* Shadows and radii */
-  --shadow: 0 6px 18px rgba(0,0,0,0.06);
-  --radius: 8px;
-
-  /* Typography */
   --font-sans: 'Inter', 'Segoe UI', Arial, sans-serif;
   --base-size: 16px;
+  --app-scale: 1;
   --line-height-body: 1.5;
   --line-height-heading: 1.25;
 
-  /* Spacing */
   --gap-sm: 8px;
   --gap-md: 16px;
   --gap-lg: 24px;
 }
 
-/* Global element defaults */
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 body {
   font-family: var(--font-sans);
-  font-size: var(--base-size);
+  font-size: calc(var(--base-size) * var(--app-scale));
   line-height: var(--line-height-body);
   color: var(--text);
   background: var(--page-bg);
   margin: 0;
+}
+
+body.high-contrast {
+  --page-bg: #000000;
+  --surface: #111111;
+  --text: #ffffff;
+  --text-secondary: #f2f2f2;
+  --text-muted: #d8d8d8;
+  --border: #8a8a8a;
+  --primary-light: #1d1d1d;
+  background: #000;
+}
+
+body.easy-mode {
+  letter-spacing: 0.01em;
+}
+
+body.high-contrast .site-footer,
+body.high-contrast .navbar,
+body.high-contrast .card,
+body.high-contrast .dashboard-card,
+body.high-contrast .auth-page-shell,
+body.high-contrast .identity-hero {
+  border-color: #8a8a8a;
 }
 
 h1, h2, h3, h4, h5 {
@@ -58,27 +77,66 @@ h1, h2, h3, h4, h5 {
   margin: 0 0 0.5rem 0;
 }
 
-/* Buttons */
 .btn-primary {
-  background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+  background: var(--primary);
   color: #fff;
-  border: none;
-  padding: 8px 14px;
+  border: 1px solid var(--primary-dark);
+  padding: 10px 16px;
   border-radius: var(--radius);
   cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.nav-links a:focus-visible,
+.lang-toggle:focus-visible,
+.access-btn:focus-visible {
+  outline: 3px solid rgba(0, 87, 166, 0.2);
+  outline-offset: 2px;
 }
 
 .btn-ghost {
-  background: transparent;
-  color: var(--text);
+  background: #fff;
+  color: var(--primary-dark);
   border: 1px solid var(--border);
-  padding: 8px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
 }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: none;
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+}
+
+input,
+select,
+textarea {
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary);
+  outline: 3px solid rgba(0, 87, 166, 0.2);
+  outline-offset: 1px;
 }

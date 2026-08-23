@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { sendChatMessage } from '../services/chatbot';
+import { sendChatMessage, transcribeSpeech } from '../services/chatbot';
 import ArVrGuidanceModal from './ArVrGuidanceModal';
 
 function toChatbotProfile(prof = {}) {
@@ -41,8 +41,13 @@ function buildContextFromResponse(data) {
   if (!data || typeof data !== 'object') return {};
   const context = {};
   if (data.service?.code) context.serviceCode = data.service.code;
+  if (data.currentServiceCode) context.currentServiceCode = data.currentServiceCode;
+  if (data.currentService) context.currentService = data.currentService;
+  if (data.lastIntent) context.lastIntent = data.lastIntent;
+  if (data.lastTopic) context.lastTopic = data.lastTopic;
   if (data.intent) context.intent = data.intent;
   if (data.sdmOffice) context.sdmOffice = data.sdmOffice;
+  if (Array.isArray(data.recentMessages)) context.recentMessages = data.recentMessages;
   return context;
 }
 
@@ -50,7 +55,7 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
   const [messages, setMessages] = useState([
     {
       sender: 'bot',
-      text: 'Namaste! Welcome to Smart e-District Delhi Assistance Desk. Ask me about document requirements, eligibility, SDM office locations, or application procedures.',
+      text: 'Namaste! I’m Dilli Sahayak. How can I help you today?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -61,8 +66,12 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
   const [selectedSdmOffice, setSelectedSdmOffice] = useState(null);
   const [userProfile, setUserProfile] = useState({});
   const [conversationContext, setConversationContext] = useState({});
+  const [isRecording, setIsRecording] = useState(false);
 
   const messagesEndRef = useRef(null);
+  const mediaRecorderRef = useRef(null);
+  const mediaStreamRef = useRef(null);
+  const audioChunksRef = useRef([]);
 
   useEffect(() => {
     let storedProfile = {};
@@ -83,8 +92,120 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
     scrollToBottom();
   }, [messages, loading]);
 
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+        mediaRecorderRef.current.stop();
+      }
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, []);
+
   if (!isOpen) return null;
 
+const blobToBase64 = (blob) => (
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = String(reader.result || '');
+      const base64 = result.includes(',') ? result.split(',')[1] : result;
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  })
+);
+const handleVoiceInput = async () => {
+  if (loading) return;
+
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || !window.MediaRecorder) {
+    setMessages(prev => [
+      ...prev,
+      {
+        sender: 'bot',
+        text: 'Voice input is not supported in this browser.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+    return;
+  }
+
+  if (isRecording) {
+    mediaRecorderRef.current?.stop();
+    return;
+  }
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaStreamRef.current = stream;
+    const recorder = new MediaRecorder(stream);
+    mediaRecorderRef.current = recorder;
+    audioChunksRef.current = [];
+
+    recorder.ondataavailable = (event) => {
+      if (event.data && event.data.size > 0) {
+        audioChunksRef.current.push(event.data);
+      }
+    };
+
+    recorder.onstop = async () => {
+      setIsRecording(false);
+
+      if (mediaStreamRef.current) {
+        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+        mediaStreamRef.current = null;
+      }
+
+      if (!audioChunksRef.current.length) return;
+
+      try {
+        const blob = new Blob(audioChunksRef.current, { type: recorder.mimeType || 'audio/webm' });
+        const audioBase64 = await blobToBase64(blob);
+        const speech = await transcribeSpeech(audioBase64, language === 'hi' ? 'hi' : 'en');
+
+        if (speech.status === 'success' && speech.transcription) {
+          setInput(String(speech.transcription).trim());
+          return;
+        }
+
+        setMessages(prev => [
+          ...prev,
+          {
+            sender: 'bot',
+            text: speech.status === 'configuration_required'
+              ? 'Voice service is currently unavailable. You can continue using text chat.'
+              : (speech.message || 'Could not transcribe the recorded audio.'),
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }
+        ]);
+      } catch {
+        setMessages(prev => [
+          ...prev,
+          {
+            sender: 'bot',
+            text: 'Could not process voice input right now. Please try again.',
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          }
+        ]);
+      }
+    };
+
+    recorder.start();
+    setIsRecording(true);
+  } catch {
+    setIsRecording(false);
+    setMessages(prev => [
+      ...prev,
+      {
+        sender: 'bot',
+        text: 'Microphone access is needed for voice input.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+  }
+};
   const handleSend = async (e) => {
     if (e) e.preventDefault();
     if (!input.trim() || loading) return;
@@ -98,15 +219,34 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
+    
+    
+
+      
+
     setMessages(prev => [...prev, newMsg]);
     setLoading(true);
 
     try {
-      const responseData = await sendChatMessage(userText, userProfile, language, conversationContext);
+      const recentMessages = messages.slice(-8).map(msg => ({
+        sender: msg.sender,
+        text: msg.text
+      }));
+      const payloadContext = {
+        ...conversationContext,
+        recentMessages,
+        currentService: conversationContext.currentService || conversationContext.serviceTitle || null,
+        currentServiceCode: conversationContext.currentServiceCode || conversationContext.serviceCode || null,
+        lastIntent: conversationContext.lastIntent || conversationContext.intent || null,
+        lastTopic: conversationContext.lastTopic || null
+      };
+      const responseData = await sendChatMessage(userText, userProfile, language, payloadContext);
 
       const botMsg = {
         sender: 'bot',
-        text: responseData.answer_hi && language === 'hi' ? responseData.answer_hi : responseData.answer,
+        text: responseData.answer_hi && language === 'hi'
+          ? responseData.answer_hi
+          : (responseData.answer || 'I could not process that request. Please try rephrasing your question.'),
         data: responseData,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
@@ -173,10 +313,10 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
           </div>
           <div>
             <div style={{ fontSize: '0.95rem', fontWeight: 700, letterSpacing: '-0.01em' }}>
-              Smart e-District Delhi
+              Dilli Sahayak
             </div>
             <div style={{ fontSize: '0.725rem', color: '#bfdbfe', fontWeight: 500 }}>
-              Official Citizen Assistance Desk
+              Government service guidance desk
             </div>
           </div>
         </div>
@@ -292,17 +432,36 @@ export default function ChatbotWidget({ isOpen, onClose, citizenProfile }) {
           }}
         />
         <button
+          type="button"
+          onClick={handleVoiceInput}
+          disabled={loading}
+          title={isRecording ? 'Stop recording' : 'Start voice input'}
+          style={{
+            padding: '0.625rem 0.75rem',
+            backgroundColor: isRecording ? '#b91c1c' : '#2563eb',
+            color: '#ffffff',
+            border: 'none',
+            borderRadius: '6px',
+            fontWeight: 700,
+            fontSize: '0.875rem',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1
+          }}
+        >
+          {isRecording ? '■' : '🎤'}
+        </button>
+        <button
           type="submit"
-          disabled={!input.trim() || loading}
+          disabled={!input.trim() || loading || isRecording}
           style={{
             padding: '0.625rem 1rem',
-            backgroundColor: !input.trim() || loading ? '#94a3b8' : '#1e3a8a',
+            backgroundColor: !input.trim() || loading || isRecording ? '#94a3b8' : '#1e3a8a',
             color: '#ffffff',
             border: 'none',
             borderRadius: '6px',
             fontWeight: 600,
             fontSize: '0.875rem',
-            cursor: !input.trim() || loading ? 'not-allowed' : 'pointer'
+            cursor: !input.trim() || loading || isRecording ? 'not-allowed' : 'pointer'
           }}
         >
           Send
