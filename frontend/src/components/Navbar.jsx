@@ -3,19 +3,11 @@ import AuthWidget from './AuthWidget'
 import '../styles/navbar.css'
 
 export default function Navbar({
-  serverStatus,
-  serverError,
   user,
   onLogout,
   onAuthSuccess,
   language,
-  onToggleLanguage,
-  accessibility,
-  onIncreaseFont,
-  onDecreaseFont,
-  onResetAccessibility,
-  onToggleHighContrast,
-  onToggleSimpleLanguage
+  onToggleLanguage
 }) {
   const location = useLocation()
   const isAuthRoute = ['/login', '/register', '/forgot-password', '/'].includes(location.pathname)
@@ -24,7 +16,7 @@ export default function Navbar({
     { to: '/eligibility', label: 'Eligibility' },
     { to: '/dashboard', label: 'Track' },
     { to: '/sdm-locator', label: 'SDM Finder' },
-    { to: '/why-smartedistrict', label: 'Why SmartEDistrict' }
+    { to: '/why-sevasphere', label: 'Why SevaSphere' }
   ]
 
   return (
@@ -32,7 +24,7 @@ export default function Navbar({
       <div className="nav-left">
         <Link to="/" className="brand-link">
           <div className="logo" aria-hidden="true" />
-          <span className="brand-text">SmartEDistrict Delhi</span>
+          <span className="brand-text">SevaSphere</span>
         </Link>
       </div>
 
@@ -45,40 +37,22 @@ export default function Navbar({
           ) : (
             <>
               <Link to="/">Home</Link>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
+              <Link to="/login">Login / Register</Link>
+              {/* <Link to="/register">Register</Link> */}
             </>
           )}
         </nav>
       </div>
-
+      
       <div className="nav-right">
-        <div className="status-pill" aria-live="polite">
-          {serverStatus ? (
-            <span className={`status ${serverStatus.status === 'ok' ? 'ok' : 'warn'}`}>Backend {serverStatus.status}</span>
-          ) : serverError ? (
-            <span className="status error">Backend error</span>
-          ) : (
-            <span className="status loading">Checking backend...</span>
-          )}
-        </div>
-
         <div className="access-tools" aria-label="Accessibility controls">
           <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
             {language === 'en' ? 'हिंदी' : 'English'}
           </button>
-          <button type="button" className="access-btn" onClick={onDecreaseFont} aria-label="Decrease font size">A−</button>
-          <button type="button" className="access-btn" onClick={onIncreaseFont} aria-label="Increase font size">A+</button>
-          <button type="button" className="access-btn" onClick={onResetAccessibility}>Reset</button>
-          <button type="button" className="access-btn" onClick={onToggleHighContrast}>
-            {accessibility?.highContrast ? 'Normal' : 'High contrast'}
-          </button>
-          <button type="button" className="access-btn" onClick={onToggleSimpleLanguage}>
-            {accessibility?.simpleLanguage ? 'Standard' : 'Easy mode'}
-          </button>
         </div>
+      <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
 
-        <div className="auth-area">
+        {/* <div className="auth-area">
           {user ? (
             <div className="user-info">
               <span className="user-name">Hi, {user.name}</span>
@@ -88,7 +62,7 @@ export default function Navbar({
           ) : !isAuthRoute ? (
             <AuthWidget onAuthSuccess={onAuthSuccess} />
           ) : null}
-        </div>
+        </div> */}
       </div>
     </header>
   )

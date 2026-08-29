@@ -7,16 +7,16 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <div className="site-footer-inner">
         <section>
-          <h4>SmartEDistrict Delhi</h4>
+          <h4>SevaSphere</h4>
           <p>
-            SmartEDistrict Delhi helps citizens discover government services, understand eligibility, and locate the correct SDM office with clarity.
+            SevaSphere helps citizens discover government services, understand eligibility, and locate the correct SDM office with clarity.
           </p>
         </section>
 
         <section>
           <h4>About</h4>
           <ul>
-            <li><Link to="/why-smartedistrict">Why SmartEDistrict</Link></li>
+            <li><Link to="/why-sevasphere">Why SevaSphere</Link></li>
             <li><Link to="/schemes">Services</Link></li>
             <li><Link to="/sdm-locator">SDM Finder</Link></li>
           </ul>
@@ -42,7 +42,7 @@ export default function SiteFooter() {
       </div>
 
       <div className="site-footer-bottom">
-        SmartEDistrict Delhi is an assistance layer and does not replace official government decisions.
+        SevaSphere is an assistance layer and does not replace official government decisions.
       </div>
     </footer>
   )

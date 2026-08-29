@@ -53,7 +53,7 @@ function WhySmartEDistrict() {
   return (
     <div className="why-page">
       <div className="why-card">
-        <h1>Why SmartEDistrict?</h1>
+        <h1>Why SevaSphere?</h1>
         <p>
           Delhi citizens often face fragmented portals, unclear criteria, repeated office visits, and poor visibility into application status.
         </p>
@@ -70,7 +70,7 @@ function WhySmartEDistrict() {
           </div>
 
           <div className="why-item">
-            <h3>SmartEDistrict advantages</h3>
+            <h3>SevaSphere advantages</h3>
             <ul>
               <li>Eligibility engine for service readiness</li>
               <li>Document clarity before every application</li>
@@ -102,8 +102,6 @@ function WhySmartEDistrict() {
 }
 
 function App() {
-  const [serverStatus, setServerStatus] = useState(null)
-  const [serverError, setServerError] = useState(null)
   const [user, setUser] = useState(null)
   const [isChatbotOpen, setIsChatbotOpen] = useState(false)
   const [language, setLanguage] = useState(() => localStorage.getItem('smartedistrict_language') || 'en')
@@ -118,16 +116,6 @@ function App() {
 
   useEffect(() => {
     let mounted = true
-
-    api.get('/health')
-      .then(res => {
-        if (!mounted) return
-        setServerStatus(res.data)
-      })
-      .catch(err => {
-        if (!mounted) return
-        setServerError(err?.response?.data || { error: err.message })
-      })
 
     ;(async () => {
       try {
@@ -183,8 +171,6 @@ function App() {
   return (
     <div className="app-shell">
       <Navbar
-        serverStatus={serverStatus}
-        serverError={serverError}
         user={user}
         onLogout={logout}
         onAuthSuccess={handleAuthSuccess}
@@ -221,7 +207,8 @@ function App() {
           className="assistant-launcher"
           onClick={() => setIsChatbotOpen(true)}
         >
-          <span aria-hidden>💬</span>
+          <span className="assistant-launcher-icon" aria-hidden>💬</span>
+          <span className="assistant-launcher-dot" aria-hidden />
           <span>Dilli Sahayak</span>
         </button>
       )}

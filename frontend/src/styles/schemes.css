@@ -364,7 +364,7 @@
   }
 }
 
-.eligibility-panel {
+/* .eligibility-panel {
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -409,7 +409,64 @@
   color: var(--primary-dark);
   font-size: 0.9rem;
   padding: 0 0.5rem;
+} */
+
+
+.eligibility-panel {
+  max-width: 1100px;
+  margin: 0 auto;
 }
+
+.eligibility-form {
+  max-width: 100%;
+}
+
+.eligibility-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+  /* Align items to top to prevent individual cards from stretching weirdly */
+  align-items: start; 
+}
+
+.eligibility-grid label {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.field-label {
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+}
+
+.eligibility-grid input[type="text"],
+.eligibility-grid input[type="number"],
+.eligibility-grid select,
+.eligibility-grid input:not([type="checkbox"]) {
+  width: 100%;
+  min-width: 0;
+  padding: 0.58rem 0.72rem;
+  /* Visual Harmony: Standardized uniform input styling */
+  border: 1px solid var(--border);
+  border-radius: 8px; 
+  background-color: #fff;
+}
+
+.eligibility-grid .card {
+  margin: 0;
+  /* FIX 3: Removed min-height 100% to stop the accidental empty bottom space stretch */
+  height: auto; 
+}
+
+.eligibility-grid .card legend {
+  /* FIX 2: Solid corporate blackish-blue color for absolute WCAG accessibility */
+  color: #0f172a !important; 
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+}
+
 
 .checkbox-control {
   display: flex;
@@ -552,3 +609,4 @@
     flex-direction: column;
   }
 }
+

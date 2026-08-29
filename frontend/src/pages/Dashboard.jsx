@@ -70,8 +70,7 @@ export default function Dashboard() {
     { title: 'Check My Eligibility', path: '/eligibility', description: 'Review service eligibility with the latest rules and profile data.' },
     { title: 'Find Required Documents', path: '/schemes', description: 'Review exact document requirements for the service you want.' },
     { title: 'Find My Correct SDM Office', path: '/sdm-locator', description: 'Confirm your locality, ward and assigned SDM office.' },
-    { title: 'Track My Application', path: '/dashboard', description: 'Monitor progress and next steps for each application.' },
-    { title: 'Ask Dilli Sahayak', description: 'Get quick guidance on eligibility, documents and support.' }
+    { title: 'Track My Application', path: '/dashboard', description: 'Monitor progress and next steps for each application.' }
   ]
 
   const timelineSteps = ['Submitted', 'Verification', 'SDM Review', 'Approved']
@@ -96,15 +95,9 @@ export default function Dashboard() {
           <div key={card.title} className="dashboard-action-card">
             <h3>{card.title}</h3>
             <p>{card.description}</p>
-            {card.path ? (
-              <Link to={card.path} className="btn-ghost" style={{ textDecoration: 'none', display: 'inline-block' }}>
-                Open
-              </Link>
-            ) : (
-              <button type="button" className="btn-primary" onClick={() => window.dispatchEvent(new Event('open-assistant'))}>
-                Chat now
-              </button>
-            )}
+            <Link to={card.path} className="btn-ghost" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              Open
+            </Link>
           </div>
         ))}
       </section>

@@ -96,8 +96,7 @@ h1, h2, h3, h4, h5 {
 .btn-primary:focus-visible,
 .btn-ghost:focus-visible,
 .nav-links a:focus-visible,
-.lang-toggle:focus-visible,
-.access-btn:focus-visible {
+.lang-toggle:focus-visible {
   outline: 3px solid rgba(0, 87, 166, 0.2);
   outline-offset: 2px;
 }

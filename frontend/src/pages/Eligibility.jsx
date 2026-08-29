@@ -211,7 +211,9 @@ export default function Eligibility() {
           <form className="eligibility-form" onSubmit={handleSubmit}>
             <div className="eligibility-grid">
               <fieldset className="card">
-                <legend>Personal details</legend>
+                {/* <legend>Personal details</legend> */}
+                <legend style={{ color: '#0f172a', fontWeight: 'bold' }}>Personal details</legend>
+
                 <label>
                   <div className="field-label">Age</div>
                   <input value={form.age} onChange={e => handleChange('age', e.target.value)} placeholder="e.g. 45" />
@@ -245,7 +247,8 @@ export default function Eligibility() {
               </fieldset>
 
               <fieldset className="card">
-                <legend>Location & residency</legend>
+                {/* <legend>Location & residency</legend> */}
+                <legend style={{ color: '#0f172a', fontWeight: 'bold' }}>Location & residency</legend>
                 <label>
                   <div className="field-label">Residence (years in Delhi)</div>
                   <input value={form.residenceYears} onChange={e => handleChange('residenceYears', e.target.value)} placeholder="e.g. 5" />
@@ -263,7 +266,8 @@ export default function Eligibility() {
               </fieldset>
 
               <fieldset className="card">
-                <legend>Identification & benefits</legend>
+                {/* <legend>Identification & benefits</legend> */}
+                <legend style={{ color: '#0f172a', fontWeight: 'bold' }}>Identification & benefits</legend>
                 <label>
                   <div className="field-label">Disability</div>
                   <div className="checkbox-control"><input type="checkbox" checked={form.disability} onChange={e => handleChange('disability', e.target.checked)} /> Disability</div>
@@ -283,7 +287,9 @@ export default function Eligibility() {
               </fieldset>
 
               <fieldset className="card">
-                <legend>Financial & category</legend>
+                {/* <legend>Financial & category</legend> */}
+                <legend style={{ color: '#0f172a', fontWeight: 'bold' }}>Financial & category</legend>
+
                 <label>
                   <div className="field-label">Annual income (INR)</div>
                   <input value={form.income} onChange={e => handleChange('income', e.target.value)} placeholder="e.g. 250000" />
