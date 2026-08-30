@@ -44,13 +44,13 @@ export default function Navbar({
         </nav>
       </div>
       
-      <div className="nav-right">
+      {/* <div className="nav-right">
         <div className="access-tools" aria-label="Accessibility controls">
           <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
             {language === 'en' ? 'हिंदी' : 'English'}
           </button>
         </div>
-      <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
+      <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button> */}
 
         {/* <div className="auth-area">
           {user ? (
@@ -63,7 +63,26 @@ export default function Navbar({
             <AuthWidget onAuthSuccess={onAuthSuccess} />
           ) : null}
         </div> */}
-      </div>
+      {/* </div> */}
+
+        <div className="nav-right">
+          <div className="access-tools" aria-label="Accessibility controls">
+            <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
+              {language === 'en' ? 'हिंदी' : 'English'}
+            </button>
+          </div>
+
+          {/* ऑथेंटिकेशन के आधार पर सही बटन दिखाना */}
+          {user ? (
+            <div className="user-info" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+              <span className="user-name">Hi, {user.name}</span>
+              <Link to="/dashboard" className="btn-ghost">Dashboard</Link>
+              <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
+            </div>
+          ) : (
+            <Link to="/login" className="btn-login-register">Login / Register</Link>
+          )}
+        </div>
     </header>
   )
 }
