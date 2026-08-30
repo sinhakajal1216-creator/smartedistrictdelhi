@@ -2,20 +2,26 @@
   position: sticky;
   top: 0;
   z-index: 200;
-  display: grid;
-  /* Fixed columns to give proper clean separate area to logo, links, and buttons */
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 0.8rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: #0056b3;
   backdrop-filter: blur(8px);
 }
 
-.nav-left {
+.nav-left,
+.nav-center,
+.nav-right,
+.access-tools,
+.user-info {
   display: flex;
   align-items: center;
+}
+
+.nav-left {
   min-width: 0;
 }
 
@@ -28,11 +34,21 @@
 }
 
 .logo {
-  width: 34px;
-  height: 34px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.logo span {
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .brand-text {
@@ -42,27 +58,30 @@
 }
 
 .nav-center {
-  display: flex;
+  flex: 1;
   justify-content: center;
   min-width: 0;
 }
 
 .nav-links {
   display: flex;
-  justify-content: center; /* Centered links evenly */
-  gap: 2.2rem; /* Uniform spacing */
+  justify-content: center;
   align-items: center;
-  flex-wrap: nowrap; /* Prevents center elements from shifting */
+  gap: 1rem;
+  flex-wrap: wrap;
   width: auto;
   margin: 0 auto;
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: #fff;
   font-weight: 600;
   font-size: 0.92rem;
-  padding: 0.5rem 0.65rem;
+  padding: 0.5rem 0.75rem;
   border-radius: 8px;
   white-space: nowrap;
 }
@@ -72,33 +91,38 @@
   color: #fff;
 }
 
-/* FIX: Strong alignment standard to prevent English button from shifting down */
 .nav-right {
-  display: flex;
-  align-items: center;
   gap: 0.8rem;
   justify-content: flex-end;
-  flex-wrap: nowrap !important; /* STRICTLY forces buttons to stay on the same line */
+  flex-wrap: wrap;
 }
 
 .access-tools {
-  display: flex;
-  align-items: center;
   gap: 0.6rem;
-  flex-wrap: nowrap !important; /* Locks structural break controls */
   justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.lang-toggle,
+.btn-login-register,
+.nav-dashboard-btn,
+.nav-right .btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .lang-toggle {
   border: 1px solid rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  border-radius: 8px;
-  padding: 0.42rem 0.65rem;
   font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
-  white-space: nowrap; /* Button text single line wrap text lock */
 }
 
 .lang-toggle:hover {
@@ -111,10 +135,8 @@
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  flex-wrap: nowrap;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .user-name {
@@ -123,11 +145,21 @@
   font-size: 0.9rem;
 }
 
-.nav-dashboard-btn {
+.nav-dashboard-btn,
+.btn-login-register,
+.nav-right .btn-ghost {
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 600;
+}
+
+.nav-dashboard-btn:hover,
+.btn-login-register:hover,
+.nav-right .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .auth-widget {

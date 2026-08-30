@@ -23,8 +23,10 @@ export default function Navbar({
     <header className="navbar">
       <div className="nav-left">
         <Link to="/" className="brand-link">
-          <div className="logo" aria-hidden="true" />
-          <span className="brand-text">SevaSphere</span>
+          <div className="logo">
+  <img src="seva.jpeg" alt="SevaSphere Logo" />
+  <span>SevaSphere</span>
+</div>
         </Link>
       </div>
 
@@ -72,11 +74,10 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* ऑथेंटिकेशन के आधार पर सही बटन दिखाना */}
           {user ? (
-            <div className="user-info" style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div className="user-info">
               <span className="user-name">Hi, {user.name}</span>
-              <Link to="/dashboard" className="btn-ghost">Dashboard</Link>
+              <Link to="/dashboard" className="btn-ghost nav-dashboard-btn">Dashboard</Link>
               <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
             </div>
           ) : (

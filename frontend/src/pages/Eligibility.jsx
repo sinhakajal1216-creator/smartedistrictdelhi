@@ -232,7 +232,7 @@ export default function Eligibility() {
                 <label>
                   <div className="field-label">Marital status</div>
                   <select value={form.maritalStatus} onChange={e => handleChange('maritalStatus', e.target.value)}>
-                    <option value="">—</option>
+                    <option value="">Select Marital Status</option>
                     <option value="Single">Single</option>
                     <option value="Married">Married</option>
                     <option value="Widowed">Widowed</option>
@@ -298,7 +298,7 @@ export default function Eligibility() {
                 <label>
                   <div className="field-label">Category</div>
                   <select value={form.category} onChange={e => handleChange('category', e.target.value)}>
-                    <option value="">—</option>
+                    <option value="">Select Category</option>
                     <option value="general">General</option>
                     <option value="sc">SC</option>
                     <option value="st">ST</option>

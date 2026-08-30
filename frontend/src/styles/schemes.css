@@ -424,20 +424,22 @@
 .eligibility-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-  /* Align items to top to prevent individual cards from stretching weirdly */
-  align-items: start; 
+  gap: 1.5rem;
+  align-items: start;
 }
 
 .eligibility-grid label {
-  display: grid;
-  gap: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .field-label {
   font-weight: 700;
   color: var(--text-secondary);
   font-size: 0.84rem;
+  margin-bottom: 0.2rem;
 }
 
 .eligibility-grid input[type="text"],
@@ -446,11 +448,17 @@
 .eligibility-grid input:not([type="checkbox"]) {
   width: 100%;
   min-width: 0;
-  padding: 0.58rem 0.72rem;
-  /* Visual Harmony: Standardized uniform input styling */
+  padding: 0.7rem 0.8rem;
   border: 1px solid var(--border);
-  border-radius: 8px; 
+  border-radius: 10px;
   background-color: #fff;
+  color: var(--text);
+  box-sizing: border-box;
+}
+
+.eligibility-grid input::placeholder,
+.eligibility-grid select::placeholder {
+  color: #94a3b8;
 }
 
 .eligibility-grid .card {
