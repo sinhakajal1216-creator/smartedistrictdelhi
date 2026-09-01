@@ -24,7 +24,7 @@ export default function Navbar({
       <div className="nav-left">
         <Link to="/" className="brand-link">
           <div className="logo">
-  <img src="seva.jpeg" alt="SevaSphere Logo" />
+  <img src="delhi.png" alt="SevaSphere Logo" />
   <span>SevaSphere</span>
 </div>
         </Link>

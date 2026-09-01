@@ -92,8 +92,44 @@ export default function SchemeDetails() {
     )
   }
 
+  const normalizeSteps = (steps = []) => {
+    if (!Array.isArray(steps)) return []
+
+    return steps
+      .map((step, index) => {
+        if (!step) return null
+
+        if (typeof step === 'string') {
+          const description = String(step).trim().replace(/^(?:\d+[\.)]\s*)+/, '').replace(/^[-–—]+\s*/, '')
+          if (!description || description === '---') return null
+          return { title: `Step ${index + 1}`, description, link: undefined }
+        }
+
+        if (typeof step === 'object') {
+          const title = String(step.title || step.step || step.name || `Step ${index + 1}`).trim()
+          const description = String(step.description || step.text || step.summary || '').trim()
+          const link = typeof step.link === 'string' ? step.link.trim() : undefined
+
+          if (!title || /^[-–—]+$/.test(title)) {
+            if (!description || /^[-–—]+$/.test(description)) return null
+            return { title: `Step ${index + 1}`, description, link }
+          }
+
+          return {
+            title,
+            description: description && !/^[-–—]+$/.test(description) ? description : `Step ${index + 1} for this service.`,
+            link: link || undefined
+          }
+        }
+
+        return null
+      })
+      .filter(Boolean)
+  }
+
+  const normalizedSteps = normalizeSteps(scheme.steps)
   const hasDocuments = Array.isArray(scheme.requiredDocuments) && scheme.requiredDocuments.length > 0
-  const hasSteps = Array.isArray(scheme.steps) && scheme.steps.length > 0
+  const hasSteps = normalizedSteps.length > 0
   const hasOfficialLink = Boolean(scheme.officialLink)
   const openAssistant = () => window.dispatchEvent(new Event('open-assistant'))
 
@@ -157,8 +193,8 @@ export default function SchemeDetails() {
           <h3>Application Steps</h3>
           {hasSteps ? (
             <ol>
-              {scheme.steps.map((s, i) => (
-                <li key={i} style={{ marginBottom: 8 }}>
+              {normalizedSteps.map((s, i) => (
+                <li key={`${s.title}-${i}`} style={{ marginBottom: 8 }}>
                   <strong>{s.title}</strong>
                   {s.description && <div style={{ color: 'var(--text-muted)' }}>{s.description}</div>}
                   {s.link && <div><a href={s.link} target="_blank" rel="noreferrer">{s.link}</a></div>}
@@ -166,7 +202,7 @@ export default function SchemeDetails() {
               ))}
             </ol>
           ) : (
-            <div className="unavailable-box">Application Steps: Information not available in repository records.</div>
+            <div className="unavailable-box">Application steps are not available in the current verified records.</div>
           )}
         </section>
 

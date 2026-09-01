@@ -40,10 +40,10 @@
 }
 
 .logo img {
-  width: 42px;
-  height: 42px;
+  width: 100px;
+  height: 100px;
   object-fit: contain;
-  border-radius: 10px;
+  border-radius: 30px;
 }
 
 .logo span {

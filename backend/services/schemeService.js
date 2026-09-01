@@ -13,6 +13,51 @@ function createCode(title) {
     .replace(/^-|-$/g, '');
 }
 
+function normalizeProcedureSteps(steps) {
+  if (!Array.isArray(steps)) return [];
+
+  return steps
+    .map((step, index) => {
+      if (!step) return null;
+
+      if (typeof step === 'string') {
+        const text = String(step).trim().replace(/^(?:\d+[\.)]\s*)+/, '').replace(/^[-–—]+\s*/, '');
+        const description = text && text !== '---' ? text : '';
+        if (!description) return null;
+        return {
+          title: `Step ${index + 1}`,
+          description,
+          link: undefined
+        };
+      }
+
+      if (typeof step === 'object') {
+        const rawTitle = step.title || step.step || step.name || `Step ${index + 1}`;
+        const title = String(rawTitle).trim();
+        const description = String(step.description || step.text || step.summary || '').trim();
+        const link = step.link || step.url || step.href || undefined;
+
+        if (!title || /^[-–—]+$/.test(title)) {
+          if (!description || /^[-–—]+$/.test(description)) return null;
+          return {
+            title: `Step ${index + 1}`,
+            description,
+            link
+          };
+        }
+
+        return {
+          title,
+          description: description && !/^[-–—]+$/.test(description) ? description : '',
+          link
+        };
+      }
+
+      return null;
+    })
+    .filter(Boolean);
+}
+
 function extractCategories(rule) {
   if (!rule || typeof rule !== 'object') return [];
   if (Array.isArray(rule.all)) return rule.all.flatMap(extractCategories);
@@ -63,7 +108,7 @@ function loadLocalSchemes() {
       id: scheme.code,
       whereToApply: guidance?.whereToApply || null,
       processingTime: guidance?.processingTime || null,
-      steps: guidance?.procedure || [],
+      steps: normalizeProcedureSteps(guidance?.procedure || []),
       requiredDocuments: documentInfo
         ? [
             ...(documentInfo.onlineSubmissionDocuments || []),
