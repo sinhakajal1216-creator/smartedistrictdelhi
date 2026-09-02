@@ -19,8 +19,10 @@ export default function Navbar({
     <header className="navbar">
       <div className="nav-left">
         <Link to="/" className="brand-link">
-          <div className="logo" aria-hidden="true" />
-          <span className="brand-text">SevaSphere</span>
+          <div className="logo">
+  <img src="delhi.png" alt="SevaSphere Logo" />
+  <span>SevaSphere</span>
+</div>
         </Link>
       </div>
 
@@ -40,23 +42,42 @@ export default function Navbar({
         </nav>
       </div>
 
-      <div className="nav-right">
         <div className="access-tools" aria-label="Accessibility controls">
           <button type="button" className="nav-action-btn nav-action-btn-soft" onClick={onToggleLanguage}>
             {language === 'en' ? 'हिंदी' : 'English'}
           </button>
         </div>
 
-        {user ? (
-          <div className="user-info">
-            <span className="user-name">Hi, {user.name}</span>
-            <Link to="/dashboard" className="nav-action-btn nav-action-btn-solid">Dashboard</Link>
-            <button type="button" className="nav-action-btn nav-action-btn-solid" onClick={onLogout}>Logout</button>
+        {/* <div className="auth-area">
+          {user ? (
+            <div className="user-info">
+              <span className="user-name">Hi, {user.name}</span>
+              <Link to="/dashboard" className="btn-primary nav-dashboard-btn">Dashboard</Link>
+              <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
+            </div>
+          ) : !isAuthRoute ? (
+            <AuthWidget onAuthSuccess={onAuthSuccess} />
+          ) : null}
+        </div> */}
+      {/* </div> */}
+
+        <div className="nav-right">
+          <div className="access-tools" aria-label="Accessibility controls">
+            <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
+              {language === 'en' ? 'हिंदी' : 'English'}
+            </button>
           </div>
-        ) : (
-          <Link to="/login" className="nav-action-btn nav-action-btn-solid">Login / Register</Link>
-        )}
-      </div>
+
+          {user ? (
+            <div className="user-info">
+              <span className="user-name">Hi, {user.name}</span>
+              <Link to="/dashboard" className="btn-ghost nav-dashboard-btn">Dashboard</Link>
+              <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
+            </div>
+          ) : (
+            <Link to="/login" className="btn-login-register">Login / Register</Link>
+          )}
+        </div>
     </header>
   )
 }

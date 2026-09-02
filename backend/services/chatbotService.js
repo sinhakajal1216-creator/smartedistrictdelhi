@@ -3,9 +3,11 @@ const serviceGuidanceService = require('./serviceGuidanceService');
 const eligibilityService = require('./eligibilityService');
 const schemeService = require('./schemeService');
 const sdmLocator = require('./sdmLocator');
+const chatbotUnderstandingService = require('./chatbotUnderstandingService');
 
 function isVerifiedStatus(status) {
-  return String(status || '').includes('verified');
+  return String(status || '').includes('verified');  //? why this status need to be checked
+
 }
 
 function normalizeGuidanceVerification(status) {
@@ -90,6 +92,23 @@ function normalizeText(text) {
     .replace(/\s+/g, ' ')
     .trim();
 }
+function serviceMatchTerms(scheme) {
+  const terms = [
+    scheme?.title,
+    scheme?.name,
+    scheme?.serviceName,
+    scheme?.code
+  ];
+
+  return [
+    ...new Set(
+      terms
+        .filter(Boolean)
+        .map((term) => normalizeText(term))
+        .filter((term) => term.length >= 2)
+    )
+  ];
+}
 
 function inferTopicFromQuestion(text) {
   const query = normalizeText(text);
@@ -104,194 +123,48 @@ function inferTopicFromQuestion(text) {
   return 'documents';
 }
 
-function detectIntent(message, context = {}) {
-  const text = normalizeText(message);
-  const previousIntent = context.lastIntent || '';
-
-  if (
-    previousIntent === 'DOCUMENT_QUERY' &&
-    /(what about|what else|more|age|residence|address|document|proof|papers|birth certificate|dont have|don t have|do not have|not have)/.test(text)
-  ) {
-    return 'DOCUMENT_QUERY';
-  }
-
-  if (
-    previousIntent === 'ELIGIBILITY_QUERY' &&
-    /(eligible|eligibility|can i apply|can i get|am i eligible|qualify)/.test(text)
-  ) {
-    return 'ELIGIBILITY_QUERY';
-  }
-
-  if (
-    text.includes('eligible') ||
-    text.includes('eligibility') ||
-    text.includes('qualify') ||
-    text.includes('qualification') ||
-    text.includes('can i apply') ||
-    text.includes('can i get') ||
-    text.includes('am i eligible')
-  ) {
-    return 'ELIGIBILITY_QUERY';
-  }
-
-  if (
-    text.includes('sdm') ||
-    text.includes('sub divisional') ||
-    text.includes('jurisdiction') ||
-    (text.includes('office') && (text.includes('which') || text.includes('where') || text.includes('sdm'))) ||
-    text.includes('where to submit') ||
-    text.includes('which office') ||
-    (text.includes('visit') && text.includes('office'))
-  ) {
-    return 'SDM_QUERY';
-  }
-
-  if (wantsSchemeListQuery(text)) {
-    return 'SCHEME_LIST_QUERY';
-  }
-
-  const document = wantsDocumentQuery(text);
-  const procedure = wantsProcedureQuery(text);
-  const processingTime = wantsProcessingTimeQuery(text);
-  const aspectCount = [document, procedure, processingTime].filter(Boolean).length;
-
-  if (aspectCount > 1) return 'COMBINED_QUERY';
-  if (document) return 'DOCUMENT_QUERY';
-  if (processingTime) return 'PROCESSING_TIME_QUERY';
-  if (procedure) return 'APPLICATION_QUERY';
-
-  if (
-    text.includes('project') ||
-    text.includes('technology') ||
-    text.includes('tech stack') ||
-    text.includes('smart e district') ||
-    text.includes('chatbot') ||
-    text.includes('about')
-  ) {
-    return 'PROJECT_QUERY';
-  }
-
-  return 'GENERAL_QUERY';
+function getUnderstanding(message, context = {}, profile = {}) {
+  return chatbotUnderstandingService.understandMessage({
+    message,
+    context,
+    profile,
+    schemes: schemeService.getAllSchemes()
+  });
 }
 
-function serviceMatchTerms(scheme) {
-  const title = String(scheme.title || '').trim();
-  const code = String(scheme.code || '').trim();
-  const rawTerms = [
-    title,
-    title.toLowerCase(),
-    code,
-    code.replace(/-/g, ' '),
-    title.toLowerCase().replace(/\s*\([^)]*\)/g, '').trim(),
-    title.toLowerCase().replace(/\s+(scheme|certificate)$/i, '').trim()
-  ].filter(Boolean);
-
-  const terms = new Set();
-  rawTerms.forEach((term) => {
-    const normalized = normalizeText(term);
-    if (normalized.length >= 2) terms.add(normalized);
-  });
-
-  if (title) {
-    const compact = title.toLowerCase().replace(/\s*\([^)]*\)/g, '').replace(/\b(scheme|certificate)\b/gi, '').replace(/\s+/g, ' ').trim();
-    if (compact) terms.add(compact);
-  }
-
-  const synonyms = {
-    'old age pension': ['old age pension', 'senior citizen pension', 'pension for senior citizens', 'old age pension scheme'],
-    'income': ['income certificate', 'income and assets certificate', 'income and assets', 'ews certificate', 'income proof certificate'],
-    'caste': ['caste certificate', 'obc certificate', 'caste obc certificate'],
-    'non creamy layer': ['non creamy layer', 'ncl certificate'],
-    'disability': ['disability pension', 'special needs pension', 'person with special needs'],
-    'ration card': ['ration card'],
-    'lal dora': ['lal dora'],
-    'surviving member': ['surviving member', 'surviving member certificate']
-  };
-
-  const matchedSynonyms = Object.entries(synonyms).find(([key]) => title.toLowerCase().includes(key));
-  if (matchedSynonyms) {
-    matchedSynonyms[1].forEach((item) => terms.add(normalizeText(item)));
-  }
-
-  if (title.toLowerCase().includes('income')) {
-    ['income certificate', 'income and assets cert', 'income and assets certificate'].forEach((item) => terms.add(normalizeText(item)));
-  }
-
-  return terms;
+function detectIntent(message, context = {}) {
+  return getUnderstanding(message, context).intent;
 }
 
 function findService(message, context = {}) {
   const schemes = schemeService.getAllSchemes();
   const text = normalizeText(message);
-  const candidates = [];
 
   if (!text) return null;
+
+  const candidates = [];
 
   for (const scheme of schemes) {
     for (const term of serviceMatchTerms(scheme)) {
       if (!term || term.length < 2) continue;
-      const matchScore = text.includes(term) ? term.length : 0;
-      if (matchScore > 0) candidates.push({ scheme, len: matchScore });
-    }
-  }
 
-  if (candidates.length) {
-    candidates.sort((a, b) => b.len - a.len);
-    return candidates[0].scheme;
-  }
-
-  if (context?.currentServiceCode) {
-    const existing = schemeService.getScheme(context.currentServiceCode);
-    if (existing) {
-      const currentText = normalizeText(context.currentService || existing.title || '');
-      if (!text.includes('new') && !text.includes('different') && !text.includes('other') && !text.includes('another')) {
-        return existing;
-      }
-      if (currentText && text.includes(currentText)) {
-        return existing;
+      if (text.includes(term)) {
+        candidates.push({
+          scheme,
+          len: term.length
+        });
       }
     }
   }
 
-  return null;
-}
-
-function isContextualFollowUp(message) {
-  const t = message.toLowerCase().trim();
-
-  if (/\b(isme|iska|iski|uska|uske|uski|for this|same service|is certificate|ye certificate)\b/.test(t)) {
-    return true;
+  if (!candidates.length) {
+    return null;
   }
 
-  if (/^(kitne din|kab tak|kitna time|lagega|lagenge|how long)\??$/i.test(t)) {
-    return true;
-  }
+  // Longest/more specific service match wins.
+  candidates.sort((a, b) => b.len - a.len);
 
-  if (/^(phone number|phone|contact|email)\??$/i.test(t)) {
-    return true;
-  }
-
-  if ((t.includes('kitne din') || t.includes('kab tak') || t.includes('lagega') || t.includes('lagenge') || t.includes('kitna time')) && t.length < 60) {
-    return true;
-  }
-
-  if ((t.includes('kaise apply') || t.includes('apply kaise') || t.includes('kahan apply') || t.includes('where do i apply')) && !findService(message)) {
-    return true;
-  }
-
-  if ((/^documents?\??$/i.test(t) || /^aur documents?\??$/i.test(t) || (t.includes('isme') && t.includes('chahiye'))) && !findService(message)) {
-    return true;
-  }
-
-  if ((t.includes('what age proof') || t.includes('age proof') || t.includes('residence proof') || t.includes('address proof') || t.includes('additional documents') || t.includes('additional document') || t.includes('before uploading') || t.includes('what should i know') || t.includes('proof can i use') || t.includes('document alternatives')) && !findService(message)) {
-    return true;
-  }
-
-  if ((t.includes('procedure') || t.includes('iska process')) && t.length < 50 && !findService(message)) {
-    return true;
-  }
-
-  return false;
+  return candidates[0].scheme;
 }
 
 function isSdmContactFollowUp(message) {
@@ -300,35 +173,42 @@ function isSdmContactFollowUp(message) {
 }
 
 function resolveService(message, context = {}) {
-  const matched = findService(message, context);
-  if (matched) return matched;
+  // FIRST: check whether the CURRENT message explicitly names a service.
+  const explicitMatch = findService(message);
 
-  if (context?.serviceCode && isContextualFollowUp(message)) {
-    return schemeService.getScheme(context.serviceCode);
+  if (explicitMatch) {
+    return explicitMatch;
   }
 
-  if (context?.currentServiceCode) {
-    const currentScheme = schemeService.getScheme(context.currentServiceCode);
-    if (currentScheme && !/\b(new|different|another|other)\b/.test(normalizeText(message))) {
-      return currentScheme;
+  // SECOND: only use conversation context for genuine follow-up questions.
+  if (context?.serviceCode && isContextualFollowUp(message)) {
+    const previousService = schemeService.getScheme(context.serviceCode);
+
+    if (previousService) {
+      return previousService;
     }
   }
 
-  if (context?.currentService && !findService(message)) {
-    const currentMatch = findService(context.currentService, context);
-    if (currentMatch) return currentMatch;
+  if (context?.currentServiceCode && isContextualFollowUp(message)) {
+    const previousService = schemeService.getScheme(
+      context.currentServiceCode
+    );
+
+    if (previousService) {
+      return previousService;
+    }
   }
 
   return null;
 }
 
-function extractLocalityQuery(message) {
-  const clean = message
-    .replace(/[^\w\s]/g, ' ')
-    .replace(/\b(which|where|what|is|the|sdm|office|i|should|visit|for|in|near|locate|find|my|address|jurisdiction|tell|me|about|area|sub|divisional)\b/gi, ' ')
-    .trim()
-    .replace(/\s+/g, ' ');
-  return clean.length >= 3 ? clean : message;
+function buildServiceClarification(understanding) {
+  const candidates = understanding?.entities?.topServiceCandidates || [];
+  const shortList = candidates.slice(0, 3).map((candidate) => candidate.title);
+  if (shortList.length) {
+    return `I can help with that. Which service do you mean — ${shortList.join(', ')}?`;
+  }
+  return 'Please specify which service or certificate you mean.';
 }
 
 function emptyDocuments() {
@@ -630,11 +510,11 @@ function buildProcessingTimeSection(service) {
   };
 }
 
-function mergeCombinedResponse(service, message) {
+function mergeCombinedResponse(service, message, queryAspects = {}) {
   const text = message.toLowerCase();
-  const includeDocument = wantsDocumentQuery(text);
-  const includeProcedure = wantsProcedureQuery(text);
-  const includeTime = wantsProcessingTimeQuery(text);
+  const includeDocument = queryAspects.document || wantsDocumentQuery(text);
+  const includeProcedure = queryAspects.procedure || wantsProcedureQuery(text);
+  const includeTime = queryAspects.processingTime || wantsProcessingTimeQuery(text);
 
   const parts = [];
   const response = {
@@ -692,23 +572,65 @@ function mergeCombinedResponse(service, message) {
 
 function buildConversationMeta(service, intent, message, context = {}) {
   const serviceTitle = service?.title || context.currentService || null;
-  const serviceCode = service?.code || context.currentServiceCode || null;
+  const serviceCode = service?.code || context.currentServiceCode || context.serviceCode || null;
   const topic = inferTopicFromQuestion(message);
+  const previousMessages = Array.isArray(context.recentMessages) ? context.recentMessages.slice(-9) : [];
+  const recentMessages = [...previousMessages, message];
 
   return {
     currentService: serviceTitle,
     currentServiceCode: serviceCode,
+    serviceCode,
     lastIntent: intent,
     lastTopic: topic,
-    recentMessages: Array.isArray(context.recentMessages) ? context.recentMessages.slice(-10) : []
+    recentMessages,
+    lastLocality: context.lastLocality || null,
+    lastSdmOffice: context.lastSdmOffice || context.sdmOffice || null
   };
+}
+function extractExplicitLocality(message) {
+  const text = String(message || '').trim();
+
+  const patterns = [
+    /i live in (.+?)(?:\s+where|\s+what|\s+which|\s*$)/i,
+    /i stay in (.+?)(?:\s+where|\s+what|\s+which|\s*$)/i,
+    /i am in (.+?)(?:\s+where|\s+what|\s+which|\s*$)/i,
+    /my locality is (.+)/i,
+    /my area is (.+)/i,
+    /i live at (.+?)(?:\s+where|\s+what|\s+which|\s*$)/i,
+    /my address is (.+)/i
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+
+    if (match && match[1]) {
+      return match[1].trim();
+    }
+  }
+
+  return null;
 }
 
 function processMessage({ message, profile = {}, context = {} }) {
   sdmLocator.loadData();
+  const understanding = getUnderstanding(message, context, profile);
+  const intent = understanding.intent;
+  const service = resolveService(message, context);
+  const usedContext = Boolean(understanding.usedContextService);
+  const conversationMeta = buildConversationMeta(service, intent, message, context);
+  const sdmContextOffice = context?.lastSdmOffice || context?.sdmOffice || null;
 
-  if (isSdmContactFollowUp(message) && context?.sdmOffice?.sdmOffice) {
-    const office = context.sdmOffice.sdmOffice;
+  console.debug('[CHATBOT] message:', message);
+  console.debug('[CHATBOT] intent:', intent);
+  console.debug('[CHATBOT] intentConfidence:', understanding.intentConfidence);
+  console.debug('[CHATBOT] service:', service ? `${service.title} (${service.code})` : null);
+  console.debug('[CHATBOT] serviceConfidence:', understanding.serviceConfidence);
+  console.debug('[CHATBOT] locality:', understanding.locality || null);
+  console.debug('[CHATBOT] usedContext:', usedContext);
+
+  if (isSdmContactFollowUp(message) && sdmContextOffice?.sdmOffice) {
+    const office = sdmContextOffice.sdmOffice;
     const phone = office.contact?.phone;
     const email = office.contact?.email;
     const parts = [];
@@ -723,35 +645,44 @@ function processMessage({ message, profile = {}, context = {} }) {
       answer: parts.length
         ? `Contact information for ${office.name}: ${parts.join('; ')}.`
         : `No phone or email is available in the current SDM office record for ${office.name}.`,
-      sdmOffice: context.sdmOffice
+      sdmOffice: sdmContextOffice,
+      lastSdmOffice: sdmContextOffice
     };
   }
 
-  const intent = detectIntent(message, context);
-  const service = resolveService(message, context);
-  const conversationMeta = buildConversationMeta(service, intent, message, context);
-
   if (intent === 'COMBINED_QUERY') {
-    const response = mergeCombinedResponse(service, message);
-    if (service) response.usedContext = !findService(message) && context?.serviceCode === service.code;
+    const response = mergeCombinedResponse(service, message, understanding.entities?.queryAspects || {});
+    if (!service && understanding.needsServiceClarification) {
+      response.answer = buildServiceClarification(understanding);
+    }
+    if (service) response.usedContext = usedContext;
     return { ...conversationMeta, ...response };
   }
 
   if (intent === 'DOCUMENT_QUERY') {
     const doc = buildDocumentSection(service, message);
-    if (service && !findService(message) && context?.serviceCode === service.code) doc.usedContext = true;
+    if (!service && understanding.needsServiceClarification) {
+      doc.answer = buildServiceClarification(understanding);
+    }
+    if (service) doc.usedContext = usedContext;
     return { ...conversationMeta, intent, ...doc };
   }
 
   if (intent === 'APPLICATION_QUERY') {
     const proc = buildProcedureSection(service);
-    if (service && !findService(message) && context?.serviceCode === service.code) proc.usedContext = true;
+    if (!service && understanding.needsServiceClarification) {
+      proc.answer = buildServiceClarification(understanding);
+    }
+    if (service) proc.usedContext = usedContext;
     return { ...conversationMeta, intent, ...proc };
   }
 
   if (intent === 'PROCESSING_TIME_QUERY') {
     const time = buildProcessingTimeSection(service);
-    if (service && !findService(message) && context?.serviceCode === service.code) time.usedContext = true;
+    if (!service && understanding.needsServiceClarification) {
+      time.answer = buildServiceClarification(understanding);
+    }
+    if (service) time.usedContext = usedContext;
     return { ...conversationMeta, intent, ...time };
   }
 
@@ -839,10 +770,43 @@ function processMessage({ message, profile = {}, context = {} }) {
   }
 
   if (intent === 'SDM_QUERY') {
-    const rawLocality = profile.locality || profile.address || extractLocalityQuery(message);
-    let sdmResult = sdmLocator.locateSdmOffice(rawLocality);
+    const localityFromMessage = understanding.locality;
+    const explicitLocality = extractExplicitLocality(message);
 
-    if ((!sdmResult || sdmResult.mappingStatus !== 'available') && rawLocality !== message) {
+const rawLocality =
+  explicitLocality ||
+  profile.locality ||
+  profile.address ||
+  extractLocalityQuery(message);
+if (
+  text.includes('sdm') ||
+  text.includes('sub divisional') ||
+  text.includes('jurisdiction') ||
+  text.includes('which sdm') ||
+  text.includes('sdm office') ||
+  text.includes('where is my sdm') ||
+  text.includes('which office') ||
+  text.includes('where is my office') ||
+  (text.includes('office') && (
+    text.includes('which') ||
+    text.includes('where') ||
+    text.includes('my')
+  )) ||
+  (
+    (text.includes('live in') ||
+     text.includes('stay in') ||
+     text.includes('address') ||
+     text.includes('locality')) &&
+    (
+      text.includes('office') ||
+      text.includes('sdm') ||
+      text.includes('jurisdiction')
+    )
+  )
+) {
+  return 'SDM_QUERY';
+}
+    if ((!sdmResult || sdmResult.mappingStatus !== 'available') && localityFromMessage && localityFromMessage !== message) {
       sdmResult = sdmLocator.locateSdmOffice(message);
     }
 
@@ -851,8 +815,12 @@ function processMessage({ message, profile = {}, context = {} }) {
         ...conversationMeta,
         intent,
         status: 'success',
+        usedContext: !localityFromMessage,
+        locality: localityFromMessage || fallbackLocality,
         answer: `Locality "${sdmResult.locality}" (MCD Ward: ${sdmResult.ward}, AC: ${sdmResult.acName}) falls under SDM ${sdmResult.sdmJurisdiction.subDivision} (${sdmResult.sdmJurisdiction.area} District). Dedicated SDM Office: ${sdmResult.sdmOffice.name} at ${sdmResult.sdmOffice.address}.`,
-        sdmOffice: sdmResult
+        sdmOffice: sdmResult,
+        lastLocality: localityFromMessage || fallbackLocality,
+        lastSdmOffice: sdmResult
       };
     }
 
@@ -860,8 +828,10 @@ function processMessage({ message, profile = {}, context = {} }) {
       ...conversationMeta,
       intent,
       status: 'locality_required',
+      locality: localityFromMessage || fallbackLocality || null,
       answer: 'Please provide your locality, colony, or MCD ward name in Delhi to find your designated SDM jurisdiction and office.',
-      sdmOffice: sdmResult || null
+      sdmOffice: sdmResult || null,
+      lastLocality: localityFromMessage || fallbackLocality || null
     };
   }
 
@@ -900,3 +870,4 @@ module.exports = {
   findService,
   processMessage
 };
+

@@ -113,19 +113,26 @@ export default function Home() {
   if (isHomeView) {
     return (
       <div className="identity-page">
-        <section className="identity-hero" aria-label="SevaSphere home hero">
+        <section className="identity-hero" aria-label="SevaSphere home hero">         
           <div className="identity-hero-media" aria-hidden="true">
-            <picture className="identity-hero-shot identity-hero-shot--india-gate">
+            <img
+              className= "identity-hero-shot"
+              src= "https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
+              alt=""
+              loading="eager"
+              decoding="async"
+            />
+            {/* <picture className="identity-hero-shot identity-hero-shot--india-gate">
               <source
                 media="(max-width: 680px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+                srcSet="homepic.jpeg"
               />
               <source
                 media="(min-width: 681px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+                srcSet="homepic.jpeg"
               />
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+                src="homepic.jpeg"
                 alt=""
                 loading="eager"
                 decoding="async"
@@ -134,21 +141,22 @@ export default function Home() {
             <picture className="identity-hero-shot identity-hero-shot--red-fort">
               <source
                 media="(max-width: 680px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
+                srcSet="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
               />
               <source
                 media="(min-width: 681px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/b/b8/Red_fort_new_delhi_with_indian_flag.jpg"
+                srcSet="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
               />
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
+                src="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
                 alt=""
                 loading="eager"
                 decoding="async"
               />
-            </picture>
+            </picture> */}
             <div className="identity-hero-overlay" />
           </div>
+
           <div className="identity-hero-inner">
             <h1>SevaSphere</h1>
             <p>One Platform. Every Citizen Service.</p>

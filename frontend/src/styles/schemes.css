@@ -160,27 +160,30 @@
 
 .service-controls-row {
   display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+
+.search-row .search-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  padding: 0.62rem 0.75rem;
+}
+
+.search-row .search-button {
+  white-space: nowrap;
+}
+
+.filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.85rem;
+  align-items: center;
   flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 1rem;
-}
-
-.service-control-field {
-  display: grid;
-  gap: 0.35rem;
-  min-width: 210px;
-  flex: 1;
-}
-
-.service-control-field-search {
-  min-width: min(420px, 100%);
-  flex: 2;
-}
-
-.control-label {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--text-secondary);
+  justify-content: flex-end;
 }
 
 .service-control-field input,
@@ -202,7 +205,7 @@
 .service-control-field input:focus,
 .service-control-field select:focus {
   border-color: var(--primary);
-  outline: 3px solid rgba(0, 87, 166, 0.2);
+  outline: 3px solid rgba(30, 58, 138, 0.2);
   outline-offset: 1px;
 }
 
@@ -214,6 +217,26 @@
 
 .service-control-btn {
   min-height: 2.5rem;
+}
+
+.search-panel {
+  width: 100%;
+  max-width: 100%;   /* remove any existing narrower max-width */
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.search-panel {
+  width: 100%;
+  max-width: 100%;   /* remove any existing narrower max-width */
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .schemes-list {
@@ -493,19 +516,21 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1.5rem;
-  align-items: start; 
+  align-items: start;
 }
 
 .eligibility-grid label {
-  display: grid;
-  gap: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
 }
 
 .field-label {
   font-weight: 700;
   color: var(--text-secondary);
   font-size: 0.84rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .eligibility-grid input[type="text"],
@@ -514,26 +539,18 @@
 .eligibility-grid input:not([type="checkbox"]) {
   width: 100%;
   min-width: 0;
-  padding: 0.58rem 0.72rem;
-  border: 1px solid #b7c7dd;
-  border-radius: 8px; 
+  padding: 0.7rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   background-color: #fff;
-  color: #0f172a;
+  color: var(--text);
+  box-sizing: border-box;
 }
 
-.eligibility-grid input::placeholder {
-  color: #64748b;
-  opacity: 1;
+.eligibility-grid input::placeholder,
+.eligibility-grid select::placeholder {
+  color: #94a3b8;
 }
-
-.eligibility-grid select:focus,
-.eligibility-grid input:not([type='checkbox']):focus {
-  border-color: var(--primary);
-  outline: 3px solid rgba(0, 87, 166, 0.22);
-  outline-offset: 1px;
-}
-
-
 
 .eligibility-grid .card {
   margin: 0;
