@@ -1,22 +1,18 @@
-import { Link, useLocation } from 'react-router-dom'
-import AuthWidget from './AuthWidget'
+import { Link } from 'react-router-dom'
 import '../styles/navbar.css'
 
 export default function Navbar({
   user,
   onLogout,
-  onAuthSuccess,
   language,
   onToggleLanguage
 }) {
-  const location = useLocation()
-  const isAuthRoute = ['/login', '/register', '/forgot-password', '/'].includes(location.pathname)
   const afterLoginLinks = [
     { to: '/schemes', label: 'Services' },
     { to: '/eligibility', label: 'Eligibility' },
     { to: '/dashboard', label: 'Track' },
     { to: '/sdm-locator', label: 'SDM Finder' },
-    { to: '/why-sevasphere', label: 'Why SevaSphere' }
+    { to: '/why-smartedistrict', label: 'Why SevaSphere' }
   ]
 
   return (
@@ -45,14 +41,12 @@ export default function Navbar({
           )}
         </nav>
       </div>
-      
-      {/* <div className="nav-right">
+
         <div className="access-tools" aria-label="Accessibility controls">
-          <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
+          <button type="button" className="nav-action-btn nav-action-btn-soft" onClick={onToggleLanguage}>
             {language === 'en' ? 'हिंदी' : 'English'}
           </button>
         </div>
-      <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button> */}
 
         {/* <div className="auth-area">
           {user ? (

@@ -1,9 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Link } from 'react-router-dom';
+import {
+  Bot,
+  Copy,
+  Mic,
+  MicOff,
+  SendHorizontal,
+  Sparkles,
+  ThumbsDown,
+  ThumbsUp,
+  X
+} from 'lucide-react';
 import { sendChatMessage, transcribeSpeech } from '../services/chatbot';
 import ArVrGuidanceModal from './ArVrGuidanceModal';
+import '../styles/chatbotWidget.css';
 
 function toChatbotProfile(prof = {}) {
   if (!prof || typeof prof !== 'object') return {};
@@ -228,18 +240,16 @@ export default function ChatbotWidget({
   const [loading, setLoading] = useState(false);
   const [language, setLanguage] = useState('en');
   const [selectedSdmOffice, setSelectedSdmOffice] = useState(null);
-  const [userProfile, setUserProfile] = useState({});
   const [conversationContext, setConversationContext] = useState({});
   const [isRecording, setIsRecording] = useState(false);
+  const [copiedMessageIndex, setCopiedMessageIndex] = useState(null);
+  const [messageFeedback, setMessageFeedback] = useState({});
 
   const messagesEndRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const mediaStreamRef = useRef(null);
   const audioChunksRef = useRef([]);
 
-  /*
-   * Load eligibility profile + logged-in citizen profile
-   */
   useEffect(() => {
     let storedProfile = {};
 
@@ -250,15 +260,9 @@ export default function ChatbotWidget({
         storedProfile = JSON.parse(raw);
       }
     } catch {
-      // Ignore invalid session data
+      // ignore invalid session data
     }
-
-    const mergedProfile = {
-      ...storedProfile,
-      ...citizenProfile
-    };
-
-    setUserProfile(toChatbotProfile(mergedProfile));
+    setUserProfile(toChatbotProfile({ ...storedProfile, ...citizenProfile }));
   }, [citizenProfile]);
 
   /*
@@ -595,24 +599,9 @@ export default function ChatbotWidget({
         })
       };
 
-      setMessages(prev => [
-        ...prev,
-        botMsg
-      ]);
-
-      /*
-       * Update conversation context
-       */
-      setConversationContext(
-        buildContextFromResponse(responseData)
-      );
-
+      setMessages(prev => [...prev, botMsg]);
+      setConversationContext(buildContextFromResponse(responseData));
     } catch (err) {
-      console.error(
-        'CHATBOT FRONTEND ERROR:',
-        err
-      );
-
       setMessages(prev => [
         ...prev,
         {
@@ -630,229 +619,138 @@ export default function ChatbotWidget({
     }
   };
 
+  const handleQuickPrompt = (prompt) => {
+    setInput(prompt);
+  };
+
+  const handleCopyResponse = async (msgText, index) => {
+    if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+    try {
+      await navigator.clipboard.writeText(msgText);
+      setCopiedMessageIndex(index);
+      setTimeout(() => setCopiedMessageIndex(null), 1600);
+    } catch {
+      setCopiedMessageIndex(null);
+    }
+  };
+
+  const handleMessageFeedback = (index, feedback) => {
+    setMessageFeedback(prev => ({ ...prev, [index]: feedback }));
+  };
+
   return (
-    <div
-      id="dilli-sahayak"
-      style={{
-        position: 'fixed',
-        bottom: '1.5rem',
-        right: '1.5rem',
-        width: '420px',
-        maxWidth: 'calc(100vw - 2rem)',
-        height: '620px',
-        maxHeight: 'calc(100vh - 3rem)',
-        backgroundColor: '#ffffff',
-        borderRadius: '12px',
-        boxShadow:
-          '0 20px 25px -5px rgba(15, 23, 42, 0.25), 0 8px 10px -6px rgba(15, 23, 42, 0.1)',
-        border: '1px solid #cbd5e1',
-        display: 'flex',
-        flexDirection: 'column',
-        zIndex: 50,
-        overflow: 'hidden',
-        fontFamily:
-          'Inter, system-ui, -apple-system, sans-serif'
-      }}
-    >
-
+    <div style={{
+      position: 'fixed',
+      bottom: '1.5rem',
+      right: '1.5rem',
+      width: '420px',
+      maxWidth: 'calc(100vw - 2rem)',
+      height: '620px',
+      maxHeight: 'calc(100vh - 3rem)',
+      backgroundColor: '#ffffff',
+      borderRadius: '12px',
+      boxShadow: '0 20px 25px -5px rgba(15, 23, 42, 0.25), 0 8px 10px -6px rgba(15, 23, 42, 0.1)',
+      border: '1px solid #cbd5e1',
+      display: 'flex',
+      flexDirection: 'column',
+      zIndex: 9990,
+      overflow: 'hidden',
+      fontFamily: 'Inter, system-ui, -apple-system, sans-serif'
+    }}>
       {/* Official Government Header */}
-
-      <div
-        style={{
-          backgroundColor: '#1e3a8a',
-          color: '#ffffff',
-          padding: '0.875rem 1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '2px solid #3b82f6'
-        }}
-      >
-        <div
-          style={{
+      <div style={{
+        backgroundColor: '#1e3a8a',
+        color: '#ffffff',
+        padding: '0.875rem 1.25rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        borderBottom: '2px solid #3b82f6'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: '50%',
+            backgroundColor: '#ffffff',
+            color: '#1e3a8a',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.75rem'
-          }}
-        >
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              backgroundColor: '#ffffff',
-              color: '#1e3a8a',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontWeight: 800,
-              fontSize: '0.9rem'
-            }}
-          >
+            justifyContent: 'center',
+            fontWeight: 800,
+            fontSize: '0.9rem'
+          }}>
             🏛️
           </div>
-
           <div>
-            <div
-              style={{
-                fontSize: '0.95rem',
-                fontWeight: 700,
-                letterSpacing: '-0.01em'
-              }}
-            >
+            <div style={{ fontSize: '0.95rem', fontWeight: 700, letterSpacing: '-0.01em' }}>
               Dilli Sahayak
             </div>
-
-            <div
-              style={{
-                fontSize: '0.725rem',
-                color: '#bfdbfe',
-                fontWeight: 500
-              }}
-            >
+            <div style={{ fontSize: '0.725rem', color: '#bfdbfe', fontWeight: 500 }}>
               Government service guidance desk
             </div>
           </div>
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem'
-          }}
-        >
-
-          {/* Language Toggle */}
-
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {/* Language Toggle Control */}
           <button
             type="button"
-            onClick={() =>
-              setLanguage(l =>
-                l === 'en' ? 'hi' : 'en'
-              )
-            }
+            onClick={() => setLanguage(l => l === 'en' ? 'hi' : 'en')}
             title="Toggle Language (BHASHINI)"
-            style={{
-              padding: '0.25rem 0.6rem',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-              backgroundColor: '#2563eb',
-              color: '#ffffff',
-              border: '1px solid #60a5fa',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
           >
-            {language === 'en'
-              ? 'हिन्दी (BHASHINI)'
-              : 'English'}
+            {language === 'en' ? 'हिन्दी (BHASHINI)' : 'English'}
           </button>
-
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              background: 'transparent',
-              border: 'none',
-              color: '#ffffff',
-              fontSize: '1.25rem',
-              cursor: 'pointer',
-              padding: '0.25rem'
-            }}
-          >
-            &times;
+          <button type="button" className="chatbot-close" onClick={onClose} aria-label="Close assistant">
+            <X size={18} />
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Messages */}
-
-      <div
-        style={{
-          flex: 1,
-          padding: '1rem',
-          overflowY: 'auto',
-          backgroundColor: '#f8fafc',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem'
-        }}
-      >
+      {/* Messages Container */}
+      <div style={{
+        flex: 1,
+        padding: '1rem',
+        overflowY: 'auto',
+        backgroundColor: '#f8fafc',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem'
+      }}>
         {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            style={{
-              alignSelf:
-                msg.sender === 'user'
-                  ? 'flex-end'
-                  : 'flex-start',
-              maxWidth: '88%'
-            }}
-          >
-            <div
-              style={{
-                padding: '0.875rem 1rem',
-                borderRadius:
-                  msg.sender === 'user'
-                    ? '12px 12px 2px 12px'
-                    : '12px 12px 12px 2px',
-                backgroundColor:
-                  msg.sender === 'user'
-                    ? '#1e3a8a'
-                    : '#ffffff',
-                color:
-                  msg.sender === 'user'
-                    ? '#ffffff'
-                    : '#1e293b',
-                border:
-                  msg.sender === 'user'
-                    ? 'none'
-                    : '1px solid #e2e8f0',
-                boxShadow:
-                  '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-                fontSize: '0.875rem',
-                lineHeight: '1.5'
-              }}
-            >
-              {msg.sender === 'user' ? (
-                <div>{msg.text}</div>
-              ) : (
-                <MarkdownMessage content={msg.text} />
-              )}
+          <div key={idx} style={{
+            alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
+            maxWidth: '88%'
+          }}>
+            <div style={{
+              padding: '0.875rem 1rem',
+              borderRadius: msg.sender === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px',
+              backgroundColor: msg.sender === 'user' ? '#1e3a8a' : '#ffffff',
+              color: msg.sender === 'user' ? '#ffffff' : '#1e293b',
+              border: msg.sender === 'user' ? 'none' : '1px solid #e2e8f0',
+              boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              fontSize: '0.875rem',
+              lineHeight: '1.5'
+            }}>
+              <div>{msg.text}</div>
 
-              {msg.data &&
-                renderStructuredContent(
-                  msg.data,
-                  setSelectedSdmOffice
-                )}
+              {/* Render Structured Response Elements if available */}
+              {msg.data && renderStructuredContent(msg.data, setSelectedSdmOffice)}
             </div>
 
-            <div
-              style={{
-                fontSize: '0.675rem',
-                color: '#94a3b8',
-                marginTop: '0.25rem',
-                textAlign:
-                  msg.sender === 'user'
-                    ? 'right'
-                    : 'left'
-              }}
-            >
+            <div style={{
+              fontSize: '0.675rem',
+              color: '#94a3b8',
+              marginTop: '0.25rem',
+              textAlign: msg.sender === 'user' ? 'right' : 'left'
+            }}>
               {msg.timestamp}
             </div>
-          </div>
+          </article>
         ))}
 
         {loading && (
-          <div
-            style={{
-              alignSelf: 'flex-start',
-              color: '#64748b',
-              fontSize: '0.8rem',
-              fontStyle: 'italic'
-            }}
-          >
+          <div style={{ alignSelf: 'flex-start', color: '#64748b', fontSize: '0.8rem', fontStyle: 'italic' }}>
             Checking official e-District records...
           </div>
         )}
@@ -860,29 +758,19 @@ export default function ChatbotWidget({
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
-
-      <form
-        onSubmit={handleSend}
-        style={{
-          padding: '0.75rem 1rem',
-          backgroundColor: '#ffffff',
-          borderTop: '1px solid #e2e8f0',
-          display: 'flex',
-          gap: '0.5rem'
-        }}
-      >
+      {/* Chat Input Bar */}
+      <form onSubmit={handleSend} style={{
+        padding: '0.75rem 1rem',
+        backgroundColor: '#ffffff',
+        borderTop: '1px solid #e2e8f0',
+        display: 'flex',
+        gap: '0.5rem'
+      }}>
         <input
           type="text"
           value={input}
-          onChange={e =>
-            setInput(e.target.value)
-          }
-          placeholder={
-            language === 'hi'
-              ? 'अपना प्रश्न लिखें (जैसे documents for EWS)...'
-              : 'Ask about documents, eligibility, or SDM office...'
-          }
+          onChange={(e) => setInput(e.target.value)}
+          placeholder={language === 'hi' ? 'अपना प्रश्न लिखें (जैसे documents for EWS)...' : 'Ask about documents, eligibility, or SDM office...'}
           style={{
             flex: 1,
             padding: '0.625rem 0.875rem',
@@ -892,62 +780,37 @@ export default function ChatbotWidget({
             outline: 'none'
           }}
         />
-
         <button
           type="button"
           onClick={handleVoiceInput}
           disabled={loading}
-          title={
-            isRecording
-              ? 'Stop recording'
-              : 'Start voice input'
-          }
+          title={isRecording ? 'Stop recording' : 'Start voice input'}
           style={{
             padding: '0.625rem 0.75rem',
-            backgroundColor:
-              isRecording
-                ? '#b91c1c'
-                : '#2563eb',
+            backgroundColor: isRecording ? '#b91c1c' : '#2563eb',
             color: '#ffffff',
             border: 'none',
             borderRadius: '6px',
             fontWeight: 700,
             fontSize: '0.875rem',
-            cursor: loading
-              ? 'not-allowed'
-              : 'pointer',
+            cursor: loading ? 'not-allowed' : 'pointer',
             opacity: loading ? 0.7 : 1
           }}
         >
           {isRecording ? '■' : '🎤'}
         </button>
-
         <button
           type="submit"
-          disabled={
-            !input.trim() ||
-            loading ||
-            isRecording
-          }
+          disabled={!input.trim() || loading || isRecording}
           style={{
             padding: '0.625rem 1rem',
-            backgroundColor:
-              !input.trim() ||
-              loading ||
-              isRecording
-                ? '#94a3b8'
-                : '#1e3a8a',
+            backgroundColor: !input.trim() || loading || isRecording ? '#94a3b8' : '#1e3a8a',
             color: '#ffffff',
             border: 'none',
             borderRadius: '6px',
             fontWeight: 600,
             fontSize: '0.875rem',
-            cursor:
-              !input.trim() ||
-              loading ||
-              isRecording
-                ? 'not-allowed'
-                : 'pointer'
+            cursor: !input.trim() || loading || isRecording ? 'not-allowed' : 'pointer'
           }}
         >
           Send
@@ -964,7 +827,7 @@ export default function ChatbotWidget({
           }
         />
       )}
-    </div>
+    </section>
   );
 }
 

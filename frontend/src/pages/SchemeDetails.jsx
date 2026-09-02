@@ -159,7 +159,7 @@ export default function SchemeDetails() {
             <Link to="/eligibility" className="btn-primary" style={{ textDecoration: 'none', whiteSpace: 'nowrap' }}>
               Evaluate Eligibility
             </Link>
-            <button type="button" className="btn-ghost" onClick={openAssistant}>e-District Assistant</button>
+            {/* <button type="button" className="btn-ghost" onClick={openAssistant}>e-District Assistant</button> */}
             {hasOfficialLink && (
               <a href={scheme.officialLink} target="_blank" rel="noreferrer" className="btn-ghost">
                 Apply Online
@@ -207,7 +207,7 @@ export default function SchemeDetails() {
         </section>
 
         <section className="details-section" style={{ marginBottom: 24 }}>
-          <h3>Official Portals & Contacts</h3>
+          <h3 style={{ marginBottom: 20}}>Official Portals & Contacts</h3>
           {hasOfficialLink ? (
             <div>
               <a href={scheme.officialLink} target="_blank" rel="noreferrer" className="btn-primary" style={{ textDecoration: 'none' }}>

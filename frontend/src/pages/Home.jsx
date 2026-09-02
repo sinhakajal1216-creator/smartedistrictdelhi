@@ -59,7 +59,7 @@ export default function Home() {
         if (!mounted) return
         setServerDepartments(dRes.data?.departments || dRes.departments || [])
         setServerCategories(cRes.data?.categories || cRes.categories || [])
-      } catch (e) {
+      } catch {
         // ignore server list failures
       }
     })()
@@ -169,22 +169,39 @@ export default function Home() {
   return (
     <div className="schemes-container">
       <section className="search-panel card">
-        <form className="search-row" onSubmit={onSearch}>
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search services, certificates or keywords" />
-          <button className="btn-primary" type="submit">Search</button>
-          <button type="button" className="btn-ghost" onClick={clearFilters}>Clear</button>
-        </form>
+        <form className="service-controls" onSubmit={onSearch}>
+          <div className="service-controls-row">
+            <label className="service-control-field service-control-field-search">
+              <span className="control-label">Search services</span>
+              <input
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                placeholder="Search services, certificates or keywords"
+              />
+            </label>
+            <div className="service-control-actions">
+              <button className="btn-primary service-control-btn" type="submit">Search</button>
+              <button type="button" className="btn-ghost service-control-btn" onClick={clearFilters}>Clear</button>
+            </div>
+          </div>
 
-        <div className="filter-row">
-          <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-            <option value="">All departments</option>
-            {departments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
-          </select>
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="">All categories</option>
-            {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
-          </select>
-        </div>
+          <div className="service-controls-row">
+            <label className="service-control-field">
+              <span className="control-label">Department</span>
+              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                <option value="">Select Department</option>
+                {departments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
+              </select>
+            </label>
+            <label className="service-control-field">
+              <span className="control-label">Category</span>
+              <select value={category} onChange={(e) => setCategory(e.target.value)}>
+                <option value="">Select Category</option>
+                {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+              </select>
+            </label>
+          </div>
+        </form>
       </section>
 
       {loading && <div className="loading">Loading services…</div>}

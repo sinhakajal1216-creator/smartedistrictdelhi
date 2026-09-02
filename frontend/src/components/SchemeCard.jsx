@@ -20,24 +20,24 @@ export default function SchemeCard({ scheme }) {
           <h3 className="scheme-title">{title}</h3>
         </div>
 
-        {hasDepartment && <div className="scheme-meta">{department}</div>}
+        {hasDepartment && <div className="scheme-meta-pill">{department}</div>}
 
         {hasCategories && (
           <div className="scheme-categories">
             {categories.filter(Boolean).map((c) => (
-              <span className="badge" key={c}>{c}</span>
+              <span className="badge badge-category" key={c}>{String(c).toUpperCase()}</span>
             ))}
           </div>
         )}
 
-        {hasDescription && <p className="scheme-desc">{description}</p>}
+        {hasDescription && <p className="scheme-desc scheme-desc-note">{description}</p>}
 
         <div className="scheme-actions">
-          <Link to={`/schemes/${schemeId}`} className="btn-primary">View Details</Link>
           {officialLink ? (
-            <a href={officialLink} target="_blank" rel="noreferrer" className="btn-ghost">Apply Online</a>
+            <a href={officialLink} target="_blank" rel="noreferrer" className="btn-primary scheme-action-primary">Apply Online</a>
           ) : null}
-          <button type="button" className="btn-ghost" onClick={openAssistant}>e-District Assistant</button>
+          <Link to={`/schemes/${schemeId}`} className="btn-ghost scheme-action-outline">View Details</Link>
+          {/* <button type="button" className="btn-ghost scheme-action-assistant" onClick={openAssistant}>e-District Assistant</button> */}
         </div>
       </div>
     </article>

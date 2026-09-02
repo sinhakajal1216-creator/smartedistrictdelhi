@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import './App.css'
-import api from './services/api'
 import * as auth from './services/auth'
 import Navbar from './components/Navbar'
 import ChatbotWidget from './components/ChatbotWidget'
@@ -104,6 +103,7 @@ function WhySmartEDistrict() {
 function App() {
   const [user, setUser] = useState(null)
   const [isChatbotOpen, setIsChatbotOpen] = useState(false)
+  const [isAssistantCompact, setIsAssistantCompact] = useState(false)
   const [language, setLanguage] = useState(() => localStorage.getItem('smartedistrict_language') || 'en')
   const [accessibility, setAccessibility] = useState(() => {
     try {
@@ -125,7 +125,7 @@ function App() {
           if (!mounted) return
           setUser(res.user)
         }
-      } catch (e) {
+      } catch {
         localStorage.removeItem('sd_token')
       }
     })()
@@ -138,6 +138,17 @@ function App() {
     window.addEventListener('open-assistant', openAssistant)
     return () => {
       window.removeEventListener('open-assistant', openAssistant)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsAssistantCompact(window.scrollY > 220)
+    }
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
     }
   }, [])
 
@@ -203,9 +214,11 @@ function App() {
 
       {!isChatbotOpen && (
         <button
+          id="dilli-sahayak"
           type="button"
-          className="assistant-launcher"
+          className={`assistant-launcher ${isAssistantCompact ? 'assistant-launcher--compact' : ''}`}
           onClick={() => setIsChatbotOpen(true)}
+          aria-label="Open Dilli Sahayak assistant"
         >
           <span className="assistant-launcher-icon" aria-hidden>💬</span>
           <span className="assistant-launcher-dot" aria-hidden />

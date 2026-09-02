@@ -2,10 +2,22 @@
   padding: 1rem 0;
 }
 
+.search-panel {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
 .services-title {
   margin: 1.25rem 0 0.75rem;
   color: var(--primary-dark);
   font-size: 1.45rem;
+}
+
+.badge-category {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #3730a3;
+  letter-spacing: 0.04em;
 }
 
 .home-hero {
@@ -141,7 +153,12 @@
   font-size: 0.86rem;
 }
 
-.search-row {
+.service-controls {
+  display: grid;
+  gap: 1rem;
+}
+
+.service-controls-row {
   display: flex;
   gap: 12px;
   width: 100%;
@@ -169,26 +186,47 @@
   justify-content: flex-end;
 }
 
-.filters select {
-  min-width: 190px;
-  padding: 0.55rem 0.65rem;
-  color: var(--text);
-  background: #fff;
-  border: 1px solid var(--border);
-}
-
-.filters select option {
-  color: var(--text);
+.service-control-field input,
+.service-control-field select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.62rem 0.72rem;
+  border: 1px solid #b7c7dd;
+  border-radius: 10px;
+  color: #1e293b;
   background: #fff;
 }
 
-.filters select:hover {
-  border-color: var(--primary);
+.service-control-field input::placeholder {
+  color: #64748b;
+  opacity: 1;
 }
 
-.filters select:focus {
+.service-control-field input:focus,
+.service-control-field select:focus {
   border-color: var(--primary);
   outline: 3px solid rgba(30, 58, 138, 0.2);
+  outline-offset: 1px;
+}
+
+.service-control-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.service-control-btn {
+  min-height: 2.5rem;
+}
+
+.search-panel {
+  width: 100%;
+  max-width: 100%;   /* remove any existing narrower max-width */
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .search-panel {
@@ -220,7 +258,7 @@
 }
 
 .scheme-card {
-  padding: 0.9rem;
+  padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 12px;
   min-height: 100%;
@@ -235,13 +273,24 @@
 
 .scheme-title {
   margin: 0;
-  font-size: 1rem;
-  color: var(--primary-dark);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #0f172a;
 }
 
-.scheme-meta {
-  color: var(--text-muted);
-  font-size: 0.82rem;
+.scheme-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
 }
 
 .scheme-categories {
@@ -257,17 +306,47 @@
   flex: 1;
 }
 
+.scheme-desc-note {
+  font-size: 0.77rem;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-style: italic;
+  padding: 0.5rem;
+}
+
 .scheme-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.6rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .scheme-actions .btn-primary,
 .scheme-actions .btn-ghost {
   text-decoration: none;
   font-size: 0.86rem;
-  padding: 0.5rem 0.75rem;
+  padding: 0.48rem 0.78rem;
+}
+
+.scheme-action-primary {
+  order: 1;
+}
+
+.scheme-action-outline {
+  order: 2;
+  background: #fff;
+  border-color: #a9bfdc;
+}
+
+.scheme-action-assistant {
+  order: 3;
+  background: transparent;
+  border-color: transparent;
+  color: var(--primary-dark);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .badge {
@@ -357,18 +436,17 @@
 }
 
 @media (max-width: 680px) {
-  .search-row {
+  .service-controls-row {
     flex-direction: column;
     align-items: stretch;
   }
 
-  .filters {
-    flex-direction: column;
-    align-items: stretch;
+  .service-control-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 
-  .filters select,
-  .filters .btn-ghost {
+  .service-control-btn {
     width: 100%;
   }
 
@@ -538,6 +616,46 @@
   display: flex;
   gap: 0.5rem;
   margin-top: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.btn-save-profile {
+  background: #0f766e;
+  border-color: #0f766e;
+}
+
+.btn-save-profile:hover {
+  background: #115e59;
+  border-color: #115e59;
+}
+
+.profile-update-banner {
+  display: grid;
+  gap: 0.2rem;
+  margin: 0.7rem 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+.profile-update-banner strong {
+  font-size: 0.95rem;
+}
+
+.profile-update-banner span {
+  font-size: 0.9rem;
+}
+
+.profile-save-success {
+  margin-top: 0.7rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid #bbf7d0;
+  background: #ecfdf3;
+  color: #166534;
+  font-weight: 600;
 }
 
 .result-summary {
@@ -630,4 +748,3 @@
     flex-direction: column;
   }
 }
-
