@@ -3,8 +3,11 @@
 }
 
 .search-panel {
-  padding: 1rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 1.75rem 1rem;   /* increased from 1rem */
+  border-radius: 16px;      /* softer, larger rounding */
+  margin-bottom: 1.5rem;
 }
 
 .services-title {
@@ -160,41 +163,71 @@
 
 .service-controls-row {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
   align-items: center;
-  margin-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
 }
 
 .search-row .search-input {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
   flex: 1 1 auto;
   min-width: 0;
   width: 100%;
-  padding: 0.62rem 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
 }
 
-.search-row .search-button {
-  white-space: nowrap;
+.search-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
+/* .search-row .search-button .filters .service-control-btn {
+  flex: 0 0 auto;
+  padding: 0.85rem 1.4rem; 
+  white-space: nowrap;  
+  border-radius: 10px;
+  font-size: 0.95rem;
+} */
+.search-row .service-control-field .filters{
+  flex: 1;
+  min-width: 0;
+}
 .filters {
   display: flex;
-  gap: 0.5rem;
+  gap: 20px;
   margin-bottom: 0.85rem;
-  align-items: center;
+  align-items: flex-end;
+  width: 100%;
   flex-wrap: wrap;
   justify-content: flex-end;
 }
-
+.service-control-field label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
 .service-control-field input,
 .service-control-field select {
   width: 100%;
   min-width: 0;
-  padding: 0.62rem 0.72rem;
+  padding: 0.85rem 1rem;
   border: 1px solid #b7c7dd;
   border-radius: 10px;
   color: #1e293b;
   background: #fff;
+  font-size: 0.95rem;
+  box-sizing: border-box;
 }
 
 .service-control-field input::placeholder {
@@ -216,12 +249,22 @@
 }
 
 .service-control-btn {
+   flex: 0 0 auto;  
+  padding: 0.85rem 1.4rem; 
+  white-space: nowrap;      
+  border-radius: 10px;
+  font-size: 0.95rem;
   min-height: 2.5rem;
+  cursor: pointer;
 }
 
 .search-panel {
   width: 100%;
   max-width: 100%;   /* remove any existing narrower max-width */
+  padding: 1.5rem 2rem 1.25rem;  /* reduced bottom padding */
+  border-radius: 16px;
+  margin-bottom: 1.25rem;  
+  box-sizing: border-box;
 }
 
 .card {

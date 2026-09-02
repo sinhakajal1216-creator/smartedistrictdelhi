@@ -164,17 +164,20 @@
 .btn-login-register,
 .nav-right .btn-ghost {
   text-decoration: none;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-weight: 600;
+  border: 1px solid #ffffff;
+  background: ffffff;
+  color: #0056b3;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  padding: 0.5rem 1.1rem;
 }
 
 .nav-dashboard-btn:hover,
 .btn-login-register:hover,
 .nav-right .btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: #eaf3ff;
+  border-color: #eaf3ff;
+  color: #0056b3;
 }
 
 .auth-widget {

@@ -20,7 +20,7 @@ export default function Navbar({
       <div className="nav-left">
         <Link to="/" className="brand-link">
           <div className="logo">
-  <img src="delhi.png" alt="SevaSphere Logo" />
+  {/* <img src="delhi.png" alt="SevaSphere Logo" /> */}
   <span>SevaSphere</span>
 </div>
         </Link>
@@ -42,24 +42,6 @@ export default function Navbar({
         </nav>
       </div>
 
-        <div className="access-tools" aria-label="Accessibility controls">
-          <button type="button" className="nav-action-btn nav-action-btn-soft" onClick={onToggleLanguage}>
-            {language === 'en' ? 'हिंदी' : 'English'}
-          </button>
-        </div>
-
-        {/* <div className="auth-area">
-          {user ? (
-            <div className="user-info">
-              <span className="user-name">Hi, {user.name}</span>
-              <Link to="/dashboard" className="btn-primary nav-dashboard-btn">Dashboard</Link>
-              <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
-            </div>
-          ) : !isAuthRoute ? (
-            <AuthWidget onAuthSuccess={onAuthSuccess} />
-          ) : null}
-        </div> */}
-      {/* </div> */}
 
         <div className="nav-right">
           <div className="access-tools" aria-label="Accessibility controls">
