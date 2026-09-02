@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import * as auth from '../services/auth'
 import api from '../services/api'
 import SchemeCard from '../components/SchemeCard'
@@ -32,7 +33,7 @@ function formatReason(reason) {
   // in / not_in
   m = reason.match(/^Field\s+(\w+)\s+\(([^)]+)\)\s+(in|not_in)\s+\[([^\]]*)\]\s+=>\s+(pass|fail)$/i)
   if (m) {
-    const [, field, profileVal, op, listStr, pf] = m
+    const [, field, profileVal, , listStr, pf] = m
     const allowed = listStr.split(',').map(s => s.trim()).filter(Boolean)
     if (pf.toLowerCase() === 'pass') return `Your ${fieldLabel(field)} (${profileVal}) is within the allowed values.`
     return `Your ${fieldLabel(field)} (${profileVal}) is not within the allowed values (${allowed.join(', ')}).`
@@ -55,7 +56,6 @@ function formatReason(reason) {
       return `Your annual income exceeds the allowed limit of ₹${value}.`
     }
     if ((field === 'delhiResident' || field === 'aadhaar') && (op === '==' || op === '!=')) {
-      const wants = value === '1' || value === 'true' || value === 'True' || value === true
       if (pf.toLowerCase() === 'pass') {
         if (field === 'delhiResident') return `You meet the Delhi residency requirement.`
         if (field === 'aadhaar') return `You have the required Aadhaar document.`
@@ -87,6 +87,9 @@ function formatReason(reason) {
 }
 
 export default function Eligibility() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isProfileEditMode = Boolean(location.state && location.state.fromProfileEdit)
   const [form, setForm] = useState({
     age: '',
     residency: false,
@@ -102,6 +105,9 @@ export default function Eligibility() {
     maritalStatus: '',
     loadingProfile: true,
     error: null,
+    profileError: null,
+    profileSuccess: null,
+    profileSaving: false,
     evalLoading: false,
     results: null
   })
@@ -117,7 +123,7 @@ export default function Eligibility() {
           setForm(prev => ({
             ...prev,
             age: prof.age ?? '',
-            residency: !!prof.residency,
+            residency: typeof prof.residency === 'boolean' ? prof.residency : !!prof.delhiResident,
             residenceYears: prof.residenceYears ?? '',
             income: prof.income ?? '',
             gender: prof.gender ?? '',
@@ -130,7 +136,7 @@ export default function Eligibility() {
             maritalStatus: prof.maritalStatus ?? ''
           }))
         }
-      } catch (e) {
+      } catch {
         // not logged in or error; allow anonymous flow
       } finally {
         if (mounted) setForm(prev => ({ ...prev, loadingProfile: false }))
@@ -140,6 +146,56 @@ export default function Eligibility() {
   }, [])
 
   const handleChange = (key, value) => setForm(prev => ({ ...prev, [key]: value }))
+
+  const validateProfileForSave = (f) => {
+    const errors = []
+    const ageValue = Number(f.age)
+    const residenceYearsValue = Number(f.residenceYears)
+    const incomeValue = Number(f.income)
+
+    if (f.age === '' || Number.isNaN(ageValue) || ageValue <= 0) {
+      errors.push('Please enter a valid age.')
+    }
+    if (!f.gender) {
+      errors.push('Please select your gender.')
+    }
+    if (!f.maritalStatus) {
+      errors.push('Please select your marital status.')
+    }
+    if (!f.occupation || !String(f.occupation).trim()) {
+      errors.push('Please enter your occupation.')
+    }
+    if (f.residenceYears === '' || Number.isNaN(residenceYearsValue) || residenceYearsValue < 0) {
+      errors.push('Please enter valid years of Delhi residency.')
+    }
+    if (f.income === '' || Number.isNaN(incomeValue) || incomeValue < 0) {
+      errors.push('Please enter a valid annual income.')
+    }
+    if (!f.category) {
+      errors.push('Please select your category.')
+    }
+    if (f.disability && (f.disabilityPercentage === '' || Number.isNaN(Number(f.disabilityPercentage)) || Number(f.disabilityPercentage) < 0 || Number(f.disabilityPercentage) > 100)) {
+      errors.push('Please enter a valid disability percentage (0-100).')
+    }
+
+    return errors
+  }
+
+  const buildPersistedProfile = (f) => ({
+    age: f.age !== '' ? Number(f.age) : '',
+    residency: !!f.residency,
+    delhiResident: !!f.residency,
+    residenceYears: f.residenceYears !== '' ? Number(f.residenceYears) : '',
+    income: f.income !== '' ? Number(f.income) : '',
+    gender: f.gender || '',
+    category: f.category || '',
+    occupation: f.occupation ? String(f.occupation).trim() : '',
+    disability: !!f.disability,
+    disabilityPercentage: f.disability && f.disabilityPercentage !== '' ? Number(f.disabilityPercentage) : '',
+    aadhaar: !!f.aadhaar,
+    receivesOtherPension: !!f.receivesOtherPension,
+    maritalStatus: f.maritalStatus || ''
+  })
 
   const buildProfile = (f) => ({
     age: f.age !== '' ? Number(f.age) : null,
@@ -192,15 +248,66 @@ export default function Eligibility() {
     maritalStatus: '',
     loadingProfile: false,
     error: null,
+    profileError: null,
+    profileSuccess: null,
+    profileSaving: false,
     evalLoading: false,
     results: null
   })
+
+  const saveProfile = async () => {
+    const validationErrors = validateProfileForSave(form)
+    if (validationErrors.length) {
+      setForm(prev => ({
+        ...prev,
+        profileError: validationErrors.join(' '),
+        profileSuccess: null
+      }))
+      return
+    }
+
+    setForm(prev => ({
+      ...prev,
+      profileSaving: true,
+      profileError: null,
+      profileSuccess: null
+    }))
+
+    try {
+      const payload = {
+        citizenProfile: buildPersistedProfile(form)
+      }
+      await auth.updateProfile(payload)
+      setForm(prev => ({
+        ...prev,
+        profileSaving: false,
+        profileError: null,
+        profileSuccess: 'Profile updated successfully. Redirecting to your dashboard...'
+      }))
+      setTimeout(() => {
+        navigate('/dashboard')
+      }, 900)
+    } catch (err) {
+      setForm(prev => ({
+        ...prev,
+        profileSaving: false,
+        profileError: err?.response?.data?.error || 'Failed to update profile.',
+        profileSuccess: null
+      }))
+    }
+  }
 
   return (
     <div className="schemes-container">
       <div className="eligibility-panel">
         <h2>Eligibility Questionnaire</h2>
         <p className="muted">Provide basic details to find schemes you may be eligible for. If logged in, your saved profile will pre-fill the form.</p>
+        {isProfileEditMode && (
+          <div className="profile-update-banner" role="status" aria-live="polite">
+            <strong>Update your profile details</strong>
+            <span>Save your information here to keep your dashboard profile up to date.</span>
+          </div>
+        )}
         <div className="reason-box muted" role="note" style={{ marginBottom: 16 }}>
           <strong>Important:</strong> Results are based on the currently available starter rules and data in this platform. They are guidance only and are <strong>not</strong> an official government eligibility decision. Verify current criteria on the relevant official portal before applying.
         </div>
@@ -222,7 +329,7 @@ export default function Eligibility() {
                 <label>
                   <div className="field-label">Gender</div>
                   <select value={form.gender} onChange={e => handleChange('gender', e.target.value)}>
-                    <option value="">Prefer not to say</option>
+                    <option value="">Select Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                     <option value="Other">Other</option>
@@ -232,7 +339,7 @@ export default function Eligibility() {
                 <label>
                   <div className="field-label">Marital status</div>
                   <select value={form.maritalStatus} onChange={e => handleChange('maritalStatus', e.target.value)}>
-                    <option value="">—</option>
+                    <option value="">Select Marital Status</option>
                     <option value="Single">Single</option>
                     <option value="Married">Married</option>
                     <option value="Widowed">Widowed</option>
@@ -298,7 +405,7 @@ export default function Eligibility() {
                 <label>
                   <div className="field-label">Category</div>
                   <select value={form.category} onChange={e => handleChange('category', e.target.value)}>
-                    <option value="">—</option>
+                    <option value="">Select Category</option>
                     <option value="general">General</option>
                     <option value="sc">SC</option>
                     <option value="st">ST</option>
@@ -311,10 +418,13 @@ export default function Eligibility() {
 
             <div className="form-actions">
               <button className="btn-primary" type="submit" disabled={form.evalLoading}>{form.evalLoading ? 'Finding…' : 'Find Eligible Schemes'}</button>
+              <button className="btn-primary btn-save-profile" type="button" onClick={saveProfile} disabled={form.profileSaving}>{form.profileSaving ? 'Saving...' : 'Save Profile'}</button>
               <button type="button" className="btn-ghost" onClick={clear}>Clear</button>
             </div>
 
             {form.error && <div className="empty">{String(form.error)}</div>}
+            {form.profileError && <div className="empty">{String(form.profileError)}</div>}
+            {form.profileSuccess && <div className="profile-save-success" role="status">{form.profileSuccess}</div>}
           </form>
         )}
 

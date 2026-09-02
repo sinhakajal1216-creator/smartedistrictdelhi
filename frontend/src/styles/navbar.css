@@ -2,11 +2,10 @@
   position: sticky;
   top: 0;
   z-index: 200;
-  display: grid;
-  /* Fixed columns to give proper clean separate area to logo, links, and buttons */
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: space-between;
+  gap: 1rem;
   padding: 0.8rem 1.5rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: #0056b3;
@@ -43,17 +42,19 @@
 
 .nav-center {
   display: flex;
+  align-items: center;
   justify-content: center;
+  flex: 1;
   min-width: 0;
 }
 
 .nav-links {
   display: flex;
-  justify-content: center; /* Centered links evenly */
-  gap: 2.2rem; /* Uniform spacing */
+  justify-content: center;
+  gap: 1.5rem;
   align-items: center;
-  flex-wrap: nowrap; /* Prevents center elements from shifting */
-  width: auto;
+  flex-wrap: nowrap;
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -72,48 +73,71 @@
   color: #fff;
 }
 
-/* FIX: Strong alignment standard to prevent English button from shifting down */
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.65rem;
   justify-content: flex-end;
-  flex-wrap: nowrap !important; /* STRICTLY forces buttons to stay on the same line */
+  flex-wrap: nowrap;
 }
 
 .access-tools {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  flex-wrap: nowrap !important; /* Locks structural break controls */
+  gap: 0.5rem;
+  flex-wrap: nowrap;
   justify-content: flex-end;
 }
 
-.lang-toggle {
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  border-radius: 8px;
-  padding: 0.42rem 0.65rem;
-  font-size: 0.82rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap; /* Button text single line wrap text lock */
-}
-
-.lang-toggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.auth-area {
-  display: flex;
+.nav-action-btn {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-height: 2.1rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-action-btn-solid {
+  background: #ffffff;
+  color: var(--primary-dark);
+  border-color: #ffffff;
+}
+
+.nav-action-btn-solid:hover {
+  background: #eaf3ff;
+  border-color: #eaf3ff;
+}
+
+.nav-action-btn-soft {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.nav-action-btn-soft:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-action-btn:focus-visible,
+.nav-links a:focus-visible,
+.brand-link:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.35);
+  outline-offset: 2px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   flex-wrap: nowrap;
 }
 
@@ -121,165 +145,45 @@
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
-}
-
-.nav-dashboard-btn {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.auth-widget {
-  width: 320px;
-  max-width: min(92vw, 320px);
-  background: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.7rem;
-  box-shadow: var(--shadow-soft);
-}
-
-.auth-toggle {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: #f8fbff;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  padding: 0.2rem;
-  margin-bottom: 0.6rem;
-}
-
-.auth-toggle button {
-  border: none;
-  background: transparent;
-  padding: 0.45rem 0.55rem;
-  border-radius: 7px;
-  font-weight: 700;
-  color: var(--text-secondary);
-  cursor: pointer;
-}
-
-.auth-toggle button.active {
-  background: var(--primary);
-  color: #fff;
-}
-
-.auth-form {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.auth-field {
-  display: grid;
-  gap: 0.25rem;
-}
-
-.auth-field label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-.auth-field input {
-  width: 100%;
-  padding: 0.48rem 0.62rem;
-  font-size: 0.9rem;
-}
-
-.auth-field input.input-error {
-  border-color: #dc2626;
-}
-
-.password-input-wrap {
-  position: relative;
-}
-
-.password-toggle {
-  position: absolute;
-  top: 50%;
-  right: 0.45rem;
-  transform: translateY(-50%);
-  border: none;
-  background: transparent;
-  color: var(--primary);
-  font-size: 0.74rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.auth-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.auth-actions button[type='submit'] {
-  flex: 1;
-}
-
-.auth-links {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.auth-link {
-  border: none;
-  background: transparent;
-  color: var(--primary);
-  padding: 0;
-  font-size: 0.78rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.auth-help {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  background: #fffbea;
-  border: 1px solid #fce588;
-  border-radius: 8px;
-  padding: 0.5rem;
-}
-
-.auth-error {
-  font-size: 0.8rem;
-  color: #991b1b;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 0.5rem;
+  white-space: nowrap;
 }
 
 @media (max-width: 1180px) {
   .navbar {
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
+    gap: 0.85rem;
+    padding: 0.75rem 1rem;
   }
 
   .nav-center {
-    justify-content: flex-start;
     overflow-x: auto;
+    justify-content: flex-start;
   }
 
   .nav-links {
-    width: 100%;
     justify-content: flex-start;
-    gap: 1.2rem;
+    gap: 1rem;
+    min-width: max-content;
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 980px) {
+  .user-name {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
   .navbar {
-    grid-template-columns: auto 1fr;
-    padding: 0.7rem 1.2rem;
+    padding: 0.7rem 0.8rem;
   }
 
-  .nav-links {
-    gap: 1rem;
+  .brand-text {
+    font-size: 0.94rem;
+  }
+
+  .nav-action-btn {
+    min-height: 2rem;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.82rem;
   }
 }
