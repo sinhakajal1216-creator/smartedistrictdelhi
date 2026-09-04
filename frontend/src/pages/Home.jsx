@@ -59,7 +59,7 @@ export default function Home() {
         if (!mounted) return
         setServerDepartments(dRes.data?.departments || dRes.departments || [])
         setServerCategories(cRes.data?.categories || cRes.categories || [])
-      } catch {
+      } catch (e) {
         // ignore server list failures
       }
     })()
@@ -113,52 +113,10 @@ export default function Home() {
   if (isHomeView) {
     return (
       <div className="identity-page">
-        <section className="identity-hero" aria-label="SevaSphere home hero">         
-          <div className="identity-hero-media" aria-hidden="true">
-            <img
-              className= "identity-hero-shot"
-              src= "https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
-              alt=""
-              loading="eager"
-              decoding="async"
-            />
-            {/* <picture className="identity-hero-shot identity-hero-shot--india-gate">
-              <source
-                media="(max-width: 680px)"
-                srcSet="homepic.jpeg"
-              />
-              <source
-                media="(min-width: 681px)"
-                srcSet="homepic.jpeg"
-              />
-              <img
-                src="homepic.jpeg"
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
-            <picture className="identity-hero-shot identity-hero-shot--red-fort">
-              <source
-                media="(max-width: 680px)"
-                srcSet="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
-              />
-              <source
-                media="(min-width: 681px)"
-                srcSet="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
-              />
-              <img
-                src="https://www.gozocabs.com/blog/wp-content/uploads/2024/12/Explore-the-Historical-Marvels-1.jpg"
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            </picture> */}
-            <div className="identity-hero-overlay" />
-          </div>
-
+        <section className="identity-hero" aria-label="SmartEDistrict Delhi home hero">
           <div className="identity-hero-inner">
-            <h1>SevaSphere</h1>
+            <span className="eyebrow">Delhi e-District</span>
+            <h1>SmartEDistrict Delhi</h1>
             <p>One Platform. Every Citizen Service.</p>
           </div>
         </section>
@@ -169,39 +127,22 @@ export default function Home() {
   return (
     <div className="schemes-container">
       <section className="search-panel card">
-        <form className="service-controls" onSubmit={onSearch}>
-          <div className="service-controls-row">
-            <label className="service-control-field service-control-field-search">
-              <span className="control-label">Search services</span>
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                placeholder="Search services, certificates or keywords"
-              />
-            </label>
-            <div className="service-control-actions">
-              <button className="btn-primary service-control-btn" type="submit">Search</button>
-              <button type="button" className="btn-ghost service-control-btn" onClick={clearFilters}>Clear</button>
-            </div>
-          </div>
-
-          <div className="service-controls-row">
-            <label className="service-control-field">
-              <span className="control-label">Department</span>
-              <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                <option value="">Select Department</option>
-                {departments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
-              </select>
-            </label>
-            <label className="service-control-field">
-              <span className="control-label">Category</span>
-              <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                <option value="">Select Category</option>
-                {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
-              </select>
-            </label>
-          </div>
+        <form className="search-row" onSubmit={onSearch}>
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search services, certificates or keywords" />
+          <button className="btn-primary" type="submit">Search</button>
+          <button type="button" className="btn-ghost" onClick={clearFilters}>Clear</button>
         </form>
+
+        <div className="filter-row">
+          <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+            <option value="">All departments</option>
+            {departments.map((dep) => <option key={dep} value={dep}>{dep}</option>)}
+          </select>
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">All categories</option>
+            {categories.map((cat) => <option key={cat} value={cat}>{cat}</option>)}
+          </select>
+        </div>
       </section>
 
       {loading && <div className="loading">Loading services…</div>}
