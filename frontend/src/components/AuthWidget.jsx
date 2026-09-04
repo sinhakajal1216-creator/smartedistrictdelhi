@@ -59,11 +59,6 @@ export default function AuthWidget({ onAuthSuccess, initialMode = 'login' }) {
   return (
     <div className="auth-card-container">
       <div className="auth-card-header">
-        <img
-          src="/sadi.png"
-          alt="SevaSphere Logo"
-          className="auth-card-logo"
-        />
         <h2 className="auth-card-title">SevaSphere</h2>
         <p className="auth-card-subtitle">
           {mode === 'login' ? 'Citizen Sign In' : 'Create Citizen Account'}
