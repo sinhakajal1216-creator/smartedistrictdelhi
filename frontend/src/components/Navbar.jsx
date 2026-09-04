@@ -1,65 +1,138 @@
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import '../styles/navbar.css'
 
 export default function Navbar({
   user,
-  onLogout,
-  language,
-  onToggleLanguage
+  onLogout
 }) {
-  const afterLoginLinks = [
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const location = useLocation()
+
+  const navLinks = [
     { to: '/schemes', label: 'Services' },
     { to: '/eligibility', label: 'Eligibility' },
-    { to: '/dashboard', label: 'Track' },
     { to: '/sdm-locator', label: 'SDM Finder' },
     { to: '/why-smartedistrict', label: 'Why SevaSphere' }
   ]
 
   return (
     <header className="navbar">
-      <div className="nav-left">
-        <Link to="/" className="brand-link">
-          <div className="logo">
-  {/* <img src="delhi.png" alt="SevaSphere Logo" /> */}
-  <span>SevaSphere</span>
-</div>
-        </Link>
-      </div>
+      <div className="navbar-container">
+        {/* Left: Brand */}
+        <div className="nav-left">
+          <Link to="/" className="brand-link" onClick={() => setMobileOpen(false)}>
+            <img
+              src="/sadi.png"
+              alt="SevaSphere Logo"
+              className="logo"
+            />
+            <span className="brand-text">SevaSphere</span>
+          </Link>
+        </div>
 
-      <div className="nav-center">
-        <nav className="nav-links" aria-label="Primary navigation">
-          {user ? (
-            afterLoginLinks.map((link) => (
-              <Link key={link.to} to={link.to}>{link.label}</Link>
-            ))
-          ) : (
-            <>
-              <Link to="/">Home</Link>
-              <Link to="/login">Login / Register</Link>
-              {/* <Link to="/register">Register</Link> */}
-            </>
-          )}
-        </nav>
-      </div>
-
-
-        <div className="nav-right">
-          <div className="access-tools" aria-label="Accessibility controls">
-            <button type="button" className="lang-toggle" onClick={onToggleLanguage}>
-              {language === 'en' ? 'हिंदी' : 'English'}
-            </button>
+        {/* Center: Desktop Navigation Links */}
+        <nav className="nav-center" aria-label="Primary navigation">
+          <div className="nav-links">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={location.pathname === link.to ? 'active' : ''}
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
+        </nav>
 
+        {/* Right: Desktop User Info / Auth Actions */}
+        <div className="nav-right">
           {user ? (
             <div className="user-info">
-              <span className="user-name">Hi, {user.name}</span>
-              <Link to="/dashboard" className="btn-ghost nav-dashboard-btn">Dashboard</Link>
-              <button type="button" className="btn-ghost" onClick={onLogout}>Logout</button>
+              <span className="user-greeting">Hi, {user.name}</span>
+              <Link to="/dashboard" className="nav-action-btn nav-action-btn-solid">
+                Dashboard
+              </Link>
+              <button
+                type="button"
+                className="nav-action-btn nav-action-btn-soft"
+                onClick={onLogout}
+              >
+                Logout
+              </button>
             </div>
           ) : (
-            <Link to="/login" className="btn-login-register">Login / Register</Link>
+            <Link to="/login" className="nav-action-btn nav-action-btn-solid">
+              Login / Register
+            </Link>
           )}
+
+          {/* Mobile hamburger button */}
+          <button
+            type="button"
+            className={`mobile-hamburger ${mobileOpen ? 'open' : ''}`}
+            aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((prev) => !prev)}
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
         </div>
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      {mobileOpen && (
+        <div className="mobile-menu" aria-label="Mobile navigation">
+          <nav className="mobile-nav-links">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`mobile-nav-link ${location.pathname === link.to ? 'active' : ''}`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="mobile-auth-actions">
+            {user ? (
+              <>
+                <div className="mobile-user-greeting">Hi, {user.name}</div>
+                <Link
+                  to="/dashboard"
+                  className="nav-action-btn nav-action-btn-solid mobile-action-btn"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <button
+                  type="button"
+                  className="nav-action-btn nav-action-btn-soft mobile-action-btn"
+                  onClick={() => {
+                    setMobileOpen(false)
+                    onLogout()
+                  }}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="nav-action-btn nav-action-btn-solid mobile-action-btn"
+                onClick={() => setMobileOpen(false)}
+              >
+                Login / Register
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   )
 }

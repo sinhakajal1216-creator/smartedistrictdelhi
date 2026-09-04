@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import * as auth from '../services/auth'
 
 export default function AuthWidget({ onAuthSuccess, initialMode = 'login' }) {
@@ -10,101 +10,210 @@ export default function AuthWidget({ onAuthSuccess, initialMode = 'login' }) {
   const [error, setError] = useState(null)
   const [fieldErrors, setFieldErrors] = useState({})
   const [showPassword, setShowPassword] = useState(false)
-  const [helpMessage, setHelpMessage] = useState('')
 
-  const OFFICIAL_PORTAL_URL = 'https://edistrict.delhigovt.nic.in/'
-
-  useEffect(() => {
-    setMode(initialMode)
-  }, [initialMode])
+  const switchMode = (nextMode) => {
+    setMode(nextMode)
+    setError(null)
+    setFieldErrors({})
+  }
 
   const validate = () => {
     const nextErrors = {}
-    if (mode === 'register' && !name.trim()) nextErrors.name = 'Name is required'
-    if (!email.trim()) nextErrors.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) nextErrors.email = 'Enter a valid email address'
-    if (!password) nextErrors.password = 'Password is required'
-    else if (password.length < 4) nextErrors.password = 'Password must be at least 4 characters'
+    if (mode === 'register' && !name.trim()) {
+      nextErrors.name = 'Full name is required'
+    }
+    if (!email.trim()) {
+      nextErrors.email = 'Email address is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      nextErrors.email = 'Enter a valid email address'
+    }
+    if (!password) {
+      nextErrors.password = 'Password is required'
+    } else if (password.length < 8) {
+      nextErrors.password = 'Password must be at least 8 characters'
+    }
     setFieldErrors(nextErrors)
     return Object.keys(nextErrors).length === 0
   }
 
   const submit = async (e) => {
     e.preventDefault()
-    setHelpMessage('')
     setError(null)
     if (!validate()) return
     setLoading(true)
     try {
       if (mode === 'login') {
         const data = await auth.login(email, password)
-        onAuthSuccess && onAuthSuccess(data.user)
+        if (onAuthSuccess) onAuthSuccess(data.user)
       } else {
         const data = await auth.register(name, email, password)
-        onAuthSuccess && onAuthSuccess(data.user)
+        if (onAuthSuccess) onAuthSuccess(data.user)
       }
     } catch (err) {
-      setError(err?.response?.data?.error || err.message || 'Auth failed')
+      setError(err?.response?.data?.error || err.message || 'Authentication failed. Please check your credentials.')
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div className="auth-widget">
-      <div className="auth-toggle">
-        <button type="button" className={mode === 'login' ? 'active' : ''} onClick={() => { setMode('login'); setError(null); setFieldErrors({}); }}>
-          Login
+    <div className="auth-card-container">
+      <div className="auth-card-header">
+        <img
+          src="/sadi.png"
+          alt="SevaSphere Logo"
+          className="auth-card-logo"
+        />
+        <h2 className="auth-card-title">SevaSphere</h2>
+        <p className="auth-card-subtitle">
+          {mode === 'login' ? 'Citizen Sign In' : 'Create Citizen Account'}
+        </p>
+      </div>
+
+      <div className="auth-segmented-switch" role="tablist" aria-label="Authentication type">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={mode === 'login'}
+          className={`auth-switch-btn ${mode === 'login' ? 'active' : ''}`}
+          onClick={() => switchMode('login')}
+        >
+          Sign In
         </button>
-        <button type="button" className={mode === 'register' ? 'active' : ''} onClick={() => { setMode('register'); setError(null); setFieldErrors({}); }}>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={mode === 'register'}
+          className={`auth-switch-btn ${mode === 'register' ? 'active' : ''}`}
+          onClick={() => switchMode('register')}
+        >
           Register
         </button>
       </div>
-      <form onSubmit={submit} className="auth-form">
+
+      {error && (
+        <div className="auth-error-banner" role="alert">
+          <span className="auth-error-icon" aria-hidden="true">⚠️</span>
+          <span>{error}</span>
+        </div>
+      )}
+
+      <form onSubmit={submit} className="auth-form" noValidate>
         {mode === 'register' && (
-          <div className="auth-field">
-            <label htmlFor="auth-name">Full Name</label>
-            <input id="auth-name" className={fieldErrors.name ? 'input-error' : ''} value={name} onChange={(e) => setName(e.target.value)} />
+          <div className="auth-form-group">
+            <label htmlFor="auth-name" className="auth-label">
+              Full Name
+            </label>
+            <input
+              id="auth-name"
+              type="text"
+              name="name"
+              autoComplete="name"
+              placeholder="e.g. Kajal Sinha"
+              className={`auth-input ${fieldErrors.name ? 'input-invalid' : ''}`}
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value)
+                if (fieldErrors.name) setFieldErrors(prev => ({ ...prev, name: null }))
+              }}
+              disabled={loading}
+            />
+            {fieldErrors.name && (
+              <span className="auth-error-message" role="alert">
+                {fieldErrors.name}
+              </span>
+            )}
           </div>
         )}
-        <div className="auth-field">
-          <label htmlFor="auth-email">Email</label>
-          <input id="auth-email" type="email" className={fieldErrors.email ? 'input-error' : ''} value={email} onChange={(e) => setEmail(e.target.value)} />
+
+        <div className="auth-form-group">
+          <label htmlFor="auth-email" className="auth-label">
+            Email Address
+          </label>
+          <input
+            id="auth-email"
+            type="email"
+            name="email"
+            autoComplete="email"
+            placeholder="e.g. citizen@example.com"
+            className={`auth-input ${fieldErrors.email ? 'input-invalid' : ''}`}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              if (fieldErrors.email) setFieldErrors(prev => ({ ...prev, email: null }))
+            }}
+            disabled={loading}
+          />
+          {fieldErrors.email && (
+            <span className="auth-error-message" role="alert">
+              {fieldErrors.email}
+            </span>
+          )}
         </div>
-        <div className="auth-field">
-          <label htmlFor="auth-password">Password</label>
-          <div className="password-input-wrap">
-            <input id="auth-password" type={showPassword ? 'text' : 'password'} className={fieldErrors.password ? 'input-error' : ''} value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button type="button" className="password-toggle" onClick={() => setShowPassword((prev) => !prev)}>
+
+        <div className="auth-form-group">
+          <label htmlFor="auth-password" className="auth-label">
+            Password
+          </label>
+          <div className="password-field-wrap">
+            <input
+              id="auth-password"
+              type={showPassword ? 'text' : 'password'}
+              name="password"
+              autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+              placeholder="At least 8 characters"
+              className={`auth-input password-input ${fieldErrors.password ? 'input-invalid' : ''}`}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value)
+                if (fieldErrors.password) setFieldErrors(prev => ({ ...prev, password: null }))
+              }}
+              disabled={loading}
+            />
+            <button
+              type="button"
+              className="password-reveal-btn"
+              onClick={() => setShowPassword(prev => !prev)}
+              aria-label={showPassword ? 'Hide password' : 'Show password'}
+              tabIndex={0}
+            >
               {showPassword ? 'Hide' : 'Show'}
             </button>
           </div>
-        </div>
-        <div className="auth-actions">
-          <button className="btn-primary" type="submit" disabled={loading}>{loading ? 'Please wait...' : (mode === 'login' ? 'Login' : 'Register')}</button>
+          {fieldErrors.password && (
+            <span className="auth-error-message" role="alert">
+              {fieldErrors.password}
+            </span>
+          )}
         </div>
 
-        {mode === 'login' && (
-          <div className="auth-links">
-            <button
-              type="button"
-              className="auth-link"
-              onClick={() => setHelpMessage('Forgot User ID: Use the registered email used at signup. If unavailable, recover via official Delhi e-District support.')}
-            >
-              Forgot User ID
-            </button>
-            <button
-              type="button"
-              className="auth-link"
-              onClick={() => setHelpMessage(`Forgot Password: Reset using the official Delhi e-District support flow at ${OFFICIAL_PORTAL_URL}`)}
-            >
-              Forgot Password
-            </button>
-          </div>
-        )}
+        <button
+          type="submit"
+          className="btn-primary auth-submit-btn"
+          disabled={loading}
+        >
+          {loading ? (
+            <span className="auth-spinner-label">
+              <span className="auth-spinner" aria-hidden="true" />
+              <span>Verifying...</span>
+            </span>
+          ) : (
+            mode === 'login' ? 'Sign In' : 'Create Citizen Account'
+          )}
+        </button>
 
-        {helpMessage && <div className="auth-help">{helpMessage}</div>}
-        {error && <div className="auth-error">{error}</div>}
+        <div className="auth-notice-box">
+          <p>
+            Official Delhi Government credentials and portal records are managed exclusively on the{' '}
+            <a
+              href="https://edistrict.delhigovt.nic.in/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              official Delhi e-District portal
+            </a>.
+          </p>
+        </div>
       </form>
     </div>
   )

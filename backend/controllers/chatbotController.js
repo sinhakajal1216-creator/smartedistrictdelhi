@@ -1,14 +1,22 @@
 const chatbotService = require('../services/chatbotService');
 const bhashiniService = require('../services/bhashiniService');
 const lyzrService = require('../services/lyzrService');
+const {
+  MAX_MESSAGE_LENGTH,
+  MAX_AUDIO_BASE64_LENGTH,
+  pickAllowedProfile,
+  sanitizeContext,
+  sanitizeLang
+} = require('../utils/chatbotInput');
 
-// Intents that are good candidates for knowledge/RAG queries handled by Lyzr.
-const LYZR_KNOWLEDGE_INTENTS = new Set([
+const LOCAL_INTENTS = new Set([
+  'SDM_QUERY',
   'DOCUMENT_QUERY',
+  'ELIGIBILITY_QUERY',
   'APPLICATION_QUERY',
-  'PROCESSING_TIME_QUERY',
   'SCHEME_LIST_QUERY',
-  'PROJECT_QUERY'
+  'PROJECT_QUERY',
+  'TRACKING_QUERY'
 ]);
 
 exports.message = async (req, res) => {
@@ -29,22 +37,26 @@ exports.message = async (req, res) => {
       });
     }
 
-    const trimmed = message.trim();
+    const trimmed = message.trim().slice(0, MAX_MESSAGE_LENGTH);
+    const safeProfile = pickAllowedProfile(profile);
+    const safeContext = sanitizeContext(context);
+    const safeLang = sanitizeLang(lang);
 
-    // Decide whether to route to Lyzr for knowledge/RAG. If Lyzr is not configured or
-    // the intent is not in the knowledge set we'll fall back to the deterministic service.
     let response = null;
 
     try {
-      const intent = chatbotService.detectIntent(trimmed, context || {});
+      const intent = chatbotService.detectIntent(trimmed, safeContext);
 
-      if (LYZR_KNOWLEDGE_INTENTS.has(intent) && lyzrService.isConfigured()) {
-        // Query Lyzr for knowledge-focused intents. Provide profile/context where relevant.
-        const lyzrResult = await lyzrService.queryLyzr({
+      if (LOCAL_INTENTS.has(intent)) {
+        response = chatbotService.processMessage({
           message: trimmed,
-          profile: profile || {},
-          context: context || {},
-          userId: (profile && (profile.email || profile.userId)) || undefined
+          profile: safeProfile,
+          context: safeContext
+        });
+        response.source = response.source || 'local';
+      } else if (lyzrService.isConfigured()) {
+        const lyzrResult = await lyzrService.queryLyzr({
+          message: trimmed
         });
 
         if (lyzrResult && lyzrResult.status === 'success' && lyzrResult.answer) {
@@ -54,29 +66,22 @@ exports.message = async (req, res) => {
             answer: String(lyzrResult.answer),
             source: 'lyzr'
           };
-        } else {
-          // If Lyzr returned configuration required or an error, log and fallback.
-          console.warn('Lyzr response not usable, falling back to chatbotService:', lyzrResult);
         }
       }
     } catch (lyzrCallError) {
-      // If Lyzr invocation itself throws, log and fall back to existing service
-      console.warn('Lyzr invocation failed, falling back to chatbotService:', lyzrCallError && lyzrCallError.message ? lyzrCallError.message : lyzrCallError);
+      console.warn('Assistant fallback in use');
     }
 
-    // If Lyzr was not used or returned no usable answer, use existing deterministic service.
     if (!response) {
       response = chatbotService.processMessage({
         message: trimmed,
-        profile: profile || {},
-        context: context || {}
+        profile: safeProfile,
+        context: safeContext
       });
-      // mark source as local deterministic service
       response.source = response.source || 'local';
     }
 
-    // Handle language translation request via BHASHINI service if requested (e.g. 'hi')
-    if (lang && lang.toLowerCase() === 'hi') {
+    if (safeLang === 'hi') {
       try {
         const translationResult = await bhashiniService.translateText(response.answer, 'en', 'hi');
         if (translationResult.status === 'success') {
@@ -84,31 +89,18 @@ exports.message = async (req, res) => {
         }
         response.bhashiniStatus = translationResult.status;
       } catch (tErr) {
-        console.warn('Bhashini translation failed:', tErr && tErr.message ? tErr.message : tErr);
         response.bhashiniStatus = 'error';
       }
     }
-console.log('\n========== FINAL CONTROLLER RESPONSE ==========');
-console.log('KEYS:', Object.keys(response));
-console.log('ANSWER LENGTH:', response.answer?.length);
-console.log('HAS RAW:', Object.prototype.hasOwnProperty.call(response, 'raw'));
-console.log('HAS MODULE_OUTPUTS:', Object.prototype.hasOwnProperty.call(response, 'module_outputs'));
-console.log('================================================\n');
-
 
     return res.json(response);
-  } 
-  catch (error) {
-    console.error("🔥 CHATBOT ERROR:");
-    console.error(error);
-    console.error("MESSAGE:", error.message);
-    console.error("STACK:", error.stack);
-
-    res.status(500).json({
-        error: "Chatbot error",
-        message: error.message
+  } catch (error) {
+    console.error('Chatbot request failed');
+    return res.status(500).json({
+      error: 'Chatbot error',
+      message: 'Sorry, I could not process that request right now. Please try again.'
     });
-}
+  }
 };
 
 exports.speechToText = async (req, res) => {
@@ -128,10 +120,17 @@ exports.speechToText = async (req, res) => {
       });
     }
 
-    const speechResult = await bhashiniService.speechToText(audioBase64.trim(), lang || 'hi');
+    if (audioBase64.length > MAX_AUDIO_BASE64_LENGTH) {
+      return res.status(413).json({
+        error: 'Audio too large',
+        message: 'Record a shorter clip and try again.'
+      });
+    }
+
+    const speechResult = await bhashiniService.speechToText(audioBase64.trim(), sanitizeLang(lang) === 'hi' ? 'hi' : 'en');
     return res.json(speechResult);
   } catch (error) {
-    console.error('Chatbot speech-to-text error:', error);
+    console.error('Speech-to-text request failed');
     return res.status(500).json({
       error: 'Speech-to-text error',
       message: 'Unable to process speech-to-text request.'

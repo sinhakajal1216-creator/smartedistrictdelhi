@@ -1,18 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function ArVrGuidanceModal({ sdmOffice, onClose }) {
-  const [arSupported, setArSupported] = useState(false);
+  const arSupported = typeof navigator !== 'undefined' && Boolean(navigator.xr || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia));
   const [activeMode, setActiveMode] = useState('guided'); // 'guided' or 'ar'
   const [currentStep, setCurrentStep] = useState(0);
-
-  useEffect(() => {
-    // Check if WebXR or camera stream capabilities exist
-    if (navigator.xr || (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)) {
-      setArSupported(true);
-    } else {
-      setArSupported(false);
-    }
-  }, []);
 
   if (!sdmOffice || !sdmOffice.sdmOffice) return null;
 

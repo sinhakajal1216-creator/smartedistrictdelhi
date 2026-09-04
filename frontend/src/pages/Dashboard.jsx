@@ -1,6 +1,6 @@
 ﻿import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AlertCircle, CheckCircle, Clock3, FileCheck, Inbox, MapPin, Search } from 'lucide-react'
+import { CheckCircle, FileCheck, MapPin, Search } from 'lucide-react'
 import * as auth from '../services/auth'
 import '../styles/dashboard.css'
 
@@ -36,7 +36,7 @@ export default function Dashboard() {
       <div className="dashboard-container">
         <div className="dashboard-state">
           <h3>Loading your dashboard...</h3>
-          <p>Retrieving citizen details and application records.</p>
+          <p>Retrieving your citizen profile.</p>
         </div>
       </div>
     )
@@ -57,21 +57,15 @@ export default function Dashboard() {
   }
 
   const prof = user.citizenProfile || {}
-  const apps = Array.isArray(user.applications) ? user.applications : []
   const profileEditPath = '/eligibility'
   const profileEditState = { fromProfileEdit: true }
   const cards = [
     { title: 'Find a Government Service', path: '/schemes', description: 'Browse available citizen services and official guidance.', icon: Search },
     { title: 'Check My Eligibility', path: '/eligibility', description: 'Review service eligibility with the latest rules and profile data.', icon: CheckCircle },
     { title: 'Find Required Documents', path: '/schemes', description: 'Review exact document requirements for the service you want.', icon: FileCheck },
-    { title: 'Find My Correct SDM Office', path: '/sdm-locator', description: 'Confirm your locality, ward and assigned SDM office.', icon: MapPin },
-    { title: 'Track My Application', path: '/dashboard', description: 'Monitor progress and next steps for each application.', icon: Clock3 }
+    { title: 'Find My Correct SDM Office', path: '/sdm-locator', description: 'Confirm your locality, ward and assigned SDM office.', icon: MapPin }
   ]
 
-  const timelineSteps = ['Submitted', 'Verification', 'SDM Review', 'Approved']
-  const approved = apps.filter((item) => ['approved', 'completed', 'success'].includes(String(item.status || '').toLowerCase()))
-  const inProgress = apps.filter((item) => ['in_progress', 'under_process', 'pending', 'current'].includes(String(item.status || '').toLowerCase()))
-  const rejected = apps.filter((item) => String(item.status || '').toLowerCase() === 'rejected')
   const hasResidencyBoolean = typeof prof.residency === 'boolean'
   const hasDelhiResidentBoolean = typeof prof.delhiResident === 'boolean'
   const residencyKnown = hasResidencyBoolean || hasDelhiResidentBoolean
@@ -79,7 +73,6 @@ export default function Dashboard() {
   const hasAge = prof.age !== null && prof.age !== undefined && prof.age !== ''
   const hasResidenceYears = prof.residenceYears !== null && prof.residenceYears !== undefined && prof.residenceYears !== ''
   const hasIncome = prof.income !== null && prof.income !== undefined && prof.income !== ''
-  const timelineCurrentStep = approved.length ? 3 : (inProgress.length ? 2 : (apps.length ? 1 : 0))
 
   const renderProfilePrompt = (prompt) => (
     <Link to={profileEditPath} state={profileEditState} className="profile-complete-link">
@@ -95,7 +88,7 @@ export default function Dashboard() {
           <div className="subtext">Welcome back, <strong>{user.name}</strong></div>
         </div>
         <Link to="/schemes" className="btn-primary dashboard-header-action" style={{ textDecoration: 'none', display: 'inline-block' }}>
-          + New Application
+          Explore Services
         </Link>
       </header>
 
@@ -142,40 +135,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      </section>
-
-      <section className="dashboard-card timeline-panel">
-        <h3>Applications timeline</h3>
-        <div className="timeline-step-row">
-          {timelineSteps.map((step, index) => (
-            <div
-              key={step}
-              className={`timeline-step ${index < timelineCurrentStep ? 'completed' : ''} ${index === timelineCurrentStep ? 'active' : ''}`}
-            >
-              <span>{index + 1}</span>
-              <strong>{step}</strong>
-            </div>
-          ))}
-        </div>
-        <div className="timeline-note">Submitted → Verification → SDM Review → Approved</div>
-      </section>
-
-      <section className="dashboard-card">
-        <h3>Application summary</h3>
-        <div className="application-sections">
-          <div>
-            <h4>Approved</h4>
-            {approved.length ? approved.map((item) => <div key={item.id || item.applicationId} className="application-card"><strong>{item.serviceName || item.service || 'Service Application'}</strong><span>{item.status || 'Approved'}</span></div>) : <div className="app-empty"><CheckCircle size={18} aria-hidden /><span>No approved applications in your record.</span></div>}
-          </div>
-          <div>
-            <h4>In Progress</h4>
-            {inProgress.length ? inProgress.map((item) => <div key={item.id || item.applicationId} className="application-card"><strong>{item.serviceName || item.service || 'Service Application'}</strong><span>{item.status || 'In progress'}</span></div>) : <div className="app-empty"><Inbox size={18} aria-hidden /><span>No applications are currently in progress.</span></div>}
-          </div>
-          <div>
-            <h4>Rejected</h4>
-            {rejected.length ? rejected.map((item) => <div key={item.id || item.applicationId} className="application-card"><strong>{item.serviceName || item.service || 'Service Application'}</strong><span>{item.rejectionReason || 'Review available records for rejection details.'}</span></div>) : <div className="app-empty"><AlertCircle size={18} aria-hidden /><span>No rejected applications found in your record.</span></div>}
-          </div>
-        </div>
       </section>
     </div>
   )

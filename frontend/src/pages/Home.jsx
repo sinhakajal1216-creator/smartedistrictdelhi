@@ -1,5 +1,6 @@
-﻿import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { Search, FileText, CheckCircle2, MapPin, Bot } from 'lucide-react'
 import api from '../services/api'
 import SchemeCard from '../components/SchemeCard'
 import '../styles/schemes.css'
@@ -43,14 +44,14 @@ export default function Home() {
     const deptParam = searchParams.get('department') || ''
     const catParam = searchParams.get('category') || ''
 
-    setQ(qParam)
-    setDepartment(deptParam)
-    setCategory(catParam)
-
-    fetchSchemes({ q: qParam, department: deptParam || undefined, category: catParam || undefined, limit: 200 })
-
     let mounted = true
     ;(async () => {
+      setQ(qParam)
+      setDepartment(deptParam)
+      setCategory(catParam)
+
+      await fetchSchemes({ q: qParam, department: deptParam || undefined, category: catParam || undefined, limit: 200 })
+
       try {
         const [dRes, cRes] = await Promise.all([
           api.get('/schemes/departments'),
@@ -59,7 +60,7 @@ export default function Home() {
         if (!mounted) return
         setServerDepartments(dRes.data?.departments || dRes.departments || [])
         setServerCategories(cRes.data?.categories || cRes.categories || [])
-      } catch (e) {
+      } catch {
         // ignore server list failures
       }
     })()
@@ -89,7 +90,6 @@ export default function Home() {
     if (department) search.set('department', department)
     if (category) search.set('category', category)
     navigate({ pathname: '/schemes', search: search.toString() }, { replace: true })
-    fetchSchemes({ q, department: department || undefined, category: category || undefined })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [department, category, isHomeView])
 
@@ -113,11 +113,105 @@ export default function Home() {
   if (isHomeView) {
     return (
       <div className="identity-page">
-        <section className="identity-hero" aria-label="SmartEDistrict Delhi home hero">
+        <section className="identity-hero" aria-label="SevaSphere home hero">
+          <div className="identity-hero-media" aria-hidden="true">
+            <picture className="identity-hero-shot identity-hero-shot--india-gate">
+              <source
+                media="(max-width: 680px)"
+                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+              />
+              <source
+                media="(min-width: 681px)"
+                srcSet="https://upload.wikimedia.org/wikipedia/commons/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
+                alt=""
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+            <picture className="identity-hero-shot identity-hero-shot--red-fort">
+              <source
+                media="(max-width: 680px)"
+                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
+              />
+              <source
+                media="(min-width: 681px)"
+                srcSet="https://upload.wikimedia.org/wikipedia/commons/b/b8/Red_fort_new_delhi_with_indian_flag.jpg"
+              />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
+                alt=""
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
+            <div className="identity-hero-overlay" />
+          </div>
+
           <div className="identity-hero-inner">
             <span className="eyebrow">Delhi e-District</span>
-            <h1>SmartEDistrict Delhi</h1>
+            <h1>SevaSphere</h1>
             <p>One Platform. Every Citizen Service.</p>
+
+            <form className="identity-hero-search" onSubmit={onSearch}>
+              <div className="identity-search-box">
+                <Search className="identity-search-icon" size={20} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="Search services, certificates or keywords"
+                  aria-label="Search citizen services"
+                />
+                <button type="submit" className="btn-primary">
+                  Search
+                </button>
+              </div>
+            </form>
+
+            <div className="stitch-cards-grid" aria-label="Portal Capabilities">
+              <div className="stitch-card">
+                <div className="stitch-card-icon" aria-hidden="true">
+                  <FileText size={18} />
+                </div>
+                <div className="stitch-card-body">
+                  <h3>Government Services & Schemes</h3>
+                  <p>Official certificates, revenue department records, and social welfare programs</p>
+                </div>
+              </div>
+
+              <div className="stitch-card">
+                <div className="stitch-card-icon" aria-hidden="true">
+                  <CheckCircle2 size={18} />
+                </div>
+                <div className="stitch-card-body">
+                  <h3>Eligibility Evaluation</h3>
+                  <p>Rule-based pre-application checks for citizen criteria and entitlements</p>
+                </div>
+              </div>
+
+              <div className="stitch-card">
+                <div className="stitch-card-icon" aria-hidden="true">
+                  <MapPin size={18} />
+                </div>
+                <div className="stitch-card-body">
+                  <h3>SDM & Ward Locator</h3>
+                  <p>Find your designated administrative office by residential ward and locality</p>
+                </div>
+              </div>
+
+              <div className="stitch-card">
+                <div className="stitch-card-icon" aria-hidden="true">
+                  <Bot size={18} />
+                </div>
+                <div className="stitch-card-body">
+                  <h3>Dilli Sahayak AI Assistant</h3>
+                  <p>Conversational citizen guidance for required documents and procedures</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>

@@ -5,9 +5,6 @@ export default function SchemeCard({ scheme }) {
   const { _id, id, code, title, description, department, categories, officialLink } = scheme
   const schemeId = id || code || _id
 
-  const openAssistant = () => {
-    window.dispatchEvent(new Event('open-assistant'))
-  }
 
   const hasDepartment = department && String(department).trim().length > 0
   const hasCategories = Array.isArray(categories) && categories.filter(Boolean).length > 0

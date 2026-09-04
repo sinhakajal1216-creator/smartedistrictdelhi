@@ -1,5 +1,11 @@
 const authService = require('../services/authService');
 
+function publicError(err, fallback) {
+  const status = err.statusCode || 500;
+  const message = status >= 500 ? fallback : (err.message || fallback);
+  return { status, message };
+}
+
 exports.register = (req, res) => {
   try {
     const result = authService.registerUser(req.body || {});
@@ -9,8 +15,8 @@ exports.register = (req, res) => {
       user: result.user
     });
   } catch (err) {
-    const status = err.statusCode || 500;
-    return res.status(status).json({ error: err.message || 'Registration failed' });
+    const { status, message } = publicError(err, 'Registration failed');
+    return res.status(status).json({ error: message });
   }
 };
 
@@ -23,48 +29,29 @@ exports.login = (req, res) => {
       user: result.user
     });
   } catch (err) {
-    const status = err.statusCode || 500;
-    return res.status(status).json({ error: err.message || 'Login failed' });
+    const { status, message } = publicError(err, 'Login failed');
+    return res.status(status).json({ error: message });
   }
 };
 
 exports.me = (req, res) => {
-  try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ error: 'Unauthorized: Missing token' });
-    }
-
-    const user = authService.getUserFromToken(authHeader);
-    if (!user) {
-      return res.status(401).json({ error: 'Unauthorized: Invalid or expired token' });
-    }
-
-    return res.status(200).json({ user });
-  } catch (err) {
-    return res.status(500).json({ error: 'Failed to retrieve profile' });
-  }
+  return res.status(200).json({ user: req.user });
 };
 
 exports.updateProfile = (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ error: 'Unauthorized: Missing token' });
-    }
-
-    const authUser = authService.getUserFromToken(authHeader);
-    if (!authUser) {
-      return res.status(401).json({ error: 'Unauthorized: Invalid or expired token' });
-    }
-
-    const updatedUser = authService.updateUserProfile(authUser.id, req.body || {});
+    const updatedUser = authService.updateUserProfile(req.user.id, req.body || {});
     return res.status(200).json({
       message: 'Profile updated successfully',
       user: updatedUser
     });
   } catch (err) {
-    const status = err.statusCode || 500;
-    return res.status(status).json({ error: err.message || 'Profile update failed' });
+    const { status, message } = publicError(err, 'Profile update failed');
+    return res.status(status).json({ error: message });
   }
+};
+
+exports.logout = (req, res) => {
+  authService.revokeToken(req.headers.authorization);
+  return res.status(200).json({ message: 'Logged out' });
 };

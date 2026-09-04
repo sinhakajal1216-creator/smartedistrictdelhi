@@ -1,14 +1,33 @@
 const crypto = require('crypto');
 
 /**
- * Local Development Storage Mechanism.
- * NOTE: This is an in-memory development store for rapid prototyping.
- * It is NOT intended for production-grade persistence.
+ * In-memory user/session store for the current prototype.
+ * Passwords are hashed with scrypt. Sessions are opaque random tokens.
+ * Replace this with a persistent store before production deployment.
  */
 const users = new Map(); // email -> user record
 const tokens = new Map(); // token -> { userId, expiresAt }
 
-const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+const TOKEN_EXPIRY_MS = 24 * 60 * 60 * 1000;
+const MIN_PASSWORD_LENGTH = 8;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const CITIZEN_PROFILE_ALLOWLIST = [
+  'age',
+  'residency',
+  'delhiResident',
+  'residenceYears',
+  'income',
+  'gender',
+  'category',
+  'occupation',
+  'disability',
+  'disabilityPercentage',
+  'aadhaar',
+  'receivesOtherPension',
+  'maritalStatus',
+  'locality'
+];
 
 function hashPassword(password, salt) {
   return crypto.scryptSync(password, salt, 64).toString('hex');
@@ -35,15 +54,32 @@ function generateToken(userId) {
   return token;
 }
 
+function parseBearerToken(tokenString) {
+  if (!tokenString || typeof tokenString !== 'string') return '';
+  return tokenString.startsWith('Bearer ') ? tokenString.slice(7).trim() : tokenString.trim();
+}
+
+function pickCitizenProfile(source) {
+  if (!source || typeof source !== 'object' || Array.isArray(source)) return {};
+  const next = {};
+  for (const field of CITIZEN_PROFILE_ALLOWLIST) {
+    if (!Object.prototype.hasOwnProperty.call(source, field)) continue;
+    const value = source[field];
+    if (value === undefined || typeof value === 'function' || typeof value === 'object') continue;
+    next[field] = typeof value === 'string' ? value.trim().slice(0, 120) : value;
+  }
+  return next;
+}
+
 function registerUser({ name, email, password }) {
   if (!name || typeof name !== 'string' || !name.trim()) {
     throw { statusCode: 400, message: 'Name is required' };
   }
-  if (!email || typeof email !== 'string' || !email.trim()) {
-    throw { statusCode: 400, message: 'Email is required' };
+  if (!email || typeof email !== 'string' || !EMAIL_PATTERN.test(email.trim())) {
+    throw { statusCode: 400, message: 'A valid email is required' };
   }
-  if (!password || typeof password !== 'string' || password.length < 4) {
-    throw { statusCode: 400, message: 'Password must be at least 4 characters long' };
+  if (!password || typeof password !== 'string' || password.length < MIN_PASSWORD_LENGTH) {
+    throw { statusCode: 400, message: 'Password must be at least 8 characters long' };
   }
 
   const normalizedEmail = email.trim().toLowerCase();
@@ -58,7 +94,7 @@ function registerUser({ name, email, password }) {
 
   const user = {
     id,
-    name: name.trim(),
+    name: name.trim().slice(0, 80),
     email: normalizedEmail,
     passwordHash,
     salt,
@@ -85,7 +121,7 @@ function registerUser({ name, email, password }) {
 }
 
 function loginUser({ email, password }) {
-  if (!email || !password) {
+  if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
     throw { statusCode: 400, message: 'Email and password are required' };
   }
 
@@ -105,8 +141,8 @@ function loginUser({ email, password }) {
 }
 
 function getUserFromToken(tokenString) {
-  if (!tokenString) return null;
-  const cleanToken = tokenString.startsWith('Bearer ') ? tokenString.slice(7).trim() : tokenString.trim();
+  const cleanToken = parseBearerToken(tokenString);
+  if (!cleanToken) return null;
   const session = tokens.get(cleanToken);
 
   if (!session) return null;
@@ -124,36 +160,39 @@ function getUserFromToken(tokenString) {
   return null;
 }
 
-function updateUserProfile(userId, profileData) {
-  let targetUser = null;
+function revokeToken(tokenString) {
+  const cleanToken = parseBearerToken(tokenString);
+  if (!cleanToken) return false;
+  return tokens.delete(cleanToken);
+}
+
+function findUserById(userId) {
   for (const user of users.values()) {
-    if (user.id === userId) {
-      targetUser = user;
-      break;
-    }
+    if (user.id === userId) return user;
   }
+  return null;
+}
+
+function updateUserProfile(userId, profileData) {
+  const targetUser = findUserById(userId);
 
   if (!targetUser) {
     throw { statusCode: 404, message: 'User not found' };
   }
 
   if (profileData.name && typeof profileData.name === 'string') {
-    targetUser.name = profileData.name.trim();
+    targetUser.name = profileData.name.trim().slice(0, 80);
   }
 
-  if (profileData.citizenProfile && typeof profileData.citizenProfile === 'object') {
-    targetUser.citizenProfile = {
-      ...targetUser.citizenProfile,
-      ...profileData.citizenProfile
-    };
-  } else if (typeof profileData === 'object') {
-    // If root profile properties are provided directly
-    const { name, email, ...directProfile } = profileData;
-    targetUser.citizenProfile = {
-      ...targetUser.citizenProfile,
-      ...directProfile
-    };
-  }
+  const incomingProfile = profileData.citizenProfile && typeof profileData.citizenProfile === 'object'
+    ? profileData.citizenProfile
+    : profileData;
+
+  const allowed = pickCitizenProfile(incomingProfile);
+  targetUser.citizenProfile = {
+    ...targetUser.citizenProfile,
+    ...allowed
+  };
 
   return sanitizeUser(targetUser);
 }
@@ -162,5 +201,6 @@ module.exports = {
   registerUser,
   loginUser,
   getUserFromToken,
-  updateUserProfile
+  updateUserProfile,
+  revokeToken
 };

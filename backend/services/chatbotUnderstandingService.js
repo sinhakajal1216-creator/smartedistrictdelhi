@@ -1,5 +1,6 @@
 const DEFAULT_INTENT = 'GENERAL_QUERY';
 const INTENT_PRIORITY = [
+  'TRACKING_QUERY',
   'SDM_QUERY',
   'SCHEME_LIST_QUERY',
   'ELIGIBILITY_QUERY',
@@ -49,6 +50,20 @@ function containsPhrase(text, phrase) {
   return text.includes(phrase);
 }
 
+const ELIGIBILITY_ALIASES = {
+  eligibilty: 'eligibility',
+  eligiblity: 'eligibility',
+  eligable: 'eligible',
+  qualfy: 'qualify'
+};
+
+function normalizeEligibilityTerms(text) {
+  return normalizeText(text)
+    .split(' ')
+    .map((token) => ELIGIBILITY_ALIASES[token] || token)
+    .join(' ');
+}
+
 function getServiceAliases(scheme) {
   const title = String(scheme.title || '').trim();
   const normalizedTitle = normalizeText(title);
@@ -75,9 +90,21 @@ function getServiceAliases(scheme) {
       'certificate showing my income',
       'income and assets certificate',
       'ews certificate',
+      'ews',
       'income and assets'
     ],
+    'issuance-of-caste-obc-certificate': [
+      'obc',
+      'obc certificate',
+      'other backward class certificate'
+    ],
+    'financial-assistance-to-persons-with-special-needs': [
+      'disability pension',
+      'special needs pension',
+      'persons with special needs'
+    ],
     'non-creamy-layer-certificate-ncl-for-obc': [
+      'ncl',
       'obc ncl',
       'ncl certificate',
       'non creamy layer certificate',
@@ -88,16 +115,6 @@ function getServiceAliases(scheme) {
       'lal dora certificate',
       'lal dora',
       'certificate for lal dora property'
-    ],
-    'issuance-of-caste-obc-certificate': [
-      'obc certificate',
-      'caste obc certificate',
-      'caste certificate'
-    ],
-    'financial-assistance-to-persons-with-special-needs': [
-      'disability pension',
-      'special needs pension',
-      'persons with special needs'
     ],
     'issuance-of-surviving-member-certificate': [
       'surviving member',
@@ -161,7 +178,7 @@ function semanticServiceMatch(messageText, messageTokens, serviceCatalog) {
 
 function isFollowUpMessage(messageText) {
   if (!messageText) return false;
-  if (/^(documents?|what documents are required|how long does it take|kitne din|kab tak|where do i apply|how to apply)\??$/.test(messageText)) {
+  if (/^(documents?|what documents are required|how long does it take|kitne din|kab tak|where do i apply|where should i go|where do i submit|how to apply)\??$/.test(messageText)) {
     return true;
   }
   if (/\b(what about|aur|isme|iska|uska|same service|for this|for that)\b/.test(messageText)) {
@@ -174,13 +191,18 @@ function isFollowUpMessage(messageText) {
 }
 
 function detectIntentSignals(messageText, context) {
+  const eligibilityText = normalizeEligibilityTerms(messageText);
   const hasSdm = /\b(sdm|sub divisional magistrate|sub divisional|jurisdiction|which sdm|sdm office|which office)\b/.test(messageText);
   const hasSchemeList = /\b(what services|services available|service list|list of services|what schemes|scheme list|all services|all schemes)\b/.test(messageText);
-  const hasEligibility = /\b(eligible|eligibility|am i eligible|qualification|qualify|criteria)\b/.test(messageText);
+  const hasEligibility = /\b(eligible|eligibility|qualification|qualify|criteria)\b/.test(eligibilityText);
   const hasDocuments = /\b(document|documents|proof|papers|required documents|kya documents|what to carry)\b/.test(messageText);
   const hasProcessingTime = /\b(how many days|how long|processing time|timeline|kitne din|kab tak|kitna time|lagega|milega)\b/.test(messageText);
-  const hasApplication = /\b(how to apply|where do i apply|apply kaise|kahan apply|procedure|steps|application process)\b/.test(messageText);
+  const hasApplication = /\b(how to apply|where do i apply|where should i submit|where do i submit|apply kaise|kahan apply|procedure|steps|application process|submit)\b/.test(messageText);
   const hasProject = /\b(project|technology|tech stack|smart e district|chatbot)\b/.test(messageText);
+  const hasTracking = /\b(track\s*(?:my\s*)?application|track\s*application|check\s*(?:my\s*)?application\s*status|where\s*is\s*my\s*application|application\s*status|submitted\s*application\s*status|application\s*tracking|track\s*(?:my\s*)?status|check\s*status)\b/i.test(messageText);
+  const hasLocationStatement =
+    /\b(?:i\s+)?(?:live|stay|reside|residing)\s+in\b/.test(messageText) &&
+    /\b(sdm|office|jurisdiction|where|which|visit|go)\b/.test(messageText);
 
   const aspects = {
     document: hasDocuments,
@@ -192,7 +214,7 @@ function detectIntentSignals(messageText, context) {
   const followUp = isFollowUpMessage(messageText);
   const lastIntent = String(context?.lastIntent || '');
   const candidates = {
-    SDM_QUERY: hasSdm ? 0.98 : 0,
+    TRACKING_QUERY: hasTracking ? 0.99 : 0,
     SCHEME_LIST_QUERY: hasSchemeList ? 0.96 : 0,
     ELIGIBILITY_QUERY: hasEligibility ? 0.95 : 0,
     DOCUMENT_QUERY: hasDocuments ? 0.92 : 0,
@@ -200,6 +222,7 @@ function detectIntentSignals(messageText, context) {
     APPLICATION_QUERY: hasApplication ? 0.9 : 0,
     COMBINED_QUERY: aspectCount > 1 ? 0.88 : 0,
     PROJECT_QUERY: hasProject ? 0.85 : 0,
+    SDM_QUERY: hasLocationStatement ? 0.86 : (hasSdm ? 0.98 : 0),
     GENERAL_QUERY: 0.5
   };
 
@@ -207,6 +230,18 @@ function detectIntentSignals(messageText, context) {
     if (lastIntent === 'DOCUMENT_QUERY' && !hasProcessingTime) candidates.DOCUMENT_QUERY = Math.max(candidates.DOCUMENT_QUERY, 0.84);
     if (lastIntent === 'PROCESSING_TIME_QUERY' && !hasDocuments) candidates.PROCESSING_TIME_QUERY = Math.max(candidates.PROCESSING_TIME_QUERY, 0.84);
     if (lastIntent === 'APPLICATION_QUERY') candidates.APPLICATION_QUERY = Math.max(candidates.APPLICATION_QUERY, 0.84);
+    if (lastIntent === 'SDM_QUERY' && /\b(where|go|office|visit)\b/.test(messageText)) candidates.SDM_QUERY = Math.max(candidates.SDM_QUERY, 0.84);
+  }
+
+  if (followUp && lastIntent === 'DOCUMENT_QUERY' && hasApplication) {
+    candidates.APPLICATION_QUERY = Math.max(candidates.APPLICATION_QUERY, 0.9);
+    candidates.DOCUMENT_QUERY = 0;
+  }
+  if (followUp && lastIntent === 'DOCUMENT_QUERY' && !hasDocuments && !hasApplication && !hasEligibility && !hasSdm) {
+    candidates.DOCUMENT_QUERY = Math.max(candidates.DOCUMENT_QUERY, 0.84);
+  }
+  if (followUp && lastIntent === 'SDM_QUERY' && !hasSdm && /\b(where|go|office|visit)\b/.test(messageText)) {
+    candidates.SDM_QUERY = Math.max(candidates.SDM_QUERY, 0.84);
   }
 
   return { candidates, aspects, followUp };
@@ -250,7 +285,7 @@ function extractLocality(message) {
       .replace(/\b(i|live|am|in|which|what|where|is|my|correct|the|sdm|office|should|visit|handles|handle|for)\b/gi, ' ')
       .replace(/\s+/g, ' ')
       .trim();
-    if (cleaned.length >= 3) return cleaned;
+    if (cleaned.length >= 3 && !/^(find|locate|my|correct)$/i.test(cleaned)) return cleaned;
   }
 
   return null;

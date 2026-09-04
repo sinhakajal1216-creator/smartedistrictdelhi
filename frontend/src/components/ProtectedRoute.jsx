@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children }) {
         await auth.me()
         if (!mounted) return
         setAuthed(true)
-      } catch (e) {
+      } catch {
         setAuthed(false)
       } finally {
         if (mounted) setLoading(false)

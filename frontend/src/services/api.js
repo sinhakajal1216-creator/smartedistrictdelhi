@@ -1,4 +1,4 @@
-﻿import axios from 'axios';
+import axios from 'axios';
 
 // In development, Vite proxies this relative path to the Express server.
 // Deployments can override it with VITE_API_BASE.
@@ -18,7 +18,7 @@ api.interceptors.request.use((config) => {
     if (token) {
       config.headers.Authorization = 'Bearer ' + token;
     }
-  } catch (e) {
+  } catch {
     // ignore (SSR not expected)
   }
   return config;
