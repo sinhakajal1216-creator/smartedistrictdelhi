@@ -98,7 +98,6 @@ export default function Navbar({
           </div>
           <div className="stitch-brand-titles">
             <span className="stitch-brand-name">SevaSphere</span>
-            <span className="stitch-brand-tag">SmartEDistrict Delhi</span>
           </div>
         </Link>
 
