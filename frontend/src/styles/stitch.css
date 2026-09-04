@@ -1,0 +1,1006 @@
+/* ==========================================================================
+   STITCH HOMEPAGE & SHELL STYLES
+   Visual source of truth: Google Stitch Screenshot & Inspect HTML
+   Fully scoped and namespaced to avoid collisions with other pages
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   App Shell adjustments for Home
+   -------------------------------------------------------------------------- */
+.stitch-body-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #faf8ff;
+  color: #131b2e;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-main--home {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   GNCTD Official Header & Stitch Navbar
+   -------------------------------------------------------------------------- */
+.stitch-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #002f5e;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.12);
+  width: 100%;
+}
+
+/* GNCTD Top Strip */
+.stitch-topstrip {
+  background-color: #002347;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #87b4fd;
+  padding: 4px 1rem;
+}
+
+@media (min-width: 768px) {
+  .stitch-topstrip {
+    padding: 4px 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-topstrip {
+    padding: 4px 3rem;
+  }
+}
+
+.stitch-topstrip-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+.stitch-topstrip-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stitch-topstrip-pipe {
+  opacity: 0.4;
+}
+
+.stitch-topstrip-subtitle {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+@media (max-width: 640px) {
+  .stitch-topstrip-subtitle {
+    display: none;
+  }
+}
+
+.stitch-topstrip-tools {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.stitch-topstrip-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.stitch-topstrip-btn:hover {
+  color: #ffffff;
+}
+
+.stitch-topstrip-tool-item {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.stitch-topstrip-tool-item:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .stitch-topstrip-desktop-only {
+    display: none;
+  }
+}
+
+/* Main Navigation Bar */
+.stitch-navbar-main {
+  height: 5rem;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .stitch-navbar-main {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-navbar-main {
+    padding: 0 3rem;
+  }
+}
+
+.stitch-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.stitch-emblem-ring {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.4);
+  flex-shrink: 0;
+}
+
+.stitch-emblem-img {
+  height: 2rem;
+  width: 2rem;
+  object-fit: contain;
+  border-radius: 9999px;
+  display: block;
+}
+
+.stitch-brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.stitch-brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.stitch-brand-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #a7c8ff;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Nav Links */
+.stitch-nav-links {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+  height: 100%;
+}
+
+@media (min-width: 1024px) {
+  .stitch-nav-links {
+    display: flex;
+  }
+}
+
+.stitch-nav-link {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  border-bottom: 2px solid transparent;
+  padding: 0 2px;
+  box-sizing: border-box;
+}
+
+.stitch-nav-link:hover {
+  color: #ffffff;
+}
+
+.stitch-nav-link.active {
+  color: #ffffff;
+  font-weight: 700;
+  border-bottom-color: #f59e0b;
+}
+
+/* Auth Action in Navbar */
+.stitch-auth-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stitch-login-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.75rem;
+  background-color: #ffffff;
+  color: #002f5e;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.stitch-login-btn:hover {
+  background-color: #f2f3ff;
+  transform: translateY(-1px);
+}
+
+.stitch-user-greet {
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.stitch-logout-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.75rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.825rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.stitch-logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Mobile Toggle */
+.stitch-mobile-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  gap: 5px;
+  padding: 0;
+}
+
+@media (max-width: 1023px) {
+  .stitch-mobile-toggle {
+    display: flex;
+  }
+}
+
+.stitch-hamburger-bar {
+  display: block;
+  width: 1.25rem;
+  height: 2px;
+  background-color: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.stitch-mobile-toggle.open .stitch-hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.stitch-mobile-toggle.open .stitch-hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.stitch-mobile-toggle.open .stitch-hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile Dropdown Menu */
+.stitch-mobile-drawer {
+  background-color: #002347;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stitch-mobile-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.75rem 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.15s ease;
+}
+
+.stitch-mobile-link:hover,
+.stitch-mobile-link.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Hero Section
+   -------------------------------------------------------------------------- */
+.stitch-hero-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: #001c3b;
+}
+
+.stitch-hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  transform: scale(1);
+}
+
+.stitch-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 28, 59, 0.95) 0%,
+    rgba(0, 40, 82, 0.88) 50%,
+    rgba(2, 19, 39, 0.96) 100%
+  );
+  z-index: 10;
+}
+
+.stitch-hero-content {
+  position: relative;
+  z-index: 20;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 11rem; /* 176px - offsets header with perfect breathing room */
+  padding-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .stitch-hero-content {
+    padding-bottom: 7rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stitch-hero-content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-hero-content {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.stitch-hero-title {
+  color: #ffffff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 640px) {
+  .stitch-hero-title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stitch-hero-title {
+    font-size: 3.75rem;
+  }
+}
+
+.stitch-hero-subtitle {
+  color: #a7c8ff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 640px) {
+  .stitch-hero-subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .stitch-hero-subtitle {
+    font-size: 1.5rem;
+  }
+}
+
+.stitch-hero-tagline {
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  max-width: 36rem;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .stitch-hero-tagline {
+    font-size: 1.125rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Citizen Facilitation Architecture Section (5 Cards)
+   -------------------------------------------------------------------------- */
+.stitch-section-services {
+  width: 100%;
+  background-color: #faf8ff;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .stitch-section-services {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.stitch-section-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .stitch-section-inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-section-inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+/* Section Header */
+.stitch-section-header {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto 3rem auto;
+}
+
+.stitch-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #004586;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.375rem;
+}
+
+.stitch-eyebrow .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.stitch-heading {
+  color: #131b2e;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0;
+  line-height: 1.25;
+}
+
+@media (min-width: 640px) {
+  .stitch-heading {
+    font-size: 1.875rem;
+  }
+}
+
+.stitch-heading-sub {
+  color: #424750;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+@media (min-width: 640px) {
+  .stitch-heading-sub {
+    font-size: 1rem;
+  }
+}
+
+/* 5 Cards Grid */
+.stitch-cards-grid-5 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .stitch-cards-grid-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-cards-grid-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Individual Card */
+.stitch-feature-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(194, 198, 210, 0.4);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+}
+
+.stitch-feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 47, 94, 0.08);
+  border-color: #a7c8fe;
+}
+
+.stitch-card-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.stitch-card-icon-wrap {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background-color: #f2f3ff;
+  color: #002f5e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.stitch-card-icon-wrap .material-symbols-outlined {
+  font-size: 26px;
+}
+
+.stitch-card-h3 {
+  color: #131b2e;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.35;
+}
+
+@media (min-width: 640px) {
+  .stitch-card-h3 {
+    font-size: 1.125rem;
+  }
+}
+
+.stitch-card-p {
+  color: #424750;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.stitch-card-bottom {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(194, 198, 210, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: #004586;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+.stitch-card-bottom .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   Floating Dilli Sahayak Widget
+   -------------------------------------------------------------------------- */
+.stitch-floating-launcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+}
+
+.stitch-floating-pill {
+  background-color: #ffffff;
+  color: #131b2e;
+  box-shadow: 0 4px 16px rgba(0, 46, 91, 0.12);
+  border: 1px solid rgba(194, 198, 210, 0.4);
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.75rem;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .stitch-floating-pill {
+    display: flex;
+  }
+}
+
+.stitch-floating-pill-title {
+  font-weight: 700;
+  color: #002f5e;
+}
+
+.stitch-floating-pill-desc {
+  color: #424750;
+  font-weight: 400;
+}
+
+.stitch-floating-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: 9999px;
+  background-color: #002f5e;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 46, 91, 0.2);
+  transition: transform 0.15s ease;
+}
+
+.stitch-floating-launcher:hover .stitch-floating-btn {
+  transform: scale(1.05);
+}
+
+.stitch-floating-btn .material-symbols-outlined {
+  font-size: 26px;
+}
+
+.stitch-ping-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.stitch-ping-radar {
+  position: absolute;
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  background-color: #fbbf24;
+  opacity: 0.75;
+  animation: stitchPing 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.stitch-ping-dot {
+  position: relative;
+  display: inline-flex;
+  border-radius: 9999px;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: #f59e0b;
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+@keyframes stitchPing {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Official GNCTD Footer
+   -------------------------------------------------------------------------- */
+.stitch-footer {
+  width: 100%;
+  background-color: #f2f3ff;
+  color: #131b2e;
+  padding-top: 3rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid rgba(194, 198, 210, 0.3);
+  font-family: 'Inter', sans-serif;
+}
+
+.stitch-footer-inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .stitch-footer-inner {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stitch-footer-inner {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+.stitch-footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(194, 198, 210, 0.3);
+}
+
+@media (min-width: 768px) {
+  .stitch-footer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.stitch-footer-brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .stitch-footer-brand-col {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.stitch-footer-brand-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.stitch-footer-emblem-wrap {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  background-color: rgba(0, 47, 94, 0.1);
+  box-shadow: 0 0 0 1px rgba(217, 119, 6, 0.3);
+  flex-shrink: 0;
+}
+
+.stitch-footer-emblem-img {
+  height: 1.5rem;
+  width: 1.5rem;
+  object-fit: contain;
+  border-radius: 9999px;
+  display: block;
+}
+
+.stitch-footer-brand-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #002f5e;
+}
+
+.stitch-footer-desc {
+  font-size: 0.8125rem;
+  color: #424750;
+  max-width: 28rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .stitch-footer-desc {
+    font-size: 0.875rem;
+  }
+}
+
+.stitch-footer-subtext {
+  font-size: 12px;
+  color: rgba(66, 71, 80, 0.8);
+  margin: 0;
+}
+
+.stitch-footer-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #131b2e;
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stitch-footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 640px) {
+  .stitch-footer-list {
+    font-size: 0.875rem;
+  }
+}
+
+.stitch-footer-link {
+  color: #424750;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.stitch-footer-link:hover {
+  color: #002f5e;
+}
+
+/* Bottom Bar */
+.stitch-footer-bottom {
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #424750;
+}
+
+@media (min-width: 768px) {
+  .stitch-footer-bottom {
+    flex-direction: row;
+    text-align: left;
+  }
+}
+
+.stitch-footer-bottom-copy {
+  margin: 0;
+}
+
+.stitch-footer-bottom-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stitch-policy-link {
+  color: #424750;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.stitch-policy-link:hover {
+  color: #002f5e;
+}
+
+/* Spacing utility for non-home pages when header is fixed */
+.stitch-page-spacer {
+  padding-top: 7.25rem;
+}

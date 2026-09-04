@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import './styles/stitch.css'
 import * as auth from './services/auth'
 import Navbar from './components/Navbar'
 import ChatbotWidget from './components/ChatbotWidget'
 import SiteFooter from './components/SiteFooter'
-import { Routes, Route, Link, useNavigate } from 'react-router-dom'
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -93,9 +94,10 @@ function WhySmartEDistrict() {
 }
 
 function App() {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
   const [user, setUser] = useState(null)
   const [isChatbotOpen, setIsChatbotOpen] = useState(false)
-  const [isAssistantCompact, setIsAssistantCompact] = useState(false)
   const [language] = useState(() => localStorage.getItem('smartedistrict_language') || 'en')
   const [accessibility] = useState(() => {
     try {
@@ -134,17 +136,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsAssistantCompact(window.scrollY > 220)
-    }
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
-
-  useEffect(() => {
     localStorage.setItem('smartedistrict_language', language)
   }, [language])
 
@@ -165,13 +156,13 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${isHome ? 'stitch-body-root' : ''}`}>
       <Navbar
         user={user}
         onLogout={logout}
       />
 
-      <main className="app-main">
+      <main className={`app-main ${isHome ? 'app-main--home' : 'stitch-page-spacer'}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<AuthPage mode="login" onAuthSuccess={handleAuthSuccess} title="Login" subtitle="Access digital citizen services" />} />
@@ -192,13 +183,21 @@ function App() {
         <button
           id="dilli-sahayak"
           type="button"
-          className={`assistant-launcher ${isAssistantCompact ? 'assistant-launcher--compact' : ''}`}
+          className="stitch-floating-launcher"
           onClick={() => setIsChatbotOpen(true)}
-          aria-label="Open Dilli Sahayak assistant"
+          aria-label="Open Dilli Sahayak AI assistant"
         >
-          <span className="assistant-launcher-icon" aria-hidden>💬</span>
-          <span className="assistant-launcher-dot" aria-hidden />
-          <span>Dilli Sahayak</span>
+          <div className="stitch-floating-pill">
+            <span className="stitch-floating-pill-title">Dilli Sahayak</span>
+            <span className="stitch-floating-pill-desc">Citizen Help</span>
+          </div>
+          <div className="stitch-floating-btn">
+            <span className="material-symbols-outlined">support_agent</span>
+            <span className="stitch-ping-container">
+              <span className="stitch-ping-radar" />
+              <span className="stitch-ping-dot" />
+            </span>
+          </div>
         </button>
       )}
 

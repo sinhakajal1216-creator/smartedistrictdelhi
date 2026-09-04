@@ -1,9 +1,9 @@
 import { useEffect, useState, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Search, FileText, CheckCircle2, MapPin, Bot } from 'lucide-react'
 import api from '../services/api'
 import SchemeCard from '../components/SchemeCard'
 import '../styles/schemes.css'
+import '../styles/stitch.css'
 
 export default function Home() {
   const location = useLocation()
@@ -112,103 +112,169 @@ export default function Home() {
 
   if (isHomeView) {
     return (
-      <div className="identity-page">
-        <section className="identity-hero" aria-label="SevaSphere home hero">
-          <div className="identity-hero-media" aria-hidden="true">
-            <picture className="identity-hero-shot identity-hero-shot--india-gate">
-              <source
-                media="(max-width: 680px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
-              />
-              <source
-                media="(min-width: 681px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg/960px-India_Gate%2C_New_Delhi%2C_India_%282018%29.jpg"
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
-            <picture className="identity-hero-shot identity-hero-shot--red-fort">
-              <source
-                media="(max-width: 680px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
-              />
-              <source
-                media="(min-width: 681px)"
-                srcSet="https://upload.wikimedia.org/wikipedia/commons/b/b8/Red_fort_new_delhi_with_indian_flag.jpg"
-              />
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Red_fort_new_delhi_with_indian_flag.jpg/960px-Red_fort_new_delhi_with_indian_flag.jpg"
-                alt=""
-                loading="eager"
-                decoding="async"
-              />
-            </picture>
-            <div className="identity-hero-overlay" />
+      <div className="stitch-home">
+        {/* Hero Section Bleeding Seamlessly Under Header */}
+        <section className="stitch-hero-wrap" aria-label="SevaSphere Homepage Hero">
+          <div
+            className="stitch-hero-bg"
+            style={{ backgroundImage: 'url("/india_gate_dusk.jpg")' }}
+            aria-hidden="true"
+          />
+          <div className="stitch-hero-overlay" aria-hidden="true" />
+
+          <div className="stitch-hero-content">
+            <h1 className="stitch-hero-title">SevaSphere</h1>
+            <p className="stitch-hero-subtitle">SmartEDistrict Delhi</p>
+            <p className="stitch-hero-tagline">
+              One Platform. Every Citizen Service.
+            </p>
           </div>
+        </section>
 
-          <div className="identity-hero-inner">
-            <span className="eyebrow">Delhi e-District</span>
-            <h1>SevaSphere</h1>
-            <p>One Platform. Every Citizen Service.</p>
-
-            <form className="identity-hero-search" onSubmit={onSearch}>
-              <div className="identity-search-box">
-                <Search className="identity-search-icon" size={20} aria-hidden="true" />
-                <input
-                  type="search"
-                  value={q}
-                  onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search services, certificates or keywords"
-                  aria-label="Search citizen services"
-                />
-                <button type="submit" className="btn-primary">
-                  Search
-                </button>
+        {/* Cards Section: Exactly the 5 Requested Concepts, Matching Visual Styling */}
+        <section className="stitch-section-services" id="services" aria-label="Citizen Facilitation Services">
+          <div className="stitch-section-inner">
+            {/* Section Header */}
+            <div className="stitch-section-header">
+              <div className="stitch-eyebrow">
+                <span className="material-symbols-outlined">account_balance</span>
+                <span>Citizen Facilitation Architecture</span>
               </div>
-            </form>
+              <h2 className="stitch-heading">AI POWERED  CITIZEN ASSITANCE PLATFORM</h2>
+              <p className="stitch-heading-sub">
+                Structured administrative access across Delhi departments, facilitating seamless civil and governance workflows.
+              </p>
+            </div>
 
-            <div className="stitch-cards-grid" aria-label="Portal Capabilities">
-              <div className="stitch-card">
-                <div className="stitch-card-icon" aria-hidden="true">
-                  <FileText size={18} />
+            {/* 5 Requested Concepts Grid */}
+            <div className="stitch-cards-grid-5">
+              {/* Card 1: Government Services & Schemes */}
+              <div
+                className="stitch-feature-card"
+                onClick={() => navigate('/schemes')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && navigate('/schemes')}
+                aria-label="Navigate to Government Services and Schemes"
+              >
+                <div className="stitch-card-top">
+                  <div className="stitch-card-icon-wrap" aria-hidden="true">
+                    <span className="material-symbols-outlined">category</span>
+                  </div>
+                  <h3 className="stitch-card-h3">
+                    Government Services &amp; Schemes
+                  </h3>
+                  <p className="stitch-card-p">
+                    Explore unified state schemes and civic certifications.
+                  </p>
                 </div>
-                <div className="stitch-card-body">
-                  <h3>Government Services & Schemes</h3>
-                  <p>Official certificates, revenue department records, and social welfare programs</p>
-                </div>
-              </div>
-
-              <div className="stitch-card">
-                <div className="stitch-card-icon" aria-hidden="true">
-                  <CheckCircle2 size={18} />
-                </div>
-                <div className="stitch-card-body">
-                  <h3>Eligibility Evaluation</h3>
-                  <p>Rule-based pre-application checks for citizen criteria and entitlements</p>
-                </div>
-              </div>
-
-              <div className="stitch-card">
-                <div className="stitch-card-icon" aria-hidden="true">
-                  <MapPin size={18} />
-                </div>
-                <div className="stitch-card-body">
-                  <h3>SDM & Ward Locator</h3>
-                  <p>Find your designated administrative office by residential ward and locality</p>
+                <div className="stitch-card-bottom">
+                  <span className="material-symbols-outlined">check_circle</span>
+                  <span>State Department Integration</span>
                 </div>
               </div>
 
-              <div className="stitch-card">
-                <div className="stitch-card-icon" aria-hidden="true">
-                  <Bot size={18} />
+              {/* Card 2: Eligibility Assistance */}
+              <div
+                className="stitch-feature-card"
+                onClick={() => navigate('/eligibility')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && navigate('/eligibility')}
+                aria-label="Navigate to Eligibility Assistance"
+              >
+                <div className="stitch-card-top">
+                  <div className="stitch-card-icon-wrap" aria-hidden="true">
+                    <span className="material-symbols-outlined">rule</span>
+                  </div>
+                  <h3 className="stitch-card-h3">
+                    Eligibility Assistance
+                  </h3>
+                  <p className="stitch-card-p">
+                    Check qualifying criteria and benefits across departments.
+                  </p>
                 </div>
-                <div className="stitch-card-body">
-                  <h3>Dilli Sahayak AI Assistant</h3>
-                  <p>Conversational citizen guidance for required documents and procedures</p>
+                <div className="stitch-card-bottom">
+                  <span className="material-symbols-outlined">verified</span>
+                  <span>Scheme Qualification</span>
+                </div>
+              </div>
+
+              {/* Card 3: Document Guidance */}
+              <div
+                className="stitch-feature-card"
+                onClick={() => navigate('/schemes')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && navigate('/schemes')}
+                aria-label="Navigate to Document Guidance"
+              >
+                <div className="stitch-card-top">
+                  <div className="stitch-card-icon-wrap" aria-hidden="true">
+                    <span className="material-symbols-outlined">description</span>
+                  </div>
+                  <h3 className="stitch-card-h3">
+                    Document Guidance
+                  </h3>
+                  <p className="stitch-card-p">
+                    Clear requirements and procedural steps for citizen applications.
+                  </p>
+                </div>
+                <div className="stitch-card-bottom">
+                  <span className="material-symbols-outlined">checklist</span>
+                  <span>Procedural Instructions</span>
+                </div>
+              </div>
+
+              {/* Card 4: Dilli Sahayak AI Assistant */}
+              <div
+                className="stitch-feature-card"
+                onClick={() => window.dispatchEvent(new CustomEvent('open-assistant'))}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && window.dispatchEvent(new CustomEvent('open-assistant'))}
+                aria-label="Open Dilli Sahayak AI Assistant"
+              >
+                <div className="stitch-card-top">
+                  <div className="stitch-card-icon-wrap" aria-hidden="true">
+                    <span className="material-symbols-outlined">smart_toy</span>
+                  </div>
+                  <h3 className="stitch-card-h3">
+                    Dilli Sahayak AI Assistant
+                  </h3>
+                  <p className="stitch-card-p">
+                    24/7 intelligent citizen guidance and query support.
+                  </p>
+                </div>
+                <div className="stitch-card-bottom">
+                  <span className="material-symbols-outlined">forum</span>
+                  <span>Interactive Citizen Aid</span>
+                </div>
+              </div>
+
+              {/* Card 5: SDM / Jurisdiction Assistance */}
+              <div
+                className="stitch-feature-card"
+                onClick={() => navigate('/sdm-locator')}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === 'Enter' && navigate('/sdm-locator')}
+                aria-label="Navigate to SDM and Jurisdiction Assistance"
+              >
+                <div className="stitch-card-top">
+                  <div className="stitch-card-icon-wrap" aria-hidden="true">
+                    <span className="material-symbols-outlined">location_on</span>
+                  </div>
+                  <h3 className="stitch-card-h3">
+                    SDM / Jurisdiction Assistance
+                  </h3>
+                  <p className="stitch-card-p">
+                    Locate relevant revenue jurisdiction and subdivision magistracy.
+                  </p>
+                </div>
+                <div className="stitch-card-bottom">
+                  <span className="material-symbols-outlined">distance</span>
+                  <span>Subdivision Locator</span>
                 </div>
               </div>
             </div>
