@@ -396,12 +396,8 @@
 .stitch-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 28, 59, 0.95) 0%,
-    rgba(0, 40, 82, 0.88) 50%,
-    rgba(2, 19, 39, 0.96) 100%
-  );
+  -tw-bg-opacity: 1;
+  background: linear-gradient(180deg, rgba(0, 47, 94, 0.6) 0%, rgba(0, 47, 94, 0.8) 100%);
   z-index: 10;
 }
 
